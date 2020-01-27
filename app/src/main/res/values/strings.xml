@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">NotificationWatcher</string>
+
+    <!-- Dialog -->
+    <string name="notification_listener_denied">Permission not granted. Please setup.</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>
