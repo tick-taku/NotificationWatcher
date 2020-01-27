@@ -34,7 +34,7 @@ class ApplicationDialog private constructor(): DialogFragment() {
 
         var isCancelable: Boolean
             get() = model.isCancelable
-            set(value) { model.isCancelable }
+            set(value) { model.isCancelable = value }
 
         var title: String?
             get() = model.title
@@ -106,7 +106,7 @@ class ApplicationDialog private constructor(): DialogFragment() {
                 }
 
                 it.negativeButton?.let { n ->
-                    setNegativeButton(n.first) {_, _ ->
+                    setNegativeButton(n.first) { _, _ ->
                         n.second()
                         dismiss()
                     }
