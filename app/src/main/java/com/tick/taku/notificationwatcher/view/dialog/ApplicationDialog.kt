@@ -28,14 +28,22 @@ class ApplicationDialog private constructor(): DialogFragment() {
     class Factory(private val context: Context) {
         private val model = Model()
 
-        fun setPriority(p: Priority) { model.priority = p }
+        var priority: Priority
+            get() = model.priority
+            set(value) { model.priority = value }
 
-        fun setCancelable(c: Boolean) { model.isCancelable = c }
+        var isCancelable: Boolean
+            get() = model.isCancelable
+            set(value) { model.isCancelable }
 
-        fun setTitle(t: String) { model.title = t }
+        var title: String?
+            get() = model.title
+            set(value) { model.title = value }
         fun setTitle(@StringRes resId: Int) { model.title = context.getString(resId) }
 
-        fun setMessage(m: String) { model.message = m }
+        var message: String?
+            get() = model.message
+            set(value) { model.message = value }
         fun setMessage(@StringRes resId: Int) { model.message = context.getString(resId) }
 
         fun setPositiveButton(@StringRes resId: Int, listener: () -> Unit = {}) {
