@@ -1,3 +1,6 @@
+import dependencies.Dep
+import dependencies.Packages
+
 plugins {
     id("com.android.application")
 
@@ -9,14 +12,14 @@ plugins {
 }
 
 android {
-    compileSdkVersion(29)
-    buildToolsVersion = "29.0.2"
+    compileSdkVersion(Packages.SdkVersion.compile)
+    buildToolsVersion = Packages.SdkVersion.compile.toString()
     defaultConfig {
-        applicationId = "com.tick.taku.notificationwatcher"
-        minSdkVersion(23)
-        targetSdkVersion(29)
-        versionCode = 1
-        versionName = "1.0"
+        applicationId = Packages.id
+        minSdkVersion(Packages.SdkVersion.min)
+        targetSdkVersion(Packages.SdkVersion.target)
+        versionCode = Packages.Version.code
+        versionName = Packages.Version.name
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     kotlinOptions {
@@ -38,20 +41,23 @@ java {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61")
-    implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("androidx.core:core-ktx:1.1.0")
-    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
-    testImplementation("junit:junit:4.12")
-    androidTestImplementation("androidx.test.ext:junit:1.1.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
+    implementation(Dep.Kotlin.stdlibJdk)
+    implementation(Dep.AndroidX.appCompat)
+    implementation(Dep.AndroidX.coreKtx)
+    implementation(Dep.AndroidX.constraint)
+
+    testImplementation(Dep.Test.junit)
+    androidTestImplementation(Dep.Test.androidJunit)
+    androidTestImplementation(Dep.Test.espressoCore)
 
     // for Navigation
-    implementation("androidx.navigation:navigation-fragment:2.2.0")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.2.0")
-    implementation("androidx.navigation:navigation-ui:2.2.0")
-    implementation("androidx.navigation:navigation-ui-ktx:2.2.0")
+    implementation(Dep.AndroidX.Navigation.fragmentKtx)
+    implementation(Dep.AndroidX.Navigation.uiKtx)
+    implementation(Dep.AndroidX.Navigation.runtimeKtx)
+
+//    implementation("androidx.navigation:navigation-fragment:2.2.0")
+//    implementation("androidx.navigation:navigation-ui:2.2.0")
 
     // for Timber
-    implementation("com.jakewharton.timber:timber:4.7.1")
+    implementation(Dep.Timber.timber)
 }
