@@ -60,9 +60,6 @@ dependencies {
     implementation(Dep.AndroidX.Navigation.uiKtx)
     implementation(Dep.AndroidX.Navigation.runtimeKtx)
 
-//    implementation("androidx.navigation:navigation-fragment:2.2.0")
-//    implementation("androidx.navigation:navigation-ui:2.2.0")
-
     // for Timber
     implementation(Dep.Timber.timber)
 }
