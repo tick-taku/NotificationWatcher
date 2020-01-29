@@ -5,15 +5,15 @@ object Packages {
     const val debugIdSuffix = ".debug"
 
     object SdkVersion {
-        val target = 29
-        val compile = 29
-        val min = 21
+        const val min = 21
+        const val target = 29
+        const val compile = 29
     }
 
     object Version {
-        private val major = 0
-        private val minor = 1
-        private val patch = 0
+        private const val major = 0
+        private const val minor = 1
+        private const val patch = 0
 
         val code = (major * 100 + minor * 10 + patch)
         val name = "$major.$minor.$patch"
