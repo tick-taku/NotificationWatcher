@@ -5,7 +5,7 @@ object Packages {
     const val debugIdSuffix = ".debug"
 
     object SdkVersion {
-        const val min = 21
+        const val min = 23
         const val target = 29
         const val compile = 29
     }
