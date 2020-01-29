@@ -1,5 +1,7 @@
 import dependencies.Dep
 import dependencies.Packages
+import extensions.debug
+import extensions.release
 
 plugins {
     id("com.android.application")
@@ -26,7 +28,10 @@ android {
         jvmTarget = "1.8"
     }
     buildTypes {
-        getByName("release") {
+        debug {
+            applicationIdSuffix = Packages.debugIdSuffix
+        }
+        release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
