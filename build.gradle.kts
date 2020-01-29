@@ -6,11 +6,11 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:3.5.3")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61")
+        classpath(Plugins.android)
+        classpath(Plugins.kotlin)
 
         // for Navigation safe args
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.2.0")
+        classpath(Plugins.safeArgs)
     }
 }
 
