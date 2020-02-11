@@ -10,6 +10,11 @@ object Dep {
     object Kotlin {
         const val version = "1.3.61"
         const val stdlibJdk = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version"
+
+        const val coroutinesVersion = "1.3.3"
+        const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+        const val coroutinesCommon = "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$coroutinesVersion"
+        const val androidCoroutinesDispatcher = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
     }
 
     object AndroidX {

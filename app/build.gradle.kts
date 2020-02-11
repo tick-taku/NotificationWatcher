@@ -36,6 +36,11 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+    packagingOptions {
+        exclude("META-INF/*.kotlin_module")
+        exclude("META-INF/*.version")
+        exclude("META-INF/proguard/*.pro")
+    }
     androidExtensions { isExperimental = true }
 }
 
@@ -54,6 +59,11 @@ dependencies {
     testImplementation(Dep.Test.junit)
     androidTestImplementation(Dep.Test.androidJunit)
     androidTestImplementation(Dep.Test.espressoCore)
+
+    // coroutines
+    implementation(Dep.Kotlin.coroutines)
+    implementation(Dep.Kotlin.coroutinesCommon)
+    implementation(Dep.Kotlin.androidCoroutinesDispatcher)
 
     // for Navigation
     implementation(Dep.AndroidX.Navigation.fragmentKtx)
