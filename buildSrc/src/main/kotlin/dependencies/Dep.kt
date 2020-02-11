@@ -37,6 +37,11 @@ object Dep {
         }
     }
 
+    object Klock {
+        const val version = "1.8.7"
+        const val common = "com.soywiz.korlibs.klock:klock:$version"
+    }
+
     object Timber {
         const val version = "4.7.1"
         const val timber = "com.jakewharton.timber:timber:$version"

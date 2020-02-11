@@ -83,6 +83,9 @@ dependencies {
     implementation(Dep.AndroidX.Navigation.uiKtx)
     implementation(Dep.AndroidX.Navigation.runtimeKtx)
 
+    // Klock ---------------------------------------------------------
+    implementation(Dep.Klock.common)
+
     // for Timber
     implementation(Dep.Timber.timber)
 }
