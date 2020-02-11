@@ -10,6 +10,8 @@ plugins {
 
     kotlin("android.extensions")
 
+    kotlin("kapt")
+
     id("androidx.navigation.safeargs")
 }
 
@@ -23,6 +25,12 @@ android {
         versionCode = Packages.Version.code
         versionName = Packages.Version.name
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = mapOf("room.incremental" to "true")
+            }
+        }
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -64,6 +72,11 @@ dependencies {
     implementation(Dep.Kotlin.coroutines)
     implementation(Dep.Kotlin.coroutinesCommon)
     implementation(Dep.Kotlin.androidCoroutinesDispatcher)
+
+    // Room
+    implementation(Dep.AndroidX.Room.runtime)
+    implementation(Dep.AndroidX.Room.coroutine)
+    kapt(Dep.AndroidX.Room.compiler)
 
     // for Navigation
     implementation(Dep.AndroidX.Navigation.fragmentKtx)
