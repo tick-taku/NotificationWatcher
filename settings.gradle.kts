@@ -1,2 +1,2 @@
-include(":app")
+include(":app", ":corecomponent")
 rootProject.name = "NotificationWatcher"

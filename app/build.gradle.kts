@@ -58,7 +58,9 @@ java {
 }
 
 dependencies {
+    implementation(project(":corecomponent"))
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+
     implementation(Dep.Kotlin.stdlibJdk)
     implementation(Dep.AndroidX.appCompat)
     implementation(Dep.AndroidX.coreKtx)
