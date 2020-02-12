@@ -86,6 +86,11 @@ dependencies {
     implementation(Dep.AndroidX.Navigation.uiKtx)
     implementation(Dep.AndroidX.Navigation.runtimeKtx)
 
+    // Groupie -------------------------------------------------------
+    implementation(Dep.Groupie.common)
+    implementation(Dep.Groupie.dataBinding)
+    implementation(Dep.Groupie.extensions)
+
     // Klock ---------------------------------------------------------
     implementation(Dep.Klock.common)
 

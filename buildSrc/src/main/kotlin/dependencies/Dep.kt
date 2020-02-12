@@ -37,6 +37,13 @@ object Dep {
         }
     }
 
+    object Groupie {
+        const val version = "2.7.2"
+        const val common = "com.xwray:groupie:$version"
+        const val dataBinding = "com.xwray:groupie-databinding:$version"
+        const val extensions = "com.xwray:groupie-kotlin-android-extensions:$version"
+    }
+
     object Klock {
         const val version = "1.8.7"
         const val common = "com.soywiz.korlibs.klock:klock:$version"
