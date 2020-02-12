@@ -76,6 +76,10 @@ dependencies {
     implementation(Dep.Kotlin.coroutinesCommon)
     implementation(Dep.Kotlin.androidCoroutinesDispatcher)
 
+    // LifeCycle -----------------------------------------------------
+    implementation(Dep.AndroidX.LifeCycle.liveDataExtension)
+    implementation(Dep.AndroidX.LifeCycle.liveDataKtx)
+
     // Room
     implementation(Dep.AndroidX.Room.runtime)
     implementation(Dep.AndroidX.Room.coroutine)

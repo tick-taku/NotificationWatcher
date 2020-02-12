@@ -7,6 +7,7 @@ import com.tick.taku.notificationwatcher.domain.db.NotificationDataBase
 import com.tick.taku.notificationwatcher.domain.db.entity.MessageEntity
 import com.tick.taku.notificationwatcher.domain.db.entity.RoomEntity
 import com.tick.taku.notificationwatcher.domain.repository.NotificationRepository
+import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
 
 class NotificationRepositoryImpl(private val db: NotificationDataBase): NotificationRepository {
@@ -30,6 +31,8 @@ class NotificationRepositoryImpl(private val db: NotificationDataBase): Notifica
             print(sbn.notification)
         }
     }
+
+    override fun roomList(): Flow<List<RoomEntity>> = db.roomDao().findAll()
 
     /**
      * Save message to db.
