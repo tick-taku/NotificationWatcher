@@ -16,4 +16,9 @@ interface NotificationRepository {
      */
     fun roomList(): Flow<List<RoomEntity>>
 
+    /**
+     * Delete room entity by id.
+     */
+    suspend fun deleteRoom(id: String)
+
 }

@@ -12,6 +12,11 @@ data class RoomItem(private val entity: RoomEntity): BindableItem<ItemRoomBindin
 
     override fun bind(viewBinding: ItemRoomBinding, position: Int) {
         viewBinding.entity = entity
+
+        viewBinding.root.setOnLongClickListener {
+            longClickListener?.invoke(entity)
+            true
+        }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -19,5 +24,10 @@ data class RoomItem(private val entity: RoomEntity): BindableItem<ItemRoomBindin
     }
 
     override fun hashCode(): Int = entity.hashCode()
+
+    private var longClickListener: ((RoomEntity) -> Unit)? = null
+    fun setOnLongClickListener(l: (RoomEntity) -> Unit) {
+        longClickListener = l
+    }
 
 }
