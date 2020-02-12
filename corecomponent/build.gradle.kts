@@ -46,6 +46,9 @@ dependencies {
     implementation(Dep.Kotlin.stdlibJdk)
     implementation(Dep.AndroidX.appCompat)
     implementation(Dep.AndroidX.coreKtx)
+    implementation(Dep.AndroidX.activityKtx)
+    implementation(Dep.AndroidX.fragmentKtx)
+
     testImplementation(Dep.Test.junit)
     androidTestImplementation(Dep.Test.androidJunit)
     androidTestImplementation(Dep.Test.espressoCore)
