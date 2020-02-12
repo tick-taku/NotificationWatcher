@@ -22,12 +22,13 @@ class NotificationRepositoryImpl(private val db: NotificationDataBase): Notifica
     }
 
     override suspend fun saveNotification(sbn: StatusBarNotification) {
-        Timber.d("Save message to db.")
+        if (FILTERS.contains(sbn.packageName)) {
+            Timber.d("Save message to db.")
 
-        if (FILTERS.contains(sbn.packageName))
             saveMessage(sbn.notification)
 
-        print(sbn.notification)
+            print(sbn.notification)
+        }
     }
 
     /**
