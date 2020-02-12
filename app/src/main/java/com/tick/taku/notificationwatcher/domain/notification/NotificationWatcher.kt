@@ -6,6 +6,7 @@ import android.service.notification.StatusBarNotification
 import com.soywiz.klock.DateTime
 import com.tick.taku.notificationwatcher.domain.db.NotificationDataBase
 import com.tick.taku.notificationwatcher.domain.db.entity.MessageEntity
+import com.tick.taku.notificationwatcher.domain.db.entity.RoomEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,6 +18,8 @@ class NotificationWatcher: NotificationListenerService(), CoroutineScope {
     companion object {
 
         private val FILTERS = listOf("jp.naver.line.android")
+
+        private const val ROOM_ID = "line.chat.id"
 
         private const val MESSAGE_ID = "line.message.id"
 
@@ -62,17 +65,28 @@ class NotificationWatcher: NotificationListenerService(), CoroutineScope {
      */
     private fun saveMessage(notification: Notification) {
         launch {
-            val dao = database.messageDao()
+            Timber.d("Save message to db.")
 
-            val entity = notification.extras.let {
-                MessageEntity(
-                    id = it.getString(MESSAGE_ID) ?: dao.findLatestId() + "1",
-                    date = DateTime.nowLocal().toString("yyyyMMddHHmmss"),
+            val (room, message) = notification.extras.let {
+                val now = DateTime.nowLocal().toString("yyyyMMddHHmmss")
+
+                val room = RoomEntity(
+                    id = it.getString(ROOM_ID) ?: "",
                     user = it.getString(Notification.EXTRA_TITLE) ?: "Empty user",
-                    message = it.getString(Notification.EXTRA_TEXT) ?: "Empty message"
+                    latestMessage = it.getString(Notification.EXTRA_TEXT) ?: "Empty message",
+                    latestUpdate = now
                 )
+                val message = MessageEntity(
+                    id = it.getString(MESSAGE_ID) ?: "",
+                    roomId = room.id,
+                    date = now,
+                    message = room.latestMessage
+                )
+                room to message
             }
-            dao.insert(entity)
+
+            database.roomDao().insertOrUpdate(room)
+            database.messageDao().insert(message)
 
             print(notification)
         }
