@@ -2,6 +2,7 @@ package com.tick.taku.notificationwatcher.domain.db.dao
 
 import androidx.room.*
 import com.tick.taku.notificationwatcher.domain.db.entity.RoomEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao abstract class RoomDao {
 
@@ -15,7 +16,7 @@ import com.tick.taku.notificationwatcher.domain.db.entity.RoomEntity
     abstract fun deleteById(id: String)
 
     @Query("SELECT * FROM room ORDER BY latest_update asc")
-    abstract fun findAll(): List<RoomEntity>
+    abstract fun findAll(): Flow<List<RoomEntity>>
 
     @Query("SELECT COUNT(*) FROM room WHERE room_id = :id")
     protected abstract fun isExistsRecord(id: String): Int
