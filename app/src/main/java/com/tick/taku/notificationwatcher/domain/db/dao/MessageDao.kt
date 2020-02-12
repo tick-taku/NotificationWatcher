@@ -9,12 +9,12 @@ import com.tick.taku.notificationwatcher.domain.db.entity.MessageEntity
     abstract fun insert(message: MessageEntity)
 
     @Query("DELETE FROM message WHERE message_id = :id")
-    abstract fun deleteById(id: Int)
+    abstract fun deleteById(id: String)
 
     @Query("SELECT * FROM message ORDER BY date asc")
     abstract fun findAll(): List<MessageEntity>
 
     @Query("SELECT message_id FROM message ORDER BY message_id desc LIMIT 1")
-    abstract fun findLatestId(): Int
+    abstract fun findLatestId(): String
 
 }

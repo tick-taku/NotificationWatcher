@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "message")
-data class MessageEntity(@PrimaryKey @ColumnInfo(name = "message_id") val id: Int,
+data class MessageEntity(@PrimaryKey @ColumnInfo(name = "message_id") val id: String,
                          val date: String,
                          val user: String,
                          val message: String)

@@ -15,7 +15,11 @@ import kotlin.coroutines.CoroutineContext
 class NotificationWatcher: NotificationListenerService(), CoroutineScope {
 
     companion object {
+
         private val FILTERS = listOf("jp.naver.line.android")
+
+        private const val MESSAGE_ID = "line.message.id"
+
     }
 
     override val coroutineContext: CoroutineContext
@@ -60,16 +64,14 @@ class NotificationWatcher: NotificationListenerService(), CoroutineScope {
         launch {
             val dao = database.messageDao()
 
-            val (user, message) = notification.extras.let {
-                (it.getString(Notification.EXTRA_TITLE) ?: "") to (it.getString(Notification.EXTRA_TEXT) ?: "")
+            val entity = notification.extras.let {
+                MessageEntity(
+                    id = it.getString(MESSAGE_ID) ?: dao.findLatestId() + "1",
+                    date = DateTime.nowLocal().toString("yyyyMMddHHmmss"),
+                    user = it.getString(Notification.EXTRA_TITLE) ?: "Empty user",
+                    message = it.getString(Notification.EXTRA_TEXT) ?: "Empty message"
+                )
             }
-
-            val entity = MessageEntity(
-                id = dao.findLatestId() + 1,
-                date = DateTime.nowLocal().toString("yyyyMMddHHmmss"),
-                user = user,
-                message = message
-            )
             dao.insert(entity)
 
             print(notification)
