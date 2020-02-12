@@ -10,6 +10,8 @@ plugins {
 
     kotlin("android.extensions")
 
+    kotlin("kapt")
+
     id("androidx.navigation.safeargs")
 }
 
@@ -23,6 +25,12 @@ android {
         versionCode = Packages.Version.code
         versionName = Packages.Version.name
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = mapOf("room.incremental" to "true")
+            }
+        }
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -35,6 +43,11 @@ android {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
+    }
+    packagingOptions {
+        exclude("META-INF/*.kotlin_module")
+        exclude("META-INF/*.version")
+        exclude("META-INF/proguard/*.pro")
     }
     androidExtensions { isExperimental = true }
 }
@@ -55,10 +68,23 @@ dependencies {
     androidTestImplementation(Dep.Test.androidJunit)
     androidTestImplementation(Dep.Test.espressoCore)
 
+    // coroutines
+    implementation(Dep.Kotlin.coroutines)
+    implementation(Dep.Kotlin.coroutinesCommon)
+    implementation(Dep.Kotlin.androidCoroutinesDispatcher)
+
+    // Room
+    implementation(Dep.AndroidX.Room.runtime)
+    implementation(Dep.AndroidX.Room.coroutine)
+    kapt(Dep.AndroidX.Room.compiler)
+
     // for Navigation
     implementation(Dep.AndroidX.Navigation.fragmentKtx)
     implementation(Dep.AndroidX.Navigation.uiKtx)
     implementation(Dep.AndroidX.Navigation.runtimeKtx)
+
+    // Klock ---------------------------------------------------------
+    implementation(Dep.Klock.common)
 
     // for Timber
     implementation(Dep.Timber.timber)
