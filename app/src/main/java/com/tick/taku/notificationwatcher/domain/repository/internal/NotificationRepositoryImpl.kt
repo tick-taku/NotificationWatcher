@@ -43,7 +43,7 @@ class NotificationRepositoryImpl(private val db: NotificationDataBase): Notifica
      *
      * @param notification Notification
      */
-    private fun saveMessage(notification: Notification) {
+    private suspend fun saveMessage(notification: Notification) {
         val (room, message) = notification.extras.let {
             val now = DateTime.nowLocal().toString("yyyyMMddHHmmss")
 

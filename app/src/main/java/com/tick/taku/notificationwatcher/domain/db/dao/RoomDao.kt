@@ -7,13 +7,13 @@ import kotlinx.coroutines.flow.Flow
 @Dao abstract class RoomDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract fun insert(room: RoomEntity)
+    abstract suspend fun insert(room: RoomEntity)
 
     @Update
-    abstract fun update(room: RoomEntity)
+    abstract suspend fun update(room: RoomEntity)
 
     @Query("DELETE FROM room WHERE room_id = :id")
-    abstract fun deleteById(id: String)
+    abstract suspend fun deleteById(id: String)
 
     @Query("SELECT * FROM room ORDER BY latest_update asc")
     abstract fun findAll(): Flow<List<RoomEntity>>
@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.Flow
      *
      * @param room Room Entity
      */
-    fun insertOrUpdate(room: RoomEntity) {
+    suspend fun insertOrUpdate(room: RoomEntity) {
         if (isExistsRecord(room.id) == 0)
             insert(room)
         else

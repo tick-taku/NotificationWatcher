@@ -7,15 +7,15 @@ import kotlinx.coroutines.flow.Flow
 @Dao abstract class MessageDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insert(message: MessageEntity)
+    abstract suspend fun insert(message: MessageEntity)
 
     @Query("DELETE FROM message WHERE message_id = :id")
-    abstract fun deleteById(id: String)
+    abstract suspend fun deleteById(id: String)
 
     @Query("SELECT * FROM message ORDER BY date asc")
     abstract fun findAll(): Flow<List<MessageEntity>>
 
     @Query("SELECT message_id FROM message ORDER BY message_id desc LIMIT 1")
-    abstract fun findLatestId(): String
+    abstract suspend fun findLatestId(): String
 
 }
