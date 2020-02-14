@@ -1,17 +1,15 @@
 package com.tick.taku.notificationwatcher.domain.db.dao
 
 import androidx.room.*
+import com.tick.taku.notificationwatcher.domain.db.base.DataAccessObject
 import com.tick.taku.notificationwatcher.domain.db.entity.RoomEntity
 import com.tick.taku.notificationwatcher.domain.db.entity.RoomInfoEntity
 import kotlinx.coroutines.flow.Flow
 
-@Dao abstract class RoomDao {
+@Dao abstract class RoomDao: DataAccessObject<RoomEntity> {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun insert(room: RoomEntity)
-
-    @Update
-    abstract suspend fun update(room: RoomEntity)
+    abstract suspend fun insertIgnore(room: RoomEntity)
 
     @Query("DELETE FROM room WHERE room_id = :id")
     abstract suspend fun deleteById(id: String)
@@ -31,7 +29,7 @@ import kotlinx.coroutines.flow.Flow
      */
     suspend fun insertOrUpdate(room: RoomEntity) {
         if (isExistsRecord(room.id) == 0)
-            insert(room)
+            insertIgnore(room)
         else
             update(room)
     }
