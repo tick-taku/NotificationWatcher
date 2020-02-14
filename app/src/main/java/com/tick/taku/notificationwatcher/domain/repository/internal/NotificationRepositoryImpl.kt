@@ -58,8 +58,8 @@ class NotificationRepositoryImpl(private val db: NotificationDataBase): Notifica
             val message = MessageEntity(
                 id = it.getString(MESSAGE_ID) ?: "",
                 roomId = room.id,
-                date = DateTime.nowLocal().toString("yyyyMMddHHmmss"),
-                message = it.getString(Notification.EXTRA_TEXT) ?: "Empty message"
+                message = it.getString(Notification.EXTRA_TEXT) ?: "Empty message",
+                date = DateTime.nowLocal().local.unixMillisLong
             )
             room to message
         }

@@ -8,10 +8,17 @@ import com.xwray.groupie.databinding.BindableItem
 // TODO: Fix layout
 data class RoomItem(private val entity: RoomInfoEntity): BindableItem<ItemRoomBinding>() {
 
+    companion object {
+        private const val DATE_FORMAT = "yyyy/MM/dd HH:mm:ss"
+    }
+
     override fun getLayout() = R.layout.item_room
 
     override fun bind(viewBinding: ItemRoomBinding, position: Int) {
         viewBinding.entity = entity
+
+        viewBinding.date.text =
+            entity.latestMessage.dateTime().toString(DATE_FORMAT)
 
         viewBinding.root.setOnLongClickListener {
             longClickListener?.invoke(entity)
