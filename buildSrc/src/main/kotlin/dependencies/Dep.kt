@@ -23,6 +23,7 @@ object Dep {
         const val activityKtx = "androidx.activity:activity-ktx:1.1.0"
         const val fragmentKtx = "androidx.fragment:fragment-ktx:1.2.0"
         const val constraint = "androidx.constraintlayout:constraintlayout:2.0.0-beta2"
+        const val design = "com.google.android.material:material:1.1.0-rc01"
 
         object LifeCycle {
             const val version = "2.2.0"

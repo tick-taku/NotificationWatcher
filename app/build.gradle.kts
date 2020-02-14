@@ -71,6 +71,7 @@ dependencies {
     implementation(Dep.AndroidX.appCompat)
     implementation(Dep.AndroidX.coreKtx)
     implementation(Dep.AndroidX.constraint)
+    implementation(Dep.AndroidX.design)
 
     testImplementation(Dep.Test.junit)
     androidTestImplementation(Dep.Test.androidJunit)
