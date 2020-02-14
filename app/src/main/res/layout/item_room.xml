@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <variable name="entity" type="com.tick.taku.notificationwatcher.domain.db.entity.RoomEntity"/>
+        <variable name="entity" type="com.tick.taku.notificationwatcher.domain.db.entity.RoomInfoEntity"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@{entity.user}"
+            android:text="@{entity.name}"
             android:textSize="@dimen/global_font_size"
             android:textStyle="bold"/>
 
@@ -24,7 +24,7 @@
             app:layout_constraintTop_toBottomOf="@id/user_name"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="8dp"
-            android:text="@{entity.latestMessage}"
+            android:text="@{entity.latestMessage.message}"
             android:textSize="@dimen/global_font_size"/>
 
         <TextView
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/user_name"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="@{entity.latestUpdate}"
+            android:text="@{entity.latestMessage.date}"
             android:textSize="@dimen/global_font_size_small"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

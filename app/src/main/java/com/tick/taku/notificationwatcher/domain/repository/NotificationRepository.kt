@@ -1,7 +1,7 @@
 package com.tick.taku.notificationwatcher.domain.repository
 
 import android.service.notification.StatusBarNotification
-import com.tick.taku.notificationwatcher.domain.db.entity.RoomEntity
+import com.tick.taku.notificationwatcher.domain.db.entity.RoomInfoEntity
 import kotlinx.coroutines.flow.Flow
 
 interface NotificationRepository {
@@ -14,7 +14,7 @@ interface NotificationRepository {
     /**
      * Load room list.
      */
-    fun roomList(): Flow<List<RoomEntity>>
+    fun roomList(): Flow<List<RoomInfoEntity>>
 
     /**
      * Delete room entity by id.

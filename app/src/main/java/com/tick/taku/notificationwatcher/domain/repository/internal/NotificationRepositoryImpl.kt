@@ -6,6 +6,7 @@ import com.soywiz.klock.DateTime
 import com.tick.taku.notificationwatcher.domain.db.NotificationDataBase
 import com.tick.taku.notificationwatcher.domain.db.entity.MessageEntity
 import com.tick.taku.notificationwatcher.domain.db.entity.RoomEntity
+import com.tick.taku.notificationwatcher.domain.db.entity.RoomInfoEntity
 import com.tick.taku.notificationwatcher.domain.repository.NotificationRepository
 import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
@@ -32,7 +33,7 @@ class NotificationRepositoryImpl(private val db: NotificationDataBase): Notifica
         }
     }
 
-    override fun roomList(): Flow<List<RoomEntity>> = db.roomDao().findAll()
+    override fun roomList(): Flow<List<RoomInfoEntity>> = db.roomDao().findAll()
 
     override suspend fun deleteRoom(id: String) {
         db.roomDao().deleteById(id)
@@ -45,19 +46,15 @@ class NotificationRepositoryImpl(private val db: NotificationDataBase): Notifica
      */
     private suspend fun saveMessage(notification: Notification) {
         val (room, message) = notification.extras.let {
-            val now = DateTime.nowLocal().toString("yyyyMMddHHmmss")
-
             val room = RoomEntity(
                 id = it.getString(ROOM_ID) ?: "",
-                user = it.getString(Notification.EXTRA_TITLE) ?: "Empty user",
-                latestMessage = it.getString(Notification.EXTRA_TEXT) ?: "Empty message",
-                latestUpdate = now
+                name = it.getString(Notification.EXTRA_TITLE) ?: "Empty user"
             )
             val message = MessageEntity(
                 id = it.getString(MESSAGE_ID) ?: "",
                 roomId = room.id,
-                date = now,
-                message = room.latestMessage
+                date = DateTime.nowLocal().toString("yyyyMMddHHmmss"),
+                message = it.getString(Notification.EXTRA_TEXT) ?: "Empty message"
             )
             room to message
         }

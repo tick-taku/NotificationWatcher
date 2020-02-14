@@ -2,11 +2,11 @@ package com.tick.taku.notificationwatcher.view.room.item
 
 import com.tick.taku.notificationwatcher.R
 import com.tick.taku.notificationwatcher.databinding.ItemRoomBinding
-import com.tick.taku.notificationwatcher.domain.db.entity.RoomEntity
+import com.tick.taku.notificationwatcher.domain.db.entity.RoomInfoEntity
 import com.xwray.groupie.databinding.BindableItem
 
 // TODO: Fix layout
-data class RoomItem(private val entity: RoomEntity): BindableItem<ItemRoomBinding>() {
+data class RoomItem(private val entity: RoomInfoEntity): BindableItem<ItemRoomBinding>() {
 
     override fun getLayout() = R.layout.item_room
 
@@ -25,8 +25,8 @@ data class RoomItem(private val entity: RoomEntity): BindableItem<ItemRoomBindin
 
     override fun hashCode(): Int = entity.hashCode()
 
-    private var longClickListener: ((RoomEntity) -> Unit)? = null
-    fun setOnLongClickListener(l: (RoomEntity) -> Unit) {
+    private var longClickListener: ((RoomInfoEntity) -> Unit)? = null
+    fun setOnLongClickListener(l: (RoomInfoEntity) -> Unit) {
         longClickListener = l
     }
 

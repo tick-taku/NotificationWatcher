@@ -4,14 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.tick.taku.notificationwatcher.domain.db.entity.RoomEntity
+import com.tick.taku.notificationwatcher.domain.db.entity.RoomInfoEntity
 import com.tick.taku.notificationwatcher.domain.repository.NotificationRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class RoomListViewModel(private val repository: NotificationRepository): ViewModel() {
 
-    val roomList: LiveData<List<RoomEntity>> by lazy {
+    val roomList: LiveData<List<RoomInfoEntity>> by lazy {
         repository.roomList().asLiveData()
     }
 
