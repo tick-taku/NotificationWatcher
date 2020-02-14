@@ -11,4 +11,17 @@
         android:label="@string/toolbar_room_list"
         tools:layout="@layout/fragment_room_list"/>
 
+    <fragment
+        android:id="@+id/message_fragment"
+        android:name="com.tick.taku.notificationwatcher.view.message.MessageFragment"
+        android:label="{title}"
+        tools:layout="@layout/fragment_message">
+
+        <argument
+            android:name="title"
+            app:argType="string"
+            android:defaultValue="@string/toolbar_message_default"/>
+
+    </fragment>
+
 </navigation>
