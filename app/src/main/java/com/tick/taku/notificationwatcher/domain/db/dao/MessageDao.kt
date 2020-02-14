@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
     abstract suspend fun deleteById(id: String)
 
     @Query("SELECT * FROM message ORDER BY date asc")
-    abstract fun findAll(): Flow<List<MessageEntity>>
+    abstract fun observe(): Flow<List<MessageEntity>>
 
     @Query("SELECT message_id FROM message ORDER BY message_id desc LIMIT 1")
     abstract suspend fun findLatestId(): String
