@@ -2,7 +2,7 @@ package com.tick.taku.notificationwatcher.domain.notification
 
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
-import com.tick.taku.notificationwatcher.domain.db.NotificationDataBase
+import com.tick.taku.notificationwatcher.MyApplication
 import com.tick.taku.notificationwatcher.domain.repository.NotificationRepository
 import com.tick.taku.notificationwatcher.domain.repository.internal.NotificationRepositoryImpl
 import kotlinx.coroutines.CoroutineScope
@@ -16,13 +16,9 @@ class NotificationWatcher: NotificationListenerService(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Default
 
-    private val database: NotificationDataBase by lazy {
-        NotificationDataBase.getInstance(applicationContext)
-    }
-
     // TODO: DI
     private val repository: NotificationRepository by lazy {
-        NotificationRepositoryImpl(database)
+        NotificationRepositoryImpl((application as MyApplication).db)
     }
 
     override fun onListenerConnected() {

@@ -6,9 +6,9 @@ import androidx.lifecycle.observe
 import com.tick.taku.android.corecomponent.ktx.dataBinding
 import com.tick.taku.android.corecomponent.ktx.viewModelProvider
 import com.tick.taku.android.corecomponent.util.showDialog
+import com.tick.taku.notificationwatcher.MyApplication
 import com.tick.taku.notificationwatcher.R
 import com.tick.taku.notificationwatcher.databinding.FragmentRoomListBinding
-import com.tick.taku.notificationwatcher.domain.db.NotificationDataBase
 import com.tick.taku.notificationwatcher.domain.repository.internal.NotificationRepositoryImpl
 import com.tick.taku.notificationwatcher.view.room.item.RoomItem
 import com.tick.taku.notificationwatcher.view.room.viewmodel.RoomListViewModel
@@ -19,8 +19,9 @@ class RoomListFragment: Fragment(R.layout.fragment_room_list) {
 
     private val binding: FragmentRoomListBinding by dataBinding()
 
+    // TODO: DI
     private val viewModel: RoomListViewModel by viewModelProvider {
-        RoomListViewModel(NotificationRepositoryImpl(NotificationDataBase.getInstance(requireContext())))
+        RoomListViewModel(NotificationRepositoryImpl((requireActivity().application as MyApplication).db))
     }
 
     private val roomListAdapter: GroupAdapter<GroupieViewHolder<*>> by lazy {
