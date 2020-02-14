@@ -26,9 +26,7 @@ data class RoomItem(private val entity: RoomInfoEntity): BindableItem<ItemRoomBi
         }
     }
 
-    override fun equals(other: Any?): Boolean {
-        return if (other is RoomItem) other.entity == entity else false
-    }
+    override fun equals(other: Any?): Boolean = (other as? RoomItem)?.entity == entity
 
     override fun hashCode(): Int = entity.hashCode()
 
