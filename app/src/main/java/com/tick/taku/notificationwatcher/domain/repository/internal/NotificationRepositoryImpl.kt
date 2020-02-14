@@ -6,7 +6,11 @@ import com.soywiz.klock.DateTime
 import com.tick.taku.notificationwatcher.domain.db.NotificationDataBase
 import com.tick.taku.notificationwatcher.domain.db.entity.MessageEntity
 import com.tick.taku.notificationwatcher.domain.db.entity.RoomEntity
+import com.tick.taku.notificationwatcher.domain.db.entity.RoomInfoEntity
 import com.tick.taku.notificationwatcher.domain.repository.NotificationRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import timber.log.Timber
 
 class NotificationRepositoryImpl(private val db: NotificationDataBase): NotificationRepository {
@@ -31,26 +35,31 @@ class NotificationRepositoryImpl(private val db: NotificationDataBase): Notifica
         }
     }
 
+    @UseExperimental(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+    override fun roomList(): Flow<List<RoomInfoEntity>> =
+        db.roomDao().observeInfo().distinctUntilChanged()
+            .map { it.sortedByDescending { room -> room.latestMessage.date } }
+
+    override suspend fun deleteRoom(id: String) {
+        db.roomDao().deleteById(id)
+    }
+
     /**
      * Save message to db.
      *
      * @param notification Notification
      */
-    private fun saveMessage(notification: Notification) {
+    private suspend fun saveMessage(notification: Notification) {
         val (room, message) = notification.extras.let {
-            val now = DateTime.nowLocal().toString("yyyyMMddHHmmss")
-
             val room = RoomEntity(
                 id = it.getString(ROOM_ID) ?: "",
-                user = it.getString(Notification.EXTRA_TITLE) ?: "Empty user",
-                latestMessage = it.getString(Notification.EXTRA_TEXT) ?: "Empty message",
-                latestUpdate = now
+                name = it.getString(Notification.EXTRA_TITLE) ?: "Empty user"
             )
             val message = MessageEntity(
                 id = it.getString(MESSAGE_ID) ?: "",
                 roomId = room.id,
-                date = now,
-                message = room.latestMessage
+                message = it.getString(Notification.EXTRA_TEXT) ?: "Empty message",
+                date = DateTime.nowLocal().local.unixMillisLong
             )
             room to message
         }

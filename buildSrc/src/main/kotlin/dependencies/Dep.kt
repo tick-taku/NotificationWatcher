@@ -20,7 +20,16 @@ object Dep {
     object AndroidX {
         const val appCompat = "androidx.appcompat:appcompat:1.1.0"
         const val coreKtx = "androidx.core:core-ktx:1.2.0-rc01"
+        const val activityKtx = "androidx.activity:activity-ktx:1.1.0"
+        const val fragmentKtx = "androidx.fragment:fragment-ktx:1.2.0"
         const val constraint = "androidx.constraintlayout:constraintlayout:2.0.0-beta2"
+        const val design = "com.google.android.material:material:1.1.0-rc01"
+
+        object LifeCycle {
+            const val version = "2.2.0"
+            const val liveDataExtension = "androidx.lifecycle:lifecycle-livedata:$version"
+            const val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
+        }
 
         object Room {
             const val version = "2.2.3"
@@ -35,6 +44,13 @@ object Dep {
             const val fragmentKtx = "androidx.navigation:navigation-fragment-ktx:$version"
             const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"
         }
+    }
+
+    object Groupie {
+        const val version = "2.7.2"
+        const val common = "com.xwray:groupie:$version"
+        const val dataBinding = "com.xwray:groupie-databinding:$version"
+        const val extensions = "com.xwray:groupie-kotlin-android-extensions:$version"
     }
 
     object Klock {

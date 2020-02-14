@@ -32,6 +32,7 @@ android {
             }
         }
     }
+    dataBinding.isEnabled = true
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -50,6 +51,11 @@ android {
         exclude("META-INF/proguard/*.pro")
     }
     androidExtensions { isExperimental = true }
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
+        kotlinOptions {
+            freeCompilerArgs += listOf("-Xuse-experimental=kotlin.Experimental")
+        }
+    }
 }
 
 java {
@@ -58,11 +64,14 @@ java {
 }
 
 dependencies {
+    implementation(project(":corecomponent"))
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+
     implementation(Dep.Kotlin.stdlibJdk)
     implementation(Dep.AndroidX.appCompat)
     implementation(Dep.AndroidX.coreKtx)
     implementation(Dep.AndroidX.constraint)
+    implementation(Dep.AndroidX.design)
 
     testImplementation(Dep.Test.junit)
     androidTestImplementation(Dep.Test.androidJunit)
@@ -73,6 +82,10 @@ dependencies {
     implementation(Dep.Kotlin.coroutinesCommon)
     implementation(Dep.Kotlin.androidCoroutinesDispatcher)
 
+    // LifeCycle -----------------------------------------------------
+    implementation(Dep.AndroidX.LifeCycle.liveDataExtension)
+    implementation(Dep.AndroidX.LifeCycle.liveDataKtx)
+
     // Room
     implementation(Dep.AndroidX.Room.runtime)
     implementation(Dep.AndroidX.Room.coroutine)
@@ -82,6 +95,11 @@ dependencies {
     implementation(Dep.AndroidX.Navigation.fragmentKtx)
     implementation(Dep.AndroidX.Navigation.uiKtx)
     implementation(Dep.AndroidX.Navigation.runtimeKtx)
+
+    // Groupie -------------------------------------------------------
+    implementation(Dep.Groupie.common)
+    implementation(Dep.Groupie.dataBinding)
+    implementation(Dep.Groupie.extensions)
 
     // Klock ---------------------------------------------------------
     implementation(Dep.Klock.common)

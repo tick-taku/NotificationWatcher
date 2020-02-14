@@ -3,6 +3,8 @@ package com.tick.taku.notificationwatcher.domain.db.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import com.soywiz.klock.DateTime
+import com.tick.taku.notificationwatcher.domain.db.base.DaoEntity
 
 @Entity(tableName = "message",
         primaryKeys = ["message_id", "room_id"],
@@ -16,5 +18,8 @@ import androidx.room.ForeignKey
         ])
 data class MessageEntity(@ColumnInfo(name = "message_id") val id: String,
                          @ColumnInfo(name = "room_id") val roomId: String,
-                         val date: String,
-                         val message: String)
+                         val message: String,
+                         val date: Long): DaoEntity {
+
+    fun dateTime(): DateTime = DateTime(date)
+}
