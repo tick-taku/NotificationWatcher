@@ -9,6 +9,7 @@ import com.tick.taku.notificationwatcher.domain.db.entity.RoomEntity
 import com.tick.taku.notificationwatcher.domain.db.entity.RoomInfoEntity
 import com.tick.taku.notificationwatcher.domain.repository.NotificationRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import timber.log.Timber
 
 class NotificationRepositoryImpl(private val db: NotificationDataBase): NotificationRepository {
@@ -33,7 +34,9 @@ class NotificationRepositoryImpl(private val db: NotificationDataBase): Notifica
         }
     }
 
-    override fun roomList(): Flow<List<RoomInfoEntity>> = db.roomDao().observeInfo()
+    @UseExperimental(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+    override fun roomList(): Flow<List<RoomInfoEntity>> =
+        db.roomDao().observeInfo().distinctUntilChanged()
 
     override suspend fun deleteRoom(id: String) {
         db.roomDao().deleteById(id)

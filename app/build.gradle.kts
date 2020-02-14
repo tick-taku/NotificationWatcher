@@ -51,6 +51,11 @@ android {
         exclude("META-INF/proguard/*.pro")
     }
     androidExtensions { isExperimental = true }
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
+        kotlinOptions {
+            freeCompilerArgs += listOf("-Xuse-experimental=kotlin.Experimental")
+        }
+    }
 }
 
 java {
