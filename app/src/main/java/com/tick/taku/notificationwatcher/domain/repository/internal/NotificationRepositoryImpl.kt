@@ -33,7 +33,7 @@ class NotificationRepositoryImpl(private val db: NotificationDataBase): Notifica
         }
     }
 
-    override fun roomList(): Flow<List<RoomInfoEntity>> = db.roomDao().findAll()
+    override fun roomList(): Flow<List<RoomInfoEntity>> = db.roomDao().observeInfo()
 
     override suspend fun deleteRoom(id: String) {
         db.roomDao().deleteById(id)
