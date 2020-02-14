@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.Flow
             + "FROM room INNER JOIN message ON message.room_id = room.room_id ORDER BY date DESC LIMIT 1")
     abstract fun observeInfo(): Flow<List<RoomInfoEntity>>
 
-    @Query("SELECT COUNT(*) FROM room WHERE room_id = :id")
+    @Query("SELECT COUNT(*) FROM room WHERE room_id = :id LIMIT 1")
     protected abstract fun isExistsRecord(id: String): Int
 
     /**
