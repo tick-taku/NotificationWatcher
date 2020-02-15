@@ -38,7 +38,6 @@ class NotificationRepositoryImpl(private val db: NotificationDataBase): Notifica
     @UseExperimental(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     override fun roomList(): Flow<List<RoomInfoEntity>> =
         db.roomDao().observeInfo().distinctUntilChanged()
-            .map { it.sortedByDescending { room -> room.latestMessage.date } }
 
     override suspend fun deleteRoom(id: String) {
         db.roomDao().deleteById(id)

@@ -15,8 +15,10 @@ import kotlinx.coroutines.flow.Flow
     abstract suspend fun deleteById(id: String)
 
     @Transaction
-    @Query("SELECT room.*, message.message_id as message_message_id, message.room_id as message_room_id, message.message as message_message, message.date as message_date "
-            + "FROM room INNER JOIN message ON message.room_id = room.room_id ORDER BY date DESC LIMIT 1")
+    @Query("SELECT room.*, message.message_id as message_message_id, message.room_id as message_room_id, message.message as message_message, message.date as message_date FROM room " +
+            "INNER JOIN message ON message.room_id = room.room_id " +
+            "WHERE date = (SELECT MAX(date) FROM message AS latest_message WHERE latest_message.room_id = message.room_id) " +
+            "ORDER BY message_date DESC")
     abstract fun observeInfo(): Flow<List<RoomInfoEntity>>
 
     @Query("SELECT COUNT(*) FROM room WHERE room_id = :id LIMIT 1")
