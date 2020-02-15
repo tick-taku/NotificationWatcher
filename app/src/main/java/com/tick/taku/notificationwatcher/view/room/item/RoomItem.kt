@@ -6,7 +6,7 @@ import com.tick.taku.notificationwatcher.domain.db.entity.RoomInfoEntity
 import com.xwray.groupie.databinding.BindableItem
 
 // TODO: Fix layout
-data class RoomItem(private val entity: RoomInfoEntity): BindableItem<ItemRoomBinding>() {
+data class RoomItem(private val entity: RoomInfoEntity): BindableItem<ItemRoomBinding>(entity.hashCode().toLong()) {
 
     companion object {
         private const val DATE_FORMAT = "yyyy/MM/dd HH:mm:ss"
