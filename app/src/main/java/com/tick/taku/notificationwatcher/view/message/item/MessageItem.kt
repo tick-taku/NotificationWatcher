@@ -9,7 +9,7 @@ import com.xwray.groupie.databinding.BindableItem
 class MessageItem(private val entity: MessageEntity): BindableItem<ItemMessageBinding>(entity.hashCode().toLong()) {
 
     companion object {
-        private const val DATE_FORMAT = "MM/dd\nHH:mm"
+        private const val DATE_FORMAT = "M/dd\nHH:mm"
     }
 
     override fun getLayout() = R.layout.item_message
