@@ -3,9 +3,11 @@ package com.tick.taku.notificationwatcher.view.message
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.tick.taku.android.corecomponent.ktx.dataBinding
 import com.tick.taku.android.corecomponent.ktx.viewModelProvider
+import com.tick.taku.android.corecomponent.util.setupBackUp
 import com.tick.taku.android.corecomponent.util.showDialog
 import com.tick.taku.notificationwatcher.MyApplication
 import com.tick.taku.notificationwatcher.R
@@ -36,6 +38,8 @@ class MessageFragment: Fragment(R.layout.fragment_message) {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        setupBackUp(findNavController())
 
         setupMessageList()
     }
