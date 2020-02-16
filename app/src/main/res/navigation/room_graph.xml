@@ -13,7 +13,11 @@
 
         <action
             android:id="@+id/show_messages"
-            app:destination="@id/message_fragment"/>
+            app:destination="@id/message_fragment"
+            app:enterAnim="@anim/from_bottom"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/from_top"/>
 
     </fragment>
 
