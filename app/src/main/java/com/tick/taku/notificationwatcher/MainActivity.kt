@@ -28,6 +28,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         checkForPermission()
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp()
+    }
+
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbar)
         setupActionBarWithNavController(navController)

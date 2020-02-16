@@ -43,6 +43,14 @@ class NotificationRepositoryImpl(private val db: NotificationDataBase): Notifica
         db.roomDao().deleteById(id)
     }
 
+    @UseExperimental(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+    override fun messageList(roomId: String): Flow<List<MessageEntity>> =
+        db.messageDao().observe(roomId).distinctUntilChanged()
+
+    override suspend fun deleteMessage(id: String) {
+        db.messageDao().deleteById(id)
+    }
+
     /**
      * Save message to db.
      *
