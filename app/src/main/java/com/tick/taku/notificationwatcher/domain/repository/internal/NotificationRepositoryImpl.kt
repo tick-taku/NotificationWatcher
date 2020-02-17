@@ -2,7 +2,6 @@ package com.tick.taku.notificationwatcher.domain.repository.internal
 
 import android.app.Notification
 import android.service.notification.StatusBarNotification
-import com.soywiz.klock.DateTime
 import com.tick.taku.notificationwatcher.domain.db.NotificationDataBase
 import com.tick.taku.notificationwatcher.domain.db.entity.MessageEntity
 import com.tick.taku.notificationwatcher.domain.db.entity.RoomEntity
@@ -10,7 +9,6 @@ import com.tick.taku.notificationwatcher.domain.db.entity.RoomInfoEntity
 import com.tick.taku.notificationwatcher.domain.repository.NotificationRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import timber.log.Timber
 
 class NotificationRepositoryImpl(private val db: NotificationDataBase): NotificationRepository {
