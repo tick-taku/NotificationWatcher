@@ -5,8 +5,7 @@ import com.tick.taku.notificationwatcher.domain.db.base.DataAccessObject
 import com.tick.taku.notificationwatcher.domain.db.entity.MessageEntity
 import kotlinx.coroutines.flow.Flow
 
-@Dao abstract class MessageDao:
-    DataAccessObject<MessageEntity> {
+@Dao abstract class MessageDao: DataAccessObject<MessageEntity> {
 
     @Query("DELETE FROM message WHERE message_id = :id")
     abstract suspend fun deleteById(id: String)

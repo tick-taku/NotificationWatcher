@@ -58,13 +58,15 @@ class NotificationRepositoryImpl(private val db: NotificationDataBase): Notifica
      */
     private suspend fun saveMessage(notification: Notification) {
         val (room, message) = notification.extras.let {
+            val user = it.getString(Notification.EXTRA_TITLE) ?: "Empty user"
             val room = RoomEntity(
                 id = it.getString(ROOM_ID) ?: "",
-                name = it.getString(Notification.EXTRA_TITLE) ?: "Empty user"
+                name = it.getString(Notification.EXTRA_SUB_TEXT) ?: user
             )
             val message = MessageEntity(
                 id = it.getString(MESSAGE_ID) ?: "",
                 roomId = room.id,
+                user = if (room.name != user) user else "",
                 message = it.getString(Notification.EXTRA_TEXT) ?: "Empty message",
                 date = DateTime.nowLocal().local.unixMillisLong
             )

@@ -18,6 +18,7 @@ import com.tick.taku.notificationwatcher.domain.db.base.DaoEntity
         ])
 data class MessageEntity(@ColumnInfo(name = "message_id") val id: String,
                          @ColumnInfo(name = "room_id") val roomId: String,
+                         val user: String,
                          val message: String,
                          val date: Long): DaoEntity {
 

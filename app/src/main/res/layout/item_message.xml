@@ -9,9 +9,20 @@
         android:padding="16dp">
 
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/user"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@{entity.user}"
+            android:textSize="@dimen/global_font_size_small"
+            android:textStyle="bold"
+            android:maxLines="1"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/user"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/date"
             android:text="@{entity.message}"
