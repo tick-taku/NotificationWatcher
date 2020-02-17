@@ -68,7 +68,7 @@ class NotificationRepositoryImpl(private val db: NotificationDataBase): Notifica
                 roomId = room.id,
                 user = if (room.name != user) user else "",
                 message = it.getString(Notification.EXTRA_TEXT) ?: "Empty message",
-                date = DateTime.nowLocal().local.unixMillisLong
+                date = notification.`when`
             )
             room to message
         }

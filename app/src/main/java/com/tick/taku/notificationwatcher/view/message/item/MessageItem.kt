@@ -16,7 +16,7 @@ class MessageItem(private val entity: MessageEntity): BindableItem<ItemMessageBi
 
     override fun bind(viewBinding: ItemMessageBinding, position: Int) {
         viewBinding.entity = entity.also {
-            viewBinding.date.text = it.dateTime().toString(DATE_FORMAT)
+            viewBinding.date.text = it.localTime().toString(DATE_FORMAT)
         }
 
         viewBinding.root.setOnLongClickListener {

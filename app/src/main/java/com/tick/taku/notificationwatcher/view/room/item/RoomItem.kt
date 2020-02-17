@@ -18,7 +18,7 @@ data class RoomItem(private val entity: RoomInfoEntity): BindableItem<ItemRoomBi
         viewBinding.entity = entity
 
         viewBinding.date.text =
-            entity.latestMessage.dateTime().toString(DATE_FORMAT)
+            entity.latestMessage.localTime().toString(DATE_FORMAT)
 
         viewBinding.root.run {
             setOnClickListener { listener?.invoke(entity) }
