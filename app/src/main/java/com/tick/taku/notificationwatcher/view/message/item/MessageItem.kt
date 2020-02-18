@@ -19,8 +19,12 @@ class MessageItem(private val entity: MessageEntity): BindableItem<ItemMessageBi
             viewBinding.date.text = it.localTime().toString(DATE_FORMAT)
         }
 
+        viewBinding.message.setOnClickListener {
+            messageClickListener?.invoke(entity.message)
+        }
+
         viewBinding.root.setOnLongClickListener {
-            listener?.invoke(entity)
+            longClickListener?.invoke(entity)
             true
         }
     }
@@ -28,9 +32,10 @@ class MessageItem(private val entity: MessageEntity): BindableItem<ItemMessageBi
     override fun equals(other: Any?): Boolean = (other as? MessageItem)?.entity == entity
     override fun hashCode(): Int = entity.hashCode()
 
-    private var listener: ((MessageEntity) -> Unit)? = null
-    fun setOnLongClickListener(l: (MessageEntity) -> Unit) {
-        listener = l
-    }
+    private var messageClickListener: ((String) -> Unit)? = null
+    fun setOnMessageClickListener(l: (String) -> Unit) { messageClickListener = l }
+
+    private var longClickListener: ((MessageEntity) -> Unit)? = null
+    fun setOnLongClickListener(l: (MessageEntity) -> Unit) { longClickListener = l }
 
 }

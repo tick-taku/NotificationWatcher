@@ -1,5 +1,7 @@
 package com.tick.taku.android.corecomponent.ktx
 
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -26,4 +28,12 @@ inline fun <reified T : ViewModel> Fragment.activityViewModelProvider(crossinlin
             }
         }
     }
+}
+
+fun Fragment.toast(text: CharSequence, duration: Int = Toast.LENGTH_SHORT): Toast {
+    return requireContext().toast(text, duration)
+}
+
+fun Fragment.toast(@StringRes resId: Int, duration: Int = Toast.LENGTH_SHORT): Toast {
+    return requireContext().toast(resId, duration)
 }

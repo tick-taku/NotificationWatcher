@@ -1,11 +1,15 @@
 package com.tick.taku.notificationwatcher.view.message
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.os.Bundle
+import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.tick.taku.android.corecomponent.ktx.dataBinding
+import com.tick.taku.android.corecomponent.ktx.toast
 import com.tick.taku.android.corecomponent.ktx.viewModelProvider
 import com.tick.taku.android.corecomponent.util.setupBackUp
 import com.tick.taku.android.corecomponent.util.showDialog
@@ -50,10 +54,20 @@ class MessageFragment: Fragment(R.layout.fragment_message) {
         viewModel.messageList.observe(viewLifecycleOwner) {
             val items = it.map { entity ->
                 MessageItem(entity).apply {
+                    setOnMessageClickListener { m -> copyToClipboard(m) }
                     setOnLongClickListener { e -> showConfirmationDialog(e.id) }
                 }
             }
             messageListAdapter.update(items)
+        }
+    }
+
+    private fun copyToClipboard(message: String) {
+        requireContext().getSystemService<ClipboardManager>()?.let {
+            val clipData = ClipData.newPlainText(getString(R.string.clipboard_label_message), message)
+            it.setPrimaryClip(clipData)
+
+            toast(R.string.copy_to_clipboard)
         }
     }
 
