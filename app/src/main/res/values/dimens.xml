@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="bubble_radius_corner">2dp</dimen>
     <dimen name="bubble_radius">12dp</dimen>
-    <dimen name="bubble_padding">8dp</dimen>
+    <dimen name="bubble_padding">6dp</dimen>
 </resources>

@@ -2,11 +2,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="android.view.View"/>
         <variable name="entity" type="com.tick.taku.notificationwatcher.domain.db.entity.MessageEntity"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp">
 
         <TextView
             android:id="@+id/user"
@@ -17,7 +21,8 @@
             android:text="@{entity.user}"
             android:textSize="@dimen/global_font_size_small"
             android:textStyle="bold"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:visibility="@{entity.user.isEmpty() ? View.GONE : View.VISIBLE}"/>
 
         <TextView
             android:id="@+id/message"
@@ -31,8 +36,10 @@
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/message"
+            app:layout_constraintStart_toStartOf="@id/message"
+            android:layout_marginTop="2dp"
+            android:layout_marginStart="8dp"
             android:textSize="@dimen/global_font_size_small"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
