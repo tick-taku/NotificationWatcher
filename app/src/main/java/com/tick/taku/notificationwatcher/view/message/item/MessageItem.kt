@@ -1,5 +1,7 @@
 package com.tick.taku.notificationwatcher.view.message.item
 
+import coil.api.load
+import coil.transform.CircleCropTransformation
 import com.tick.taku.notificationwatcher.R
 import com.tick.taku.notificationwatcher.databinding.ItemMessageBinding
 import com.tick.taku.notificationwatcher.domain.db.entity.MessageEntity
@@ -17,6 +19,10 @@ class MessageItem(private val entity: MessageEntity): BindableItem<ItemMessageBi
     override fun bind(viewBinding: ItemMessageBinding, position: Int) {
         viewBinding.entity = entity.also {
             viewBinding.date.text = it.localTime().toString(DATE_FORMAT)
+        }
+
+        viewBinding.icon.load(R.mipmap.ic_launcher) {
+            transformations(CircleCropTransformation())
         }
 
         viewBinding.message.setOnClickListener {
