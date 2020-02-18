@@ -4,6 +4,6 @@
     <dimen name="room_padding">12dp</dimen>
 
     <dimen name="bubble_radius_corner">2dp</dimen>
-    <dimen name="bubble_radius">12dp</dimen>
-    <dimen name="bubble_padding">6dp</dimen>
+    <dimen name="bubble_radius">16dp</dimen>
+    <dimen name="bubble_padding">14dp</dimen>
 </resources>
