@@ -16,10 +16,10 @@
         <item name="android:gravity">start|center_vertical</item>
     </style>
     <style name="MessageBubble.Incoming" parent="MessageBubble">
-        <item name="android:background">@drawable/incoming_bubble</item>
+        <item name="android:background">@drawable/incoming_bubble_rippled</item>
     </style>
     <style name="MessageBubble.Outgoing" parent="MessageBubble">
-        <item name="android:background">@drawable/outgoing_bubble</item>
+        <item name="android:background">@drawable/outgoing_bubble_rippled</item>
     </style>
 
 </resources>
