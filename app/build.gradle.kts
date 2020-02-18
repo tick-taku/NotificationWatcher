@@ -101,6 +101,9 @@ dependencies {
     implementation(Dep.Groupie.dataBinding)
     implementation(Dep.Groupie.extensions)
 
+    // Coil ----------------------------------------------------------
+    implementation(Dep.Coil.common)
+
     // Klock ---------------------------------------------------------
     implementation(Dep.Klock.common)
 
