@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="room_name">#03A9F4</color>
+    <color name="room_card">#616161</color>
+
     <color name="incoming_bubble">#EB2196F3</color>
     <color name="ripple_incoming_bubble">#424242</color>
     <color name="outgoing_bubble">#EB616161</color>

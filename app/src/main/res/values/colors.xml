@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#277DF6</color>
     <color name="colorAccent">#FFA000</color>
 
+    <color name="room_name">#75D2F6</color>
+    <color name="room_card">#FAFAFA</color>
+
     <color name="incoming_bubble">#C871F3FD</color>
     <color name="ripple_incoming_bubble">#EEEEEE</color>
     <color name="outgoing_bubble">#C8BDBDBD</color>
