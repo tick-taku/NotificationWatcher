@@ -9,6 +9,33 @@
         android:id="@+id/room_list_fragment"
         android:name="com.tick.taku.notificationwatcher.view.room.RoomListFragment"
         android:label="@string/toolbar_room_list"
-        tools:layout="@layout/fragment_room_list"/>
+        tools:layout="@layout/fragment_room_list">
+
+        <action
+            android:id="@+id/show_messages"
+            app:destination="@id/message_fragment"
+            app:enterAnim="@anim/from_bottom"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/from_top"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/message_fragment"
+        android:name="com.tick.taku.notificationwatcher.view.message.MessageFragment"
+        android:label="{title}"
+        tools:layout="@layout/fragment_message">
+
+        <argument
+            android:name="title"
+            app:argType="string"
+            android:defaultValue="Messages"/>
+
+        <argument
+            android:name="room_id"
+            app:argType="string"/>
+
+    </fragment>
 
 </navigation>

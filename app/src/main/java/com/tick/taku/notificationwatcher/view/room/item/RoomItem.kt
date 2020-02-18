@@ -18,17 +18,23 @@ data class RoomItem(private val entity: RoomInfoEntity): BindableItem<ItemRoomBi
         viewBinding.entity = entity
 
         viewBinding.date.text =
-            entity.latestMessage.dateTime().toString(DATE_FORMAT)
+            entity.latestMessage.localTime().toString(DATE_FORMAT)
 
-        viewBinding.root.setOnLongClickListener {
-            longClickListener?.invoke(entity)
-            true
+        viewBinding.root.run {
+            setOnClickListener { listener?.invoke(entity) }
+            setOnLongClickListener {
+                longClickListener?.invoke(entity)
+                true
+            }
         }
     }
 
     override fun equals(other: Any?): Boolean = (other as? RoomItem)?.entity == entity
 
     override fun hashCode(): Int = entity.hashCode()
+
+    private var listener: ((RoomInfoEntity) -> Unit)? = null
+    fun setOnClickListener(l: (RoomInfoEntity) -> Unit) { listener = l }
 
     private var longClickListener: ((RoomInfoEntity) -> Unit)? = null
     fun setOnLongClickListener(l: (RoomInfoEntity) -> Unit) {

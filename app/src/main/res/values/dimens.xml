@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="global_font_size_small">12sp</dimen>
-    <dimen name="global_font_size">14sp</dimen>
+    <dimen name="room_radius">4dp</dimen>
+    <dimen name="room_padding">12dp</dimen>
+
+    <dimen name="bubble_radius_corner">2dp</dimen>
+    <dimen name="bubble_radius">12dp</dimen>
+    <dimen name="bubble_padding">6dp</dimen>
 </resources>

@@ -1,7 +1,7 @@
-package com.tick.taku.notificationwatcher.corecomponent.util
+package com.tick.taku.android.corecomponent.util
 
 import androidx.appcompat.app.AppCompatActivity
-import com.tick.taku.notificationwatcher.view.dialog.ApplicationDialog
+import com.tick.taku.android.corecomponent.ui.ApplicationDialog
 
 /**
  * Show common dialog.
