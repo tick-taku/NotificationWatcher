@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="incoming_bubble">#EB2196F3</color>
+    <color name="outgoing_bubble">#EB616161</color>
+</resources>

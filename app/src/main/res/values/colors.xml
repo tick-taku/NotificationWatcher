@@ -3,4 +3,7 @@
     <color name="colorPrimary">#03A9F4</color>
     <color name="colorPrimaryDark">#277DF6</color>
     <color name="colorAccent">#FFA000</color>
+
+    <color name="incoming_bubble">#C881D4FA</color>
+    <color name="outgoing_bubble">#C8BDBDBD</color>
 </resources>
