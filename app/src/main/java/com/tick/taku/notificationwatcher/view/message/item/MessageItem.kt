@@ -21,7 +21,7 @@ class MessageItem(private val entity: MessageEntity): BindableItem<ItemMessageBi
             viewBinding.date.text = it.localTime().toString(DATE_FORMAT)
         }
 
-        viewBinding.icon.load(R.mipmap.ic_launcher) {
+        viewBinding.icon.load(R.drawable.ic_tmp) {
             transformations(CircleCropTransformation())
         }
 

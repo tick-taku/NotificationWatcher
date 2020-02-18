@@ -22,7 +22,7 @@ data class RoomItem(private val entity: RoomInfoEntity): BindableItem<ItemRoomBi
         viewBinding.date.text =
             entity.latestMessage.localTime().toString(DATE_FORMAT)
 
-        viewBinding.icon.load(R.mipmap.ic_launcher) {
+        viewBinding.icon.load(R.drawable.ic_tmp) {
             transformations(CircleCropTransformation())
         }
 
