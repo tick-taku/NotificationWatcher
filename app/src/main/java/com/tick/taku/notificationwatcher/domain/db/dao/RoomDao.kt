@@ -8,9 +8,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao abstract class RoomDao: DataAccessObject<RoomEntity> {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun insertIgnore(room: RoomEntity)
-
     @Query("DELETE FROM room WHERE room_id = :id")
     abstract suspend fun deleteById(id: String)
 
