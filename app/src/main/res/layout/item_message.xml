@@ -2,7 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <import type="android.view.View"/>
         <variable name="entity" type="com.tick.taku.notificationwatcher.domain.db.entity.UserMessageEntity"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,8 +28,7 @@
             android:text="@{entity.user.name}"
             android:textSize="@dimen/global_font_size_small"
             android:textStyle="bold"
-            android:maxLines="1"
-            android:visibility="@{entity.user.name.isEmpty() ? View.GONE : View.VISIBLE}"/>
+            android:maxLines="1"/>
 
         <Space
             android:id="@+id/icon_center"

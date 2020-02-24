@@ -1,5 +1,6 @@
 package com.tick.taku.notificationwatcher.view.message.item
 
+import androidx.core.view.isVisible
 import coil.api.load
 import coil.transform.CircleCropTransformation
 import com.tick.taku.notificationwatcher.R
@@ -9,7 +10,8 @@ import com.tick.taku.notificationwatcher.domain.db.entity.UserMessageEntity
 import com.xwray.groupie.databinding.BindableItem
 
 // TODO: Fix layout
-class MessageItem(private val entity: UserMessageEntity): BindableItem<ItemMessageBinding>(entity.hashCode().toLong()) {
+class MessageItem(private val entity: UserMessageEntity,
+                  private val isShowName: Boolean = true): BindableItem<ItemMessageBinding>(entity.hashCode().toLong()) {
 
     companion object {
         private const val DATE_FORMAT = "M/dd HH:mm"
@@ -21,6 +23,8 @@ class MessageItem(private val entity: UserMessageEntity): BindableItem<ItemMessa
         viewBinding.entity = entity.also {
             viewBinding.date.text = it.message.localTime().toString(DATE_FORMAT)
         }
+
+        viewBinding.user.isVisible = isShowName
 
         viewBinding.icon.load(entity.user.icon) {
             // TODO : Icon disappear when screen rotated.
