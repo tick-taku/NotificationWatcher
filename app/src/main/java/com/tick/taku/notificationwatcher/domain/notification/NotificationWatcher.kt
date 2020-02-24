@@ -28,7 +28,7 @@ class NotificationWatcher: NotificationListenerService(), CoroutineScope {
         launch {
             activeNotifications
                 .forEach {
-                    repository.saveNotification(it)
+                    repository.saveNotification(applicationContext, it)
                 }
         }
     }
@@ -39,7 +39,7 @@ class NotificationWatcher: NotificationListenerService(), CoroutineScope {
         Timber.d("------------- NotificationWatcher#onNotificationPosted. -------------")
         launch {
             sbn?.let {
-                repository.saveNotification(it)
+                repository.saveNotification(applicationContext, it)
             }
         }
     }

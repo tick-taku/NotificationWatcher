@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <import type="android.view.View"/>
-        <variable name="entity" type="com.tick.taku.notificationwatcher.domain.db.entity.MessageEntity"/>
+        <variable name="entity" type="com.tick.taku.notificationwatcher.domain.db.entity.UserMessageEntity"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:contentDescription="@{entity.user}"/>
+            android:contentDescription="@{entity.user.name}"/>
 
         <TextView
             android:id="@+id/user"
@@ -26,11 +26,11 @@
             app:layout_constraintStart_toStartOf="@id/message"
             android:layout_marginBottom="2dp"
             android:layout_marginStart="2dp"
-            android:text="@{entity.user}"
+            android:text="@{entity.user.name}"
             android:textSize="@dimen/global_font_size_small"
             android:textStyle="bold"
             android:maxLines="1"
-            android:visibility="@{entity.user.isEmpty() ? View.GONE : View.VISIBLE}"/>
+            android:visibility="@{entity.user.name.isEmpty() ? View.GONE : View.VISIBLE}"/>
 
         <Space
             android:id="@+id/icon_center"
@@ -50,7 +50,7 @@
             app:layout_constrainedWidth="true"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="10dp"
-            android:text="@{entity.message}"/>
+            android:text="@{entity.message.message}"/>
 
         <TextView
             android:id="@+id/date"

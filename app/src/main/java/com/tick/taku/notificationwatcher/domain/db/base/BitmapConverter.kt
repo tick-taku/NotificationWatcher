@@ -9,17 +9,17 @@ import java.io.ByteArrayOutputStream
 class BitmapConverter {
 
     @TypeConverter
-    fun Bitmap.toEncodedString(image: Bitmap): String {
+    fun Bitmap.toEncodedString(): String {
         val bos = ByteArrayOutputStream()
-        return if (image.compress(Bitmap.CompressFormat.PNG, 50, bos))
+        return if (compress(Bitmap.CompressFormat.PNG, 50, bos))
             Base64.encodeToString(bos.toByteArray(), Base64.DEFAULT)
         else
             ""
     }
 
     @TypeConverter
-    fun String.toBitmap(rawStr: String): Bitmap {
-        val raw = Base64.decode(rawStr, Base64.DEFAULT)
+    fun String.toBitmap(): Bitmap {
+        val raw = Base64.decode(this, Base64.DEFAULT)
         return BitmapFactory.decodeByteArray(raw, 0, raw.size)
     }
 

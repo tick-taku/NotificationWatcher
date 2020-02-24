@@ -5,10 +5,11 @@ import coil.transform.CircleCropTransformation
 import com.tick.taku.notificationwatcher.R
 import com.tick.taku.notificationwatcher.databinding.ItemMessageBinding
 import com.tick.taku.notificationwatcher.domain.db.entity.MessageEntity
+import com.tick.taku.notificationwatcher.domain.db.entity.UserMessageEntity
 import com.xwray.groupie.databinding.BindableItem
 
 // TODO: Fix layout
-class MessageItem(private val entity: MessageEntity): BindableItem<ItemMessageBinding>(entity.hashCode().toLong()) {
+class MessageItem(private val entity: UserMessageEntity): BindableItem<ItemMessageBinding>(entity.hashCode().toLong()) {
 
     companion object {
         private const val DATE_FORMAT = "M/dd HH:mm"
@@ -18,19 +19,19 @@ class MessageItem(private val entity: MessageEntity): BindableItem<ItemMessageBi
 
     override fun bind(viewBinding: ItemMessageBinding, position: Int) {
         viewBinding.entity = entity.also {
-            viewBinding.date.text = it.localTime().toString(DATE_FORMAT)
+            viewBinding.date.text = it.message.localTime().toString(DATE_FORMAT)
         }
 
-        viewBinding.icon.load(R.drawable.ic_tmp) {
+        viewBinding.icon.load(entity.user.icon) {
             transformations(CircleCropTransformation())
         }
 
         viewBinding.message.setOnClickListener {
-            messageClickListener?.invoke(entity.message)
+            messageClickListener?.invoke(entity.message.message)
         }
 
         viewBinding.root.setOnLongClickListener {
-            longClickListener?.invoke(entity)
+            longClickListener?.invoke(entity.message)
             true
         }
     }
