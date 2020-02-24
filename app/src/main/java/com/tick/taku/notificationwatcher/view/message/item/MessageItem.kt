@@ -23,7 +23,8 @@ class MessageItem(private val entity: UserMessageEntity): BindableItem<ItemMessa
         }
 
         viewBinding.icon.load(entity.user.icon) {
-            transformations(CircleCropTransformation())
+            // TODO : Icon disappear when screen rotated.
+//            transformations(CircleCropTransformation())
         }
 
         viewBinding.message.setOnClickListener {
