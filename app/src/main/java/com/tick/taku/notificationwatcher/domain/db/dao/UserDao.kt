@@ -7,7 +7,7 @@ import com.tick.taku.notificationwatcher.domain.db.entity.UserEntity
 
 @Dao abstract class UserDao: DataAccessObject<UserEntity> {
 
-    @Query("SELECT COUNT(*) FROM room WHERE room_id = :id LIMIT 1")
+    @Query("SELECT COUNT(*) FROM user WHERE user_id = :id LIMIT 1")
     protected abstract fun isExistsRecord(id: String): Int
 
     /**
