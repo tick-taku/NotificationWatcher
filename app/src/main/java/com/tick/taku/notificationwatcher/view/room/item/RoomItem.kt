@@ -22,8 +22,9 @@ data class RoomItem(private val entity: RoomInfoEntity): BindableItem<ItemRoomBi
         viewBinding.date.text =
             entity.latestMessage.localTime().toString(DATE_FORMAT)
 
-        viewBinding.icon.load(R.drawable.ic_tmp) {
-            transformations(CircleCropTransformation())
+        viewBinding.icon.load(entity.latestMessage.icon) {
+            // TODO : Icon disappear when screen rotated.
+//            transformations(CircleCropTransformation())
         }
 
         viewBinding.root.run {
