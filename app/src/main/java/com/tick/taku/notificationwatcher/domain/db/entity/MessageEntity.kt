@@ -24,8 +24,8 @@ import com.tick.taku.notificationwatcher.domain.db.base.DaoEntity
             )
         ])
 data class MessageEntity(@ColumnInfo(name = "message_id") val id: String,
-                         @ColumnInfo(name = "room_id") val roomId: String,
-                         @ColumnInfo(name = "message_user_id") val userId: String,
+                         @ColumnInfo(name = "room_id", index = true) val roomId: String,
+                         @ColumnInfo(name = "message_user_id", index = true) val userId: String,
                          val message: String,
                          val date: Long): DaoEntity {
     fun localTime(): DateTimeTz = DateTime(date).local
