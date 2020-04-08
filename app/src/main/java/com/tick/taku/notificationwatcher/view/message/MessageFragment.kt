@@ -52,8 +52,9 @@ class MessageFragment: Fragment(R.layout.fragment_message) {
         binding.messageList.adapter = messageListAdapter
 
         viewModel.messageList.observe(viewLifecycleOwner) {
+            val isShowName = it.all { entity -> entity.user.name != args.title }
             val items = it.map { entity ->
-                MessageItem(entity).apply {
+                MessageItem(entity, isShowName).apply {
                     setOnMessageClickListener { m -> copyToClipboard(m) }
                     setOnLongClickListener { e -> showConfirmationDialog(e.id) }
                 }

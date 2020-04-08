@@ -28,7 +28,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = mapOf("room.incremental" to "true")
+                arguments = mapOf("room.incremental" to "true", "room.schemaLocation" to "$projectDir/schemas")
             }
         }
     }
@@ -56,11 +56,10 @@ android {
             freeCompilerArgs += listOf("-Xuse-experimental=kotlin.Experimental")
         }
     }
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -100,6 +99,9 @@ dependencies {
     implementation(Dep.Groupie.common)
     implementation(Dep.Groupie.dataBinding)
     implementation(Dep.Groupie.extensions)
+
+    // Coil ----------------------------------------------------------
+    implementation(Dep.Coil.common)
 
     // Klock ---------------------------------------------------------
     implementation(Dep.Klock.common)

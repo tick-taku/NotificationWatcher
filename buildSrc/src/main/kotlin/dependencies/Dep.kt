@@ -53,6 +53,11 @@ object Dep {
         const val extensions = "com.xwray:groupie-kotlin-android-extensions:$version"
     }
 
+    object Coil {
+        const val version = "0.9.5"
+        const val common = "io.coil-kt:coil:$version"
+    }
+
     object Klock {
         const val version = "1.8.7"
         const val common = "com.soywiz.korlibs.klock:klock:$version"

@@ -1,5 +1,7 @@
 package com.tick.taku.notificationwatcher.view.room.item
 
+import coil.api.load
+import coil.transform.CircleCropTransformation
 import com.tick.taku.notificationwatcher.R
 import com.tick.taku.notificationwatcher.databinding.ItemRoomBinding
 import com.tick.taku.notificationwatcher.domain.db.entity.RoomInfoEntity
@@ -19,6 +21,11 @@ data class RoomItem(private val entity: RoomInfoEntity): BindableItem<ItemRoomBi
 
         viewBinding.date.text =
             entity.latestMessage.localTime().toString(DATE_FORMAT)
+
+        viewBinding.icon.load(entity.latestMessage.icon) {
+            // TODO : Icon disappear when screen rotated.
+//            transformations(CircleCropTransformation())
+        }
 
         viewBinding.root.run {
             setOnClickListener { listener?.invoke(entity) }

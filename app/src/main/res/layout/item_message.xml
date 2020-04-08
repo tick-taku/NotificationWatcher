@@ -2,45 +2,65 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <import type="android.view.View"/>
-        <variable name="entity" type="com.tick.taku.notificationwatcher.domain.db.entity.MessageEntity"/>
+        <variable name="entity" type="com.tick.taku.notificationwatcher.domain.db.entity.UserMessageEntity"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:paddingTop="6dp"
-        android:paddingBottom="6dp"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp">
+        android:padding="6dp">
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="36dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="@{entity.user.name}"/>
 
         <TextView
             android:id="@+id/user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@{entity.user}"
+            app:layout_constraintBottom_toTopOf="@id/message"
+            app:layout_constraintStart_toStartOf="@id/message"
+            android:layout_marginBottom="2dp"
+            android:layout_marginStart="2dp"
+            android:text="@{entity.user.name}"
             android:textSize="@dimen/global_font_size_small"
             android:textStyle="bold"
-            android:maxLines="1"
-            android:visibility="@{entity.user.isEmpty() ? View.GONE : View.VISIBLE}"/>
+            android:maxLines="1"/>
+
+        <Space
+            android:id="@+id/icon_center"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            app:layout_constraintTop_toTopOf="@id/icon"
+            app:layout_constraintBottom_toBottomOf="@id/icon"
+            app:layout_constraintStart_toEndOf="@id/icon"/>
 
         <TextView
             android:id="@+id/message"
             style="@style/MessageBubble.Incoming"
-            android:layout_marginTop="2dp"
-            app:layout_constraintTop_toBottomOf="@id/user"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@{entity.message}"/>
+            app:layout_constraintTop_toBottomOf="@id/icon_center"
+            app:layout_constraintStart_toEndOf="@id/icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constrainedWidth="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="10dp"
+            android:text="@{entity.message.message}"/>
 
         <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/message"
-            app:layout_constraintStart_toStartOf="@id/message"
-            android:layout_marginTop="2dp"
-            android:layout_marginStart="8dp"
-            android:textSize="@dimen/global_font_size_small"/>
+            app:layout_constraintBottom_toTopOf="@id/message"
+            app:layout_constraintEnd_toEndOf="@id/message"
+            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="10dp"
+            android:textSize="@dimen/global_font_size_small"
+            android:textColor="@color/posted_date"
+            android:textStyle="bold"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

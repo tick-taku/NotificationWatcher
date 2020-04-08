@@ -8,14 +8,12 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao abstract class RoomDao: DataAccessObject<RoomEntity> {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun insertIgnore(room: RoomEntity)
-
     @Query("DELETE FROM room WHERE room_id = :id")
     abstract suspend fun deleteById(id: String)
 
     @Transaction
-    @Query("SELECT room.*, message.message as latest_message, message.date as latest_date FROM room " +
+    @Query("SELECT room.*, message.message as latest_message, message.date as latest_date, user.user_icon as latest_icon " +
+            "FROM room INNER JOIN user ON user.user_id = message.message_user_id " +
             "INNER JOIN message ON message.room_id = room.room_id " +
             "WHERE date = (SELECT MAX(date) FROM message AS latest_message WHERE latest_message.room_id = message.room_id) " +
             "ORDER BY latest_date DESC")

@@ -1,11 +1,11 @@
 package com.tick.taku.notificationwatcher.domain.repository.internal
 
 import android.app.Notification
+import android.content.Context
 import android.service.notification.StatusBarNotification
+import androidx.core.graphics.drawable.toBitmap
 import com.tick.taku.notificationwatcher.domain.db.NotificationDataBase
-import com.tick.taku.notificationwatcher.domain.db.entity.MessageEntity
-import com.tick.taku.notificationwatcher.domain.db.entity.RoomEntity
-import com.tick.taku.notificationwatcher.domain.db.entity.RoomInfoEntity
+import com.tick.taku.notificationwatcher.domain.db.entity.*
 import com.tick.taku.notificationwatcher.domain.repository.NotificationRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -23,11 +23,11 @@ class NotificationRepositoryImpl(private val db: NotificationDataBase): Notifica
 
     }
 
-    override suspend fun saveNotification(sbn: StatusBarNotification) {
+    override suspend fun saveNotification(context: Context, sbn: StatusBarNotification) {
         if (FILTERS.contains(sbn.packageName)) {
             Timber.d("Save message to db.")
 
-            saveMessage(sbn.notification)
+            saveMessage(context, sbn.notification)
 
             print(sbn.notification)
         }
@@ -42,7 +42,7 @@ class NotificationRepositoryImpl(private val db: NotificationDataBase): Notifica
     }
 
     @UseExperimental(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
-    override fun messageList(roomId: String): Flow<List<MessageEntity>> =
+    override fun messageList(roomId: String): Flow<List<UserMessageEntity>> =
         db.messageDao().observe(roomId).distinctUntilChanged()
 
     override suspend fun deleteMessage(id: String) {
@@ -54,24 +54,34 @@ class NotificationRepositoryImpl(private val db: NotificationDataBase): Notifica
      *
      * @param notification Notification
      */
-    private suspend fun saveMessage(notification: Notification) {
-        val (room, message) = notification.extras.let {
-            val user = it.getString(Notification.EXTRA_TITLE) ?: "Empty user"
+    private suspend fun saveMessage(context: Context, notification: Notification) {
+        val (room, user, message) = notification.extras.let {
+            val userName = it.getString(Notification.EXTRA_TITLE) ?: "Empty user"
             val room = RoomEntity(
                 id = it.getString(ROOM_ID) ?: "",
-                name = it.getString(Notification.EXTRA_SUB_TEXT) ?: user
+                name = it.getString(Notification.EXTRA_SUB_TEXT) ?: userName
             )
+
+            // TODO: User id
+            val user = UserEntity(
+                id = room.id + userName.hashCode(),
+                name = userName,
+                icon = notification.getLargeIcon().loadDrawable(context).toBitmap()
+            )
+
             val message = MessageEntity(
                 id = it.getString(MESSAGE_ID) ?: "",
                 roomId = room.id,
-                user = if (room.name != user) user else "",
+                userId = user.id,
                 message = it.getString(Notification.EXTRA_TEXT) ?: "Empty message",
                 date = notification.`when`
             )
-            room to message
+
+            Triple(room, user, message)
         }
 
         db.roomDao().insertOrUpdate(room)
+        db.userDao().insertOrUpdate(user)
         db.messageDao().insert(message)
     }
 
