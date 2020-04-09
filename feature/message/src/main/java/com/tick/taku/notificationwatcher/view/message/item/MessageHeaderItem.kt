@@ -1,7 +1,7 @@
 package com.tick.taku.notificationwatcher.view.message.item
 
-import com.tick.taku.notificationwatcher.R
-import com.tick.taku.notificationwatcher.databinding.ItemMessageHeaderBinding
+import com.tick.taku.notificationwatcher.view.R
+import com.tick.taku.notificationwatcher.view.databinding.ItemMessageHeaderBinding
 import com.xwray.groupie.databinding.BindableItem
 
 class MessageHeaderItem(private val date: String): BindableItem<ItemMessageHeaderBinding>(date.hashCode().toLong()) {

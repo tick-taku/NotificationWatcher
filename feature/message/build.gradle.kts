@@ -1,23 +1,22 @@
 import dependencies.Dep
 import dependencies.Packages
-import extensions.debug
 import extensions.release
 
 plugins {
-    id("com.android.application")
+    id("com.android.library")
 
     kotlin("android")
 
     kotlin("android.extensions")
 
     kotlin("kapt")
+
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
     compileSdkVersion(Packages.SdkVersion.compile)
-    buildToolsVersion = Packages.SdkVersion.compile.toString()
     defaultConfig {
-        applicationId = Packages.id
         minSdkVersion(Packages.SdkVersion.min)
         targetSdkVersion(Packages.SdkVersion.target)
         versionCode = Packages.Version.code
@@ -29,18 +28,10 @@ android {
         jvmTarget = "1.8"
     }
     buildTypes {
-        debug {
-            applicationIdSuffix = Packages.debugIdSuffix
-        }
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
-    }
-    packagingOptions {
-        exclude("META-INF/*.kotlin_module")
-        exclude("META-INF/*.version")
-        exclude("META-INF/proguard/*.pro")
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -50,7 +41,6 @@ android {
 
 dependencies {
     implementation(project(":corecomponent"))
-    implementation(project(":feature:message"))
     implementation(project(":domain:db"))
     implementation(project(":domain:repository"))
 
@@ -66,6 +56,11 @@ dependencies {
     androidTestImplementation(Dep.Test.androidJunit)
     androidTestImplementation(Dep.Test.espressoCore)
 
+    // Coroutines ----------------------------------------------------
+    implementation(Dep.Kotlin.coroutines)
+    implementation(Dep.Kotlin.coroutinesCommon)
+    implementation(Dep.Kotlin.androidCoroutinesDispatcher)
+
     // LifeCycle -----------------------------------------------------
     implementation(Dep.AndroidX.LifeCycle.liveDataExtension)
     implementation(Dep.AndroidX.LifeCycle.liveDataKtx)
@@ -75,6 +70,17 @@ dependencies {
     implementation(Dep.AndroidX.Navigation.uiKtx)
     implementation(Dep.AndroidX.Navigation.runtimeKtx)
 
-    // Timber  -------------------------------------------------------
+    // Groupie -------------------------------------------------------
+    implementation(Dep.Groupie.common)
+    implementation(Dep.Groupie.dataBinding)
+    implementation(Dep.Groupie.extensions)
+
+    // Coil ----------------------------------------------------------
+    implementation(Dep.Coil.common)
+
+    // Klock ---------------------------------------------------------
+    implementation(Dep.Klock.common)
+
+    // Timber --------------------------------------------------------
     implementation(Dep.Timber.timber)
 }

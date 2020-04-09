@@ -13,13 +13,13 @@ import com.tick.taku.android.corecomponent.ktx.toast
 import com.tick.taku.android.corecomponent.ktx.viewModelProvider
 import com.tick.taku.android.corecomponent.util.setupBackUp
 import com.tick.taku.android.corecomponent.util.showDialog
-import com.tick.taku.notificationwatcher.MyApplication
-import com.tick.taku.notificationwatcher.R
-import com.tick.taku.notificationwatcher.databinding.FragmentMessageBinding
+import com.tick.taku.notificationwatcher.view.R
 import com.tick.taku.notificationwatcher.domain.repository.internal.NotificationRepositoryImpl
+import com.tick.taku.notificationwatcher.view.databinding.FragmentMessageBinding
 import com.tick.taku.notificationwatcher.view.message.item.MessageHeaderItem
 import com.tick.taku.notificationwatcher.view.message.item.MessageItem
 import com.tick.taku.notificationwatcher.view.message.viewmodel.MessageViewModel
+import com.tick.taku.notificationwatcher.view.DatabaseTmp
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Section
 import com.xwray.groupie.databinding.GroupieViewHolder
@@ -31,7 +31,7 @@ class MessageFragment: Fragment(R.layout.fragment_message) {
     // TODO: DI
     private val viewModel: MessageViewModel by viewModelProvider {
         MessageViewModel(
-            NotificationRepositoryImpl((requireActivity().application as MyApplication).db),
+            NotificationRepositoryImpl(DatabaseTmp.db!!),
             args.roomId
         )
     }

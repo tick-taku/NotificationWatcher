@@ -8,18 +8,4 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="MessageBubble" parent="Widget.AppCompat.TextView">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:padding">@dimen/bubble_padding</item>
-        <item name="android:textSize">@dimen/global_font_size</item>
-        <item name="android:gravity">start|center_vertical</item>
-    </style>
-    <style name="MessageBubble.Incoming" parent="MessageBubble">
-        <item name="android:background">@drawable/incoming_bubble_rippled</item>
-    </style>
-    <style name="MessageBubble.Outgoing" parent="MessageBubble">
-        <item name="android:background">@drawable/outgoing_bubble_rippled</item>
-    </style>
-
 </resources>

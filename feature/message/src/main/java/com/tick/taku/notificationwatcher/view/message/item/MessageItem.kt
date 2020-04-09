@@ -3,10 +3,10 @@ package com.tick.taku.notificationwatcher.view.message.item
 import androidx.core.view.isVisible
 import coil.api.load
 import coil.transform.CircleCropTransformation
-import com.tick.taku.notificationwatcher.R
-import com.tick.taku.notificationwatcher.databinding.ItemMessageBinding
+import com.tick.taku.notificationwatcher.view.R
 import com.tick.taku.notificationwatcher.domain.db.entity.MessageEntity
 import com.tick.taku.notificationwatcher.domain.db.entity.UserMessageEntity
+import com.tick.taku.notificationwatcher.view.databinding.ItemMessageBinding
 import com.xwray.groupie.databinding.BindableItem
 
 // TODO: Fix layout

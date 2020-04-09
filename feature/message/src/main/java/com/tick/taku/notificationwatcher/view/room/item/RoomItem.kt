@@ -2,9 +2,9 @@ package com.tick.taku.notificationwatcher.view.room.item
 
 import coil.api.load
 import coil.transform.CircleCropTransformation
-import com.tick.taku.notificationwatcher.R
-import com.tick.taku.notificationwatcher.databinding.ItemRoomBinding
 import com.tick.taku.notificationwatcher.domain.db.entity.RoomInfoEntity
+import com.tick.taku.notificationwatcher.view.R
+import com.tick.taku.notificationwatcher.view.databinding.ItemRoomBinding
 import com.xwray.groupie.databinding.BindableItem
 
 // TODO: Fix layout
