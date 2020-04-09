@@ -5,5 +5,5 @@
 
     <dimen name="bubble_radius_corner">2dp</dimen>
     <dimen name="bubble_radius">16dp</dimen>
-    <dimen name="bubble_padding">14dp</dimen>
+    <dimen name="bubble_padding">12dp</dimen>
 </resources>
