@@ -4,9 +4,11 @@ import androidx.room.*
 import com.tick.taku.notificationwatcher.domain.db.base.DataAccessObject
 import com.tick.taku.notificationwatcher.domain.db.entity.RoomEntity
 import com.tick.taku.notificationwatcher.domain.db.entity.RoomInfoEntity
+import com.tick.taku.notificationwatcher.domain.db.entity.internal.RoomEntityImpl
+import com.tick.taku.notificationwatcher.domain.db.entity.internal.RoomInfoEntityImpl
 import kotlinx.coroutines.flow.Flow
 
-@Dao abstract class RoomDao: DataAccessObject<RoomEntity> {
+@Dao abstract class RoomDao: DataAccessObject<RoomEntityImpl> {
 
     @Query("DELETE FROM room WHERE room_id = :id")
     abstract suspend fun deleteById(id: String)
@@ -17,7 +19,7 @@ import kotlinx.coroutines.flow.Flow
             "INNER JOIN message ON message.room_id = room.room_id " +
             "WHERE date = (SELECT MAX(date) FROM message AS latest_message WHERE latest_message.room_id = message.room_id) " +
             "ORDER BY latest_date DESC")
-    abstract fun observeInfo(): Flow<List<RoomInfoEntity>>
+    abstract fun observeInfo(): Flow<List<RoomInfoEntityImpl>>
 
     @Query("SELECT COUNT(*) FROM room WHERE room_id = :id LIMIT 1")
     protected abstract fun isExistsRecord(id: String): Int
@@ -27,7 +29,7 @@ import kotlinx.coroutines.flow.Flow
      *
      * @param room Room Entity
      */
-    suspend fun insertOrUpdate(room: RoomEntity) {
+    suspend fun insertOrUpdate(room: RoomEntityImpl) {
         if (isExistsRecord(room.id) == 0)
             insertIgnore(room)
         else

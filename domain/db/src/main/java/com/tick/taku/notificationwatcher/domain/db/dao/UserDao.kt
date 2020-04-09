@@ -3,9 +3,9 @@ package com.tick.taku.notificationwatcher.domain.db.dao
 import androidx.room.Dao
 import androidx.room.Query
 import com.tick.taku.notificationwatcher.domain.db.base.DataAccessObject
-import com.tick.taku.notificationwatcher.domain.db.entity.UserEntity
+import com.tick.taku.notificationwatcher.domain.db.entity.internal.UserEntityImpl
 
-@Dao abstract class UserDao: DataAccessObject<UserEntity> {
+@Dao abstract class UserDao: DataAccessObject<UserEntityImpl> {
 
     @Query("SELECT COUNT(*) FROM user WHERE user_id = :id LIMIT 1")
     protected abstract fun isExistsRecord(id: String): Int
@@ -15,7 +15,7 @@ import com.tick.taku.notificationwatcher.domain.db.entity.UserEntity
      *
      * @param room Room Entity
      */
-    suspend fun insertOrUpdate(room: UserEntity) {
+    suspend fun insertOrUpdate(room: UserEntityImpl) {
         if (isExistsRecord(room.id) == 0)
             insertIgnore(room)
         else
