@@ -17,9 +17,11 @@ import com.tick.taku.notificationwatcher.MyApplication
 import com.tick.taku.notificationwatcher.R
 import com.tick.taku.notificationwatcher.databinding.FragmentMessageBinding
 import com.tick.taku.notificationwatcher.domain.repository.internal.NotificationRepositoryImpl
+import com.tick.taku.notificationwatcher.view.message.item.MessageHeaderItem
 import com.tick.taku.notificationwatcher.view.message.item.MessageItem
 import com.tick.taku.notificationwatcher.view.message.viewmodel.MessageViewModel
 import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Section
 import com.xwray.groupie.databinding.GroupieViewHolder
 
 class MessageFragment: Fragment(R.layout.fragment_message) {
@@ -51,15 +53,25 @@ class MessageFragment: Fragment(R.layout.fragment_message) {
     private fun setupMessageList() {
         binding.messageList.adapter = messageListAdapter
 
-        viewModel.messageList.observe(viewLifecycleOwner) {
-            val isShowName = it.all { entity -> entity.user.name != args.title }
-            val items = it.map { entity ->
-                MessageItem(entity, isShowName).apply {
-                    setOnMessageClickListener { m -> copyToClipboard(m) }
-                    setOnLongClickListener { e -> showConfirmationDialog(e.id) }
-                }
-            }
+        viewModel.messageList.observe(viewLifecycleOwner) { list ->
+            val isShowName = list.all { items -> items.value.all { it.user.name != args.title } }
+            val items = list.mapKeys { MessageHeaderItem(it.key) }
+                .mapValues {
+                    it.value.map { entity ->
+                        MessageItem(entity, isShowName).apply {
+                            setOnMessageClickListener { m -> copyToClipboard(m) }
+                            setOnLongClickListener { e -> showConfirmationDialog(e.id) }
+                        }
+                    }
+                }.toSections()
             messageListAdapter.update(items)
+        }
+    }
+
+    private fun Map<MessageHeaderItem, List<MessageItem>>.toSections() = map {
+        Section().apply {
+            setHeader(it.key)
+            addAll(it.value)
         }
     }
 

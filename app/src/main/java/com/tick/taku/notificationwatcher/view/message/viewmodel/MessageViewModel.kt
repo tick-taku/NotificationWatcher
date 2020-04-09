@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 class MessageViewModel(private val repository: NotificationRepository,
                        private val roomId: String): ViewModel() {
 
-    val messageList: LiveData<List<UserMessageEntity>> by lazy {
+    val messageList: LiveData<Map<String, List<UserMessageEntity>>> by lazy {
         repository.messageList(roomId).asLiveData()
     }
 

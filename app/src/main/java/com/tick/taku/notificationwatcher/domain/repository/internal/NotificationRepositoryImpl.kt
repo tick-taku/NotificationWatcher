@@ -9,6 +9,7 @@ import com.tick.taku.notificationwatcher.domain.db.entity.*
 import com.tick.taku.notificationwatcher.domain.repository.NotificationRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import timber.log.Timber
 
 class NotificationRepositoryImpl(private val db: NotificationDataBase): NotificationRepository {
@@ -20,6 +21,8 @@ class NotificationRepositoryImpl(private val db: NotificationDataBase): Notifica
         private const val ROOM_ID = "line.chat.id"
 
         private const val MESSAGE_ID = "line.message.id"
+
+        private const val HEADER_FORMAT = "yyyy/MM/dd (EE)"
 
     }
 
@@ -42,8 +45,11 @@ class NotificationRepositoryImpl(private val db: NotificationDataBase): Notifica
     }
 
     @UseExperimental(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
-    override fun messageList(roomId: String): Flow<List<UserMessageEntity>> =
+    override fun messageList(roomId: String): Flow<Map<String, List<UserMessageEntity>>> =
         db.messageDao().observe(roomId).distinctUntilChanged()
+            .map { entity ->
+                entity.groupBy { it.message.localTime().toString(HEADER_FORMAT) }
+            }
 
     override suspend fun deleteMessage(id: String) {
         db.messageDao().deleteById(id)

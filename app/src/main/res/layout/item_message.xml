@@ -60,7 +60,7 @@
             app:layout_constraintStart_toEndOf="@id/message"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/message"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="6dp"
             android:layout_marginBottom="6dp"
             android:textSize="@dimen/global_font_size_small"
             android:textColor="@color/posted_date"
