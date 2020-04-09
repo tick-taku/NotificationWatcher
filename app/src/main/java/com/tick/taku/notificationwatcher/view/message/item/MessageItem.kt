@@ -14,7 +14,7 @@ class MessageItem(private val entity: UserMessageEntity,
                   private val isShowName: Boolean = true): BindableItem<ItemMessageBinding>(entity.hashCode().toLong()) {
 
     companion object {
-        private const val DATE_FORMAT = "M/dd HH:mm"
+        private const val DATE_FORMAT = "M/dd\nHH:mm"
     }
 
     override fun getLayout() = R.layout.item_message
