@@ -1,4 +1,4 @@
-package com.tick.taku.notificationwatcher.domain.notification
+package com.tick.taku.notificationwatcher.notification
 
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
