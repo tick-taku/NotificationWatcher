@@ -11,7 +11,7 @@ import com.xwray.groupie.databinding.BindableItem
 data class RoomItem(private val entity: RoomInfoEntity): BindableItem<ItemRoomBinding>(entity.hashCode().toLong()) {
 
     companion object {
-        private const val DATE_FORMAT = "yyyy/MM/dd HH:mm:ss"
+        private const val DATE_FORMAT = "yyyy/MM/dd HH:mm"
     }
 
     override fun getLayout() = R.layout.item_room
