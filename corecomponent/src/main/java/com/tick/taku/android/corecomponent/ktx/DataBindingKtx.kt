@@ -41,7 +41,7 @@ inline fun <reified DB: ViewDataBinding> AppCompatActivity.dataBinding() =
 class DataBindingLazy<DB: ViewDataBinding>(private val view: () -> View): Lazy<DB> {
     private var cached: DB? = null
     override val value: DB
-        get() = cached ?: run {
+        get() = cached guard {
             DataBindingUtil.bind<DB>(view())!!.also {
                 it.executePendingBindings()
                 cached = it
