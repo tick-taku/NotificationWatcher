@@ -6,4 +6,7 @@
     <dimen name="bubble_radius_corner">2dp</dimen>
     <dimen name="bubble_radius">16dp</dimen>
     <dimen name="bubble_padding">12dp</dimen>
+
+    <dimen name="message_header_padding">16dp</dimen>
+    <dimen name="message_header_line_space">18dp</dimen>
 </resources>

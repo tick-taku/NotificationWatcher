@@ -26,7 +26,7 @@ interface NotificationRepository {
     /**
      * Load message list.
      */
-    fun messageList(roomId: String): Flow<List<UserMessageEntity>>
+    fun messageList(roomId: String): Flow<Map<String, List<UserMessageEntity>>>
 
     /**
      * Delete message entity by id.
