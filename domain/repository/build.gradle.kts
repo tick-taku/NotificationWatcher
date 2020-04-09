@@ -8,6 +8,8 @@ plugins {
     kotlin("android")
 
     kotlin("android.extensions")
+
+    kotlin("kapt")
 }
 
 android {
@@ -51,6 +53,13 @@ dependencies {
     testImplementation(Dep.Test.junit)
     androidTestImplementation(Dep.Test.androidJunit)
     androidTestImplementation(Dep.Test.espressoCore)
+
+    // Dagger --------------------------------------------------------
+    implementation(Dep.Dagger.core)
+    implementation(Dep.Dagger.android)
+    implementation(Dep.Dagger.androidSupport)
+    kapt(Dep.Dagger.compiler)
+    kapt(Dep.Dagger.androidProcessor)
 
     // Coroutine ---------------------------------------
     implementation(Dep.Kotlin.coroutines)
