@@ -23,6 +23,8 @@ import com.tick.taku.notificationwatcher.view.DatabaseTmp
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Section
 import com.xwray.groupie.databinding.GroupieViewHolder
+import timber.log.Timber
+import javax.inject.Inject
 
 class MessageFragment: Fragment(R.layout.fragment_message) {
 
@@ -38,12 +40,12 @@ class MessageFragment: Fragment(R.layout.fragment_message) {
 
     private val args: MessageFragmentArgs by navArgs()
 
-    private val messageListAdapter: GroupAdapter<GroupieViewHolder<*>> by lazy {
-        GroupAdapter<GroupieViewHolder<*>>()
-    }
+    @Inject lateinit var name: String
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        Timber.e("Injected: $name")
 
         setupBackUp(findNavController())
 
@@ -51,6 +53,8 @@ class MessageFragment: Fragment(R.layout.fragment_message) {
     }
 
     private fun setupMessageList() {
+        val messageListAdapter = GroupAdapter<GroupieViewHolder<*>>()
+
         binding.messageList.adapter = messageListAdapter
 
         viewModel.messageList.observe(viewLifecycleOwner) { list ->

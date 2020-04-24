@@ -1,7 +1,7 @@
 package com.tick.taku.notificationwatcher.di
 
 import android.app.Application
-import com.tick.taku.notificationwatcher.MainActivityBinder
+import com.tick.taku.notificationwatcher.MainActivityModule
 import com.tick.taku.notificationwatcher.MyApplication
 import dagger.BindsInstance
 import dagger.Component
@@ -10,7 +10,7 @@ import dagger.android.AndroidInjector
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AndroidInjectionModule::class, AppModule::class, MainActivityBinder::class])
+@Component(modules = [AndroidInjectionModule::class, AppModule::class, MainActivityModule::class])
 interface AppComponent: AndroidInjector<MyApplication> {
 
     @Component.Factory

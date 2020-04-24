@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
+import com.tick.taku.android.corecomponent.di.Injectable
 import com.tick.taku.android.corecomponent.ktx.dataBinding
 import com.tick.taku.android.corecomponent.ktx.viewModelProvider
 import com.tick.taku.android.corecomponent.util.showDialog
@@ -16,8 +17,10 @@ import com.tick.taku.notificationwatcher.view.DatabaseTmp
 import com.tick.taku.notificationwatcher.view.databinding.FragmentRoomListBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.GroupieViewHolder
+import timber.log.Timber
+import javax.inject.Inject
 
-class RoomListFragment: Fragment(R.layout.fragment_room_list) {
+class RoomListFragment: Fragment(R.layout.fragment_room_list), Injectable {
 
     private val binding: FragmentRoomListBinding by dataBinding()
 
@@ -26,17 +29,19 @@ class RoomListFragment: Fragment(R.layout.fragment_room_list) {
         RoomListViewModel(NotificationRepositoryImpl(DatabaseTmp.db!!))
     }
 
-    private val roomListAdapter: GroupAdapter<GroupieViewHolder<*>> by lazy {
-        GroupAdapter<GroupieViewHolder<*>>()
-    }
+    @Inject lateinit var name: String
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        Timber.e("Injected: $name")
 
         setupRoomList()
     }
 
     private fun setupRoomList() {
+        val roomListAdapter = GroupAdapter<GroupieViewHolder<*>>()
+
         binding.roomList.adapter = roomListAdapter
 
         viewModel.roomList.observe(viewLifecycleOwner) {
