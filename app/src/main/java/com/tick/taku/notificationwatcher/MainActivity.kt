@@ -1,5 +1,6 @@
 package com.tick.taku.notificationwatcher
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,8 +12,20 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.tick.taku.android.corecomponent.ktx.dataBinding
 import com.tick.taku.android.corecomponent.util.showDialog
 import com.tick.taku.notificationwatcher.databinding.ActivityMainBinding
+import dagger.Module
+import dagger.android.AndroidInjector
+import dagger.android.ContributesAndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
+import timber.log.Timber
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+class MainActivity : AppCompatActivity(R.layout.activity_main), HasAndroidInjector {
+
+    @Inject lateinit var injector: DispatchingAndroidInjector<Any>
+    override fun androidInjector(): AndroidInjector<Any> = injector
+
+    @Inject lateinit var name: String
 
     private val binding: ActivityMainBinding by dataBinding()
 
@@ -22,6 +35,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Timber.e("Injected: $name")
 
         setupToolbar()
 
@@ -50,4 +65,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 }
             }
     }
+}
+
+@Module
+abstract class MainActivityBinder {
+    @ContributesAndroidInjector
+    abstract fun contributeMainActivity(): MainActivity
 }
