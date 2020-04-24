@@ -17,24 +17,19 @@ import com.tick.taku.notificationwatcher.view.DatabaseTmp
 import com.tick.taku.notificationwatcher.view.databinding.FragmentRoomListBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.GroupieViewHolder
-import timber.log.Timber
 import javax.inject.Inject
 
 class RoomListFragment: Fragment(R.layout.fragment_room_list), Injectable {
 
     private val binding: FragmentRoomListBinding by dataBinding()
 
-    // TODO: DI
+    @Inject lateinit var viewModelFactory: RoomListViewModel.Factory
     private val viewModel: RoomListViewModel by viewModelProvider {
-        RoomListViewModel(NotificationRepositoryImpl(DatabaseTmp.db!!))
+        viewModelFactory.create(NotificationRepositoryImpl(DatabaseTmp.db!!))
     }
-
-    @Inject lateinit var name: String
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        Timber.e("Injected: $name")
 
         setupRoomList()
     }

@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.tick.taku.android.corecomponent.ktx.dataBinding
 import com.tick.taku.android.corecomponent.util.showDialog
 import com.tick.taku.notificationwatcher.databinding.ActivityMainBinding
+import com.tick.taku.notificationwatcher.view.di.MessageAssistedInjectModule
 import com.tick.taku.notificationwatcher.view.message.MessageFragment
 import com.tick.taku.notificationwatcher.view.room.RoomListFragment
 import dagger.Binds
@@ -74,10 +75,13 @@ abstract class MainActivityModule {
 
     @Module
     abstract class MainActivityBinder {
-        @ContributesAndroidInjector
+
+        @ContributesAndroidInjector(modules = [MessageAssistedInjectModule::class])
         abstract fun contributeMessageFragment(): MessageFragment
-        @ContributesAndroidInjector
+
+        @ContributesAndroidInjector(modules = [MessageAssistedInjectModule::class])
         abstract fun contributeRoomListFragment(): RoomListFragment
+
     }
 
 }
