@@ -8,33 +8,32 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.tick.taku.android.corecomponent.di.Injectable
 import com.tick.taku.android.corecomponent.ktx.dataBinding
 import com.tick.taku.android.corecomponent.ktx.toast
 import com.tick.taku.android.corecomponent.ktx.viewModelProvider
 import com.tick.taku.android.corecomponent.util.setupBackUp
 import com.tick.taku.android.corecomponent.util.showDialog
 import com.tick.taku.notificationwatcher.view.R
-import com.tick.taku.notificationwatcher.domain.repository.internal.NotificationRepositoryImpl
 import com.tick.taku.notificationwatcher.view.databinding.FragmentMessageBinding
 import com.tick.taku.notificationwatcher.view.message.item.MessageHeaderItem
 import com.tick.taku.notificationwatcher.view.message.item.MessageItem
 import com.tick.taku.notificationwatcher.view.message.viewmodel.MessageViewModel
-import com.tick.taku.notificationwatcher.view.DatabaseTmp
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Section
 import com.xwray.groupie.databinding.GroupieViewHolder
 import javax.inject.Inject
 
-class MessageFragment: Fragment(R.layout.fragment_message) {
+class MessageFragment: Fragment(R.layout.fragment_message), Injectable {
 
     private val binding: FragmentMessageBinding by dataBinding()
 
+    private val args: MessageFragmentArgs by navArgs()
+
     @Inject lateinit var viewModelFactory: MessageViewModel.Factory
     private val viewModel: MessageViewModel by viewModelProvider {
-        viewModelFactory.create(args.roomId, NotificationRepositoryImpl(DatabaseTmp.db!!))
+        viewModelFactory.create(args.roomId)
     }
-
-    private val args: MessageFragmentArgs by navArgs()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

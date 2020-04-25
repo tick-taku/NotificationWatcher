@@ -9,23 +9,22 @@ import com.tick.taku.android.corecomponent.ktx.dataBinding
 import com.tick.taku.android.corecomponent.ktx.viewModelProvider
 import com.tick.taku.android.corecomponent.util.showDialog
 import com.tick.taku.notificationwatcher.domain.db.entity.RoomInfoEntity
-import com.tick.taku.notificationwatcher.domain.repository.internal.NotificationRepositoryImpl
 import com.tick.taku.notificationwatcher.view.R
 import com.tick.taku.notificationwatcher.view.room.item.RoomItem
 import com.tick.taku.notificationwatcher.view.room.viewmodel.RoomListViewModel
-import com.tick.taku.notificationwatcher.view.DatabaseTmp
 import com.tick.taku.notificationwatcher.view.databinding.FragmentRoomListBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.GroupieViewHolder
 import javax.inject.Inject
+import javax.inject.Provider
 
 class RoomListFragment: Fragment(R.layout.fragment_room_list), Injectable {
 
     private val binding: FragmentRoomListBinding by dataBinding()
 
-    @Inject lateinit var viewModelFactory: RoomListViewModel.Factory
+    @Inject lateinit var viewModelFactory: Provider<RoomListViewModel>
     private val viewModel: RoomListViewModel by viewModelProvider {
-        viewModelFactory.create(NotificationRepositoryImpl(DatabaseTmp.db!!))
+        viewModelFactory.get()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

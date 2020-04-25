@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MessageViewModel @AssistedInject constructor(@Assisted private val roomId: String,
-                                                   @Assisted private val repository: NotificationRepository): ViewModel() {
+                                                   private val repository: NotificationRepository): ViewModel() {
 
     val messageList: LiveData<Map<String, List<UserMessageEntity>>> by lazy {
         repository.messageList(roomId).asLiveData()
@@ -26,6 +26,6 @@ class MessageViewModel @AssistedInject constructor(@Assisted private val roomId:
 
     @AssistedInject.Factory
     interface Factory {
-        fun create(roomId: String, repository: NotificationRepository): MessageViewModel
+        fun create(roomId: String): MessageViewModel
     }
 }
