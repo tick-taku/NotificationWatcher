@@ -3,15 +3,18 @@ package com.tick.taku.notificationwatcher.domain.repository.internal
 import android.app.Notification
 import android.content.Context
 import android.service.notification.StatusBarNotification
-import com.tick.taku.notificationwatcher.domain.db.NotificationDataBase
+import com.tick.taku.notificationwatcher.domain.db.NotificationDatabase
 import com.tick.taku.notificationwatcher.domain.db.entity.*
 import com.tick.taku.notificationwatcher.domain.repository.NotificationRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
+import javax.inject.Inject
 
-class NotificationRepositoryImpl(private val db: NotificationDataBase): NotificationRepository {
+internal class NotificationRepositoryImpl @Inject constructor(private val context: Context,
+                                                              private val db: NotificationDatabase)
+    : NotificationRepository {
 
     companion object {
 
@@ -21,7 +24,7 @@ class NotificationRepositoryImpl(private val db: NotificationDataBase): Notifica
 
     }
 
-    override suspend fun saveNotification(context: Context, sbn: StatusBarNotification) {
+    override suspend fun saveNotification(sbn: StatusBarNotification) {
         if (FILTERS.contains(sbn.packageName)) {
             Timber.d("Save message to db.")
 

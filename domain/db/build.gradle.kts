@@ -67,7 +67,6 @@ dependencies {
     kapt(Dep.Dagger.compiler)
     kapt(Dep.Dagger.androidProcessor)
 
-
     // Coroutine ---------------------------------------
     implementation(Dep.Kotlin.coroutines)
     implementation(Dep.Kotlin.coroutinesCommon)
