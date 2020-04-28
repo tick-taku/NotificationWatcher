@@ -9,5 +9,5 @@
     <string name="enable_auto_delete_summary_off">Disabled</string>
 
     <string name="delete_from">From</string>
-    <string name="delete_from_summary">How many months ago will the message be erased?</string>
+    <string name="delete_from_summary">How many months old message will be erased?</string>
 </resources>
