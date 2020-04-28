@@ -6,6 +6,7 @@ import com.tick.taku.notificationwatcher.di.createAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import timber.log.Timber
+import javax.inject.Inject
 
 class MyApplication: DaggerApplication() {
 
@@ -14,12 +15,14 @@ class MyApplication: DaggerApplication() {
     }
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> = appComponent
 
+    @Inject lateinit var logTree: Timber.Tree
+
     override fun onCreate() {
         super.onCreate()
 
         AppInjector.initialize(this)
 
-        Timber.plant(Timber.DebugTree())
+        Timber.plant(logTree)
     }
 
 }
