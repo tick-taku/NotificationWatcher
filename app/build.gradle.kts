@@ -84,6 +84,9 @@ dependencies {
     implementation(Dep.AndroidX.Navigation.uiKtx)
     implementation(Dep.AndroidX.Navigation.runtimeKtx)
 
+    // Coil ----------------------------------------------------------
+    implementation(Dep.Coil.common)
+
     // Timber  -------------------------------------------------------
     implementation(Dep.Timber.timber)
 }

@@ -1,5 +1,7 @@
 package com.tick.taku.notificationwatcher
 
+import coil.Coil
+import coil.ImageLoader
 import com.tick.taku.notificationwatcher.di.AppComponent
 import com.tick.taku.notificationwatcher.di.AppInjector
 import com.tick.taku.notificationwatcher.di.createAppComponent
@@ -15,6 +17,7 @@ class MyApplication: DaggerApplication() {
     }
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> = appComponent
 
+    @Inject lateinit var imageLoader: ImageLoader
     @Inject lateinit var logTree: Timber.Tree
 
     override fun onCreate() {
@@ -22,6 +25,11 @@ class MyApplication: DaggerApplication() {
 
         AppInjector.initialize(this)
 
+        initModules()
+    }
+
+    private fun initModules() {
+        Coil.setDefaultImageLoader(imageLoader)
         Timber.plant(logTree)
     }
 
