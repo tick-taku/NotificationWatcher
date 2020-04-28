@@ -36,21 +36,21 @@ internal class NotificationRepositoryImpl @Inject constructor(private val contex
 
     @UseExperimental(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     override fun roomList(): Flow<List<RoomInfoEntity>> =
-        db.roomDao().observeInfo().distinctUntilChanged()
+        db.observeRooms().distinctUntilChanged()
 
     override suspend fun deleteRoom(id: String) {
-        db.roomDao().deleteById(id)
+        db.deleteRoom(id)
     }
 
     @UseExperimental(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     override fun messageList(roomId: String): Flow<Map<String, List<UserMessageEntity>>> =
-        db.messageDao().observe(roomId).distinctUntilChanged()
+        db.observeMessages(roomId).distinctUntilChanged()
             .map { entity ->
                 entity.groupBy { it.message.localTime().toString(HEADER_FORMAT) }
             }
 
     override suspend fun deleteMessage(id: String) {
-        db.messageDao().deleteById(id)
+        db.deleteMessage(id)
     }
 
     /**

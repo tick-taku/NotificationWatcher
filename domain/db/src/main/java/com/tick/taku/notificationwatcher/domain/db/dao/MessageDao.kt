@@ -2,11 +2,11 @@ package com.tick.taku.notificationwatcher.domain.db.dao
 
 import androidx.room.*
 import com.tick.taku.notificationwatcher.domain.db.base.DataAccessObject
-import com.tick.taku.notificationwatcher.domain.db.entity.internal.MessageEntityImpl
-import com.tick.taku.notificationwatcher.domain.db.entity.internal.UserMessageEntityImpl
+import com.tick.taku.notificationwatcher.domain.db.internal.entity.MessageEntityImpl
+import com.tick.taku.notificationwatcher.domain.db.internal.entity.UserMessageEntityImpl
 import kotlinx.coroutines.flow.Flow
 
-@Dao abstract class MessageDao: DataAccessObject<MessageEntityImpl> {
+@Dao internal abstract class MessageDao: DataAccessObject<MessageEntityImpl> {
 
     @Query("DELETE FROM message WHERE message_id = :id")
     abstract suspend fun deleteById(id: String)

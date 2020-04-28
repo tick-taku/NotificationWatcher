@@ -1,4 +1,4 @@
-package com.tick.taku.notificationwatcher.domain.db.entity.internal
+package com.tick.taku.notificationwatcher.domain.db.internal.entity
 
 import android.graphics.Bitmap
 import androidx.room.ColumnInfo
@@ -9,9 +9,9 @@ import com.tick.taku.notificationwatcher.domain.db.base.DaoEntity
 import com.tick.taku.notificationwatcher.domain.db.entity.UserEntity
 
 @Entity(tableName = "user")
-data class UserEntityImpl(@PrimaryKey @ColumnInfo(name = PRIMARY_KEY) override val id: String,
-                          @ColumnInfo(name = "user_name") override val name: String,
-                          @ColumnInfo(name = "user_icon") override val icon: Bitmap): UserEntity, DaoEntity {
+internal data class UserEntityImpl(@PrimaryKey @ColumnInfo(name = PRIMARY_KEY) override val id: String,
+                                   @ColumnInfo(name = "user_name") override val name: String,
+                                   @ColumnInfo(name = "user_icon") override val icon: Bitmap): UserEntity, DaoEntity {
     companion object {
         const val PRIMARY_KEY = "user_id"
     }

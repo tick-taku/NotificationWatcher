@@ -1,4 +1,4 @@
-package com.tick.taku.notificationwatcher.domain.db.entity.internal
+package com.tick.taku.notificationwatcher.domain.db.internal.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -22,8 +22,8 @@ import com.tick.taku.notificationwatcher.domain.db.entity.MessageEntity
                 onDelete = ForeignKey.CASCADE
             )
         ])
-data class MessageEntityImpl(@ColumnInfo(name = "message_id") override val id: String,
-                         @ColumnInfo(name = "room_id", index = true) override val roomId: String,
-                         @ColumnInfo(name = "message_user_id", index = true) override val userId: String,
-                         override val message: String,
-                         override val date: Long): MessageEntity, DaoEntity
+internal data class MessageEntityImpl(@ColumnInfo(name = "message_id") override val id: String,
+                                      @ColumnInfo(name = "room_id", index = true) override val roomId: String,
+                                      @ColumnInfo(name = "message_user_id", index = true) override val userId: String,
+                                      override val message: String,
+                                      override val date: Long): MessageEntity, DaoEntity
