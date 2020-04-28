@@ -53,4 +53,7 @@ dependencies {
     testImplementation(Dep.Test.junit)
     androidTestImplementation(Dep.Test.androidJunit)
     androidTestImplementation(Dep.Test.espressoCore)
+
+    // Dagger --------------------------------------------------------
+    implementation(Dep.Dagger.core)
 }

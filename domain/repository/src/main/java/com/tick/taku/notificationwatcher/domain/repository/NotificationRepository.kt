@@ -1,6 +1,5 @@
 package com.tick.taku.notificationwatcher.domain.repository
 
-import android.content.Context
 import android.service.notification.StatusBarNotification
 import com.tick.taku.notificationwatcher.domain.db.entity.RoomInfoEntity
 import com.tick.taku.notificationwatcher.domain.db.entity.UserMessageEntity
@@ -11,7 +10,7 @@ interface NotificationRepository {
     /**
      * Save notification to db.
      */
-    suspend fun saveNotification(context: Context, sbn: StatusBarNotification)
+    suspend fun saveNotification(sbn: StatusBarNotification)
 
     /**
      * Load room list.

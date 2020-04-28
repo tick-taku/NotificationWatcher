@@ -3,15 +3,18 @@ package com.tick.taku.notificationwatcher.domain.repository.internal
 import android.app.Notification
 import android.content.Context
 import android.service.notification.StatusBarNotification
-import com.tick.taku.notificationwatcher.domain.db.NotificationDataBase
+import com.tick.taku.notificationwatcher.domain.db.NotificationDatabase
 import com.tick.taku.notificationwatcher.domain.db.entity.*
 import com.tick.taku.notificationwatcher.domain.repository.NotificationRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
+import javax.inject.Inject
 
-class NotificationRepositoryImpl(private val db: NotificationDataBase): NotificationRepository {
+internal class NotificationRepositoryImpl @Inject constructor(private val context: Context,
+                                                              private val db: NotificationDatabase)
+    : NotificationRepository {
 
     companion object {
 
@@ -21,7 +24,7 @@ class NotificationRepositoryImpl(private val db: NotificationDataBase): Notifica
 
     }
 
-    override suspend fun saveNotification(context: Context, sbn: StatusBarNotification) {
+    override suspend fun saveNotification(sbn: StatusBarNotification) {
         if (FILTERS.contains(sbn.packageName)) {
             Timber.d("Save message to db.")
 
@@ -33,21 +36,21 @@ class NotificationRepositoryImpl(private val db: NotificationDataBase): Notifica
 
     @UseExperimental(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     override fun roomList(): Flow<List<RoomInfoEntity>> =
-        db.roomDao().observeInfo().distinctUntilChanged()
+        db.observeRooms().distinctUntilChanged()
 
     override suspend fun deleteRoom(id: String) {
-        db.roomDao().deleteById(id)
+        db.deleteRoom(id)
     }
 
     @UseExperimental(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     override fun messageList(roomId: String): Flow<Map<String, List<UserMessageEntity>>> =
-        db.messageDao().observe(roomId).distinctUntilChanged()
+        db.observeMessages(roomId).distinctUntilChanged()
             .map { entity ->
                 entity.groupBy { it.message.localTime().toString(HEADER_FORMAT) }
             }
 
     override suspend fun deleteMessage(id: String) {
-        db.messageDao().deleteById(id)
+        db.deleteMessage(id)
     }
 
     /**

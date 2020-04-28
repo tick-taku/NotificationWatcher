@@ -46,6 +46,20 @@ object Dep {
         }
     }
 
+    object Dagger {
+        const val version = "2.26"
+        const val core = "com.google.dagger:dagger:$version"
+        const val compiler = "com.google.dagger:dagger-compiler:$version"
+        const val androidSupport = "com.google.dagger:dagger-android-support:$version"
+        const val android = "com.google.dagger:dagger-android:$version"
+        const val androidProcessor = "com.google.dagger:dagger-android-processor:$version"
+        object AssistedInject {
+            const val version = "0.5.2"
+            const val annotations = "com.squareup.inject:assisted-inject-annotations-dagger2:$version"
+            const val processor = "com.squareup.inject:assisted-inject-processor-dagger2:$version"
+        }
+    }
+
     object Groupie {
         const val version = "2.7.2"
         const val common = "com.xwray:groupie:$version"

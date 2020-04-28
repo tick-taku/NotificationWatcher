@@ -4,30 +4,27 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
+import com.tick.taku.android.corecomponent.di.Injectable
 import com.tick.taku.android.corecomponent.ktx.dataBinding
 import com.tick.taku.android.corecomponent.ktx.viewModelProvider
 import com.tick.taku.android.corecomponent.util.showDialog
 import com.tick.taku.notificationwatcher.domain.db.entity.RoomInfoEntity
-import com.tick.taku.notificationwatcher.domain.repository.internal.NotificationRepositoryImpl
 import com.tick.taku.notificationwatcher.view.R
 import com.tick.taku.notificationwatcher.view.room.item.RoomItem
 import com.tick.taku.notificationwatcher.view.room.viewmodel.RoomListViewModel
-import com.tick.taku.notificationwatcher.view.DatabaseTmp
 import com.tick.taku.notificationwatcher.view.databinding.FragmentRoomListBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.GroupieViewHolder
+import javax.inject.Inject
+import javax.inject.Provider
 
-class RoomListFragment: Fragment(R.layout.fragment_room_list) {
+class RoomListFragment: Fragment(R.layout.fragment_room_list), Injectable {
 
     private val binding: FragmentRoomListBinding by dataBinding()
 
-    // TODO: DI
+    @Inject lateinit var viewModelFactory: Provider<RoomListViewModel>
     private val viewModel: RoomListViewModel by viewModelProvider {
-        RoomListViewModel(NotificationRepositoryImpl(DatabaseTmp.db!!))
-    }
-
-    private val roomListAdapter: GroupAdapter<GroupieViewHolder<*>> by lazy {
-        GroupAdapter<GroupieViewHolder<*>>()
+        viewModelFactory.get()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -37,6 +34,8 @@ class RoomListFragment: Fragment(R.layout.fragment_room_list) {
     }
 
     private fun setupRoomList() {
+        val roomListAdapter = GroupAdapter<GroupieViewHolder<*>>()
+
         binding.roomList.adapter = roomListAdapter
 
         viewModel.roomList.observe(viewLifecycleOwner) {

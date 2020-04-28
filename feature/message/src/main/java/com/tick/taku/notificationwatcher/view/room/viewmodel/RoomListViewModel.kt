@@ -8,8 +8,9 @@ import com.tick.taku.notificationwatcher.domain.db.entity.RoomInfoEntity
 import com.tick.taku.notificationwatcher.domain.repository.NotificationRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RoomListViewModel(private val repository: NotificationRepository): ViewModel() {
+class RoomListViewModel @Inject constructor(private val repository: NotificationRepository): ViewModel() {
 
     val roomList: LiveData<List<RoomInfoEntity>> by lazy {
         repository.roomList().asLiveData()
@@ -20,5 +21,4 @@ class RoomListViewModel(private val repository: NotificationRepository): ViewMod
             repository.deleteRoom(id)
         }
     }
-
 }

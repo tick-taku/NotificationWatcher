@@ -3,12 +3,14 @@ package com.tick.taku.notificationwatcher.notification
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import com.tick.taku.notificationwatcher.domain.repository.NotificationRepository
-import com.tick.taku.notificationwatcher.domain.repository.internal.NotificationRepositoryImpl
-import com.tick.taku.notificationwatcher.view.DatabaseTmp
+import dagger.Module
+import dagger.android.AndroidInjection
+import dagger.android.ContributesAndroidInjector
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 class NotificationWatcher: NotificationListenerService(), CoroutineScope {
@@ -16,9 +18,11 @@ class NotificationWatcher: NotificationListenerService(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Default
 
-    // TODO: DI
-    private val repository: NotificationRepository by lazy {
-        NotificationRepositoryImpl(DatabaseTmp.db!!)
+    @Inject lateinit var repository: NotificationRepository
+
+    override fun onCreate() {
+        AndroidInjection.inject(this)
+        super.onCreate()
     }
 
     override fun onListenerConnected() {
@@ -28,7 +32,7 @@ class NotificationWatcher: NotificationListenerService(), CoroutineScope {
         launch {
             activeNotifications
                 .forEach {
-                    repository.saveNotification(applicationContext, it)
+                    repository.saveNotification(it)
                 }
         }
     }
@@ -39,7 +43,7 @@ class NotificationWatcher: NotificationListenerService(), CoroutineScope {
         Timber.d("------------- NotificationWatcher#onNotificationPosted. -------------")
         launch {
             sbn?.let {
-                repository.saveNotification(applicationContext, it)
+                repository.saveNotification(it)
             }
         }
     }
@@ -49,5 +53,13 @@ class NotificationWatcher: NotificationListenerService(), CoroutineScope {
 
         Timber.d("------------- NotificationWatcher#onListenerDisconnected. -------------")
     }
+
+}
+
+@Module
+abstract class NotificationWatcherModule {
+
+    @ContributesAndroidInjector
+    abstract fun contributeNotificationService(): NotificationWatcher
 
 }
