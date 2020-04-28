@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        android:title="@string/auto_delete_category"
+        android:key="@string/pref_key_auto_delete">
+
+        <SwitchPreferenceCompat
+            android:key="@string/pref_key_enable_auto_delete"
+            android:title="@string/enable_auto_delete"
+            android:summaryOn="@string/enable_auto_delete_summary_on"
+            android:summaryOff="@string/enable_auto_delete_summary_off"/>
+
+        <SeekBarPreference
+            android:key="@string/pref_key_delete_from"
+            android:title="@string/delete_from"
+            android:summary="@string/delete_from_summary"
+            android:defaultValue="@integer/delete_from_max"
+            app:min="@integer/delete_from_min"
+            android:max="@integer/delete_from_max"
+            app:showSeekBarValue="true"/>
+
+    </PreferenceCategory>
+</PreferenceScreen>

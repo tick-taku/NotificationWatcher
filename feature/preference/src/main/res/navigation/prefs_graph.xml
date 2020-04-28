@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/prefs_graph"
+    app:startDestination="@id/preferences_fragment">
+
+    <fragment
+        android:id="@+id/preferences_fragment"
+        android:name="com.tick.taku.notificationwatcher.view.preference.PreferencesFragment"
+        android:label="@string/toolbar_title_settings"/>
+
+</navigation>

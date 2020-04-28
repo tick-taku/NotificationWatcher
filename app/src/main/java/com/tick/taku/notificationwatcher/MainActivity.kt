@@ -15,6 +15,7 @@ import com.tick.taku.android.corecomponent.util.showDialog
 import com.tick.taku.notificationwatcher.databinding.ActivityMainBinding
 import com.tick.taku.notificationwatcher.view.di.MessageAssistedInjectModule
 import com.tick.taku.notificationwatcher.view.message.MessageFragment
+import com.tick.taku.notificationwatcher.view.preference.PreferencesActivity
 import com.tick.taku.notificationwatcher.view.room.RoomListFragment
 import dagger.Module
 import dagger.android.AndroidInjector
@@ -40,6 +41,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), HasAndroidInject
         setupToolbar()
 
         checkForPermission()
+
+        // TODO: DrawerLayout
+        binding.toolbar.setOnClickListener {
+            PreferencesActivity.start(this)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
