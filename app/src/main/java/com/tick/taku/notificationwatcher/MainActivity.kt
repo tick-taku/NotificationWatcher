@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import androidx.annotation.IdRes
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -40,12 +42,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), HasAndroidInject
 
         setupToolbar()
 
-        checkForPermission()
+        setupDrawer()
 
-        // TODO: DrawerLayout
-        binding.toolbar.setOnClickListener {
-            PreferencesActivity.start(this)
-        }
+        checkForPermission()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -55,6 +54,31 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), HasAndroidInject
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbar)
         setupActionBarWithNavController(navController)
+    }
+
+    private fun setupDrawer() {
+        ActionBarDrawerToggle(
+            this,
+            binding.drawerLayout,
+            binding.toolbar,
+            R.string.content_description_drawer_open,
+            R.string.content_description_drawer_close
+        )
+            .apply {
+                isDrawerSlideAnimationEnabled = false
+            }.also {
+                binding.drawerLayout.addDrawerListener(it)
+                it.syncState()
+            }
+
+        binding.drawer.setNavigationItemSelectedListener {
+            when (DrawerMenu.findById(it.itemId)) {
+                DrawerMenu.SETTINGS -> { PreferencesActivity.start(this) }
+                else -> {}
+            }
+            binding.drawerLayout.closeDrawers()
+            false
+        }
     }
 
     /**
@@ -69,6 +93,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), HasAndroidInject
                     startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
                 }
             }
+    }
+}
+
+private enum class DrawerMenu(@IdRes val id: Int) {
+    SETTINGS(R.id.menu_settings);
+    companion object {
+        fun findById(id: Int): DrawerMenu? = values().find { it.id == id }
     }
 }
 
