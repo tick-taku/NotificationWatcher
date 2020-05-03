@@ -45,6 +45,11 @@ object Dep {
             const val fragmentKtx = "androidx.navigation:navigation-fragment-ktx:$version"
             const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"
         }
+
+        object WorkManager {
+            const val version = "2.3.4"
+            const val runtimeKtx = "androidx.work:work-runtime-ktx:$version"
+        }
     }
 
     object Dagger {

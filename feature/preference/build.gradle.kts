@@ -36,6 +36,7 @@ android {
 
 dependencies {
     implementation(project(":corecomponent"))
+    implementation(project(":domain:db"))
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     implementation(Dep.Kotlin.stdlibJdk)
@@ -52,6 +53,9 @@ dependencies {
     implementation(Dep.AndroidX.Navigation.fragmentKtx)
     implementation(Dep.AndroidX.Navigation.uiKtx)
     implementation(Dep.AndroidX.Navigation.runtimeKtx)
+
+    // WorkManager ----------------------------------------------------
+    implementation(Dep.AndroidX.WorkManager.runtimeKtx)
 
     // Timber --------------------------------------------------------
     implementation(Dep.Timber.timber)
