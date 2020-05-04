@@ -5,11 +5,18 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.preference.*
+import com.tick.taku.android.corecomponent.di.Injectable
+import com.tick.taku.android.corecomponent.ktx.viewModelProvider
 import com.tick.taku.notificationwatcher.view.preference.viewmodel.PreferencesViewModel
+import javax.inject.Inject
+import javax.inject.Provider
 
-class PreferencesFragment: PreferenceFragmentCompat() {
+class PreferencesFragment: PreferenceFragmentCompat(), Injectable {
 
-    private val viewModel: PreferencesViewModel by viewModels()
+    @Inject lateinit var viewModelFactory: Provider<PreferencesViewModel>
+    private val viewModel: PreferencesViewModel by viewModelProvider {
+        viewModelFactory.get()
+    }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preference, rootKey)

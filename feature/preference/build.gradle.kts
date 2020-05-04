@@ -43,11 +43,20 @@ dependencies {
     implementation(Dep.AndroidX.appCompat)
     implementation(Dep.AndroidX.coreKtx)
     implementation(Dep.AndroidX.constraint)
-    implementation(Dep.AndroidX.preference)
+    api(Dep.AndroidX.preference)
 
     testImplementation(Dep.Test.junit)
     androidTestImplementation(Dep.Test.androidJunit)
     androidTestImplementation(Dep.Test.espressoCore)
+
+    // Dagger --------------------------------------------------------
+    implementation(Dep.Dagger.core)
+    implementation(Dep.Dagger.android)
+    implementation(Dep.Dagger.androidSupport)
+    kapt(Dep.Dagger.compiler)
+    kapt(Dep.Dagger.androidProcessor)
+    compileOnly(Dep.Dagger.AssistedInject.annotations)
+    kapt(Dep.Dagger.AssistedInject.processor)
 
     // Navigation ----------------------------------------------------
     implementation(Dep.AndroidX.Navigation.fragmentKtx)

@@ -10,8 +10,17 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.tick.taku.android.corecomponent.ktx.dataBinding
 import com.tick.taku.android.corecomponent.ktx.openActivity
 import com.tick.taku.notificationwatcher.view.preference.databinding.ActivityPreferencesBinding
+import dagger.Module
+import dagger.android.AndroidInjector
+import dagger.android.ContributesAndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
+import javax.inject.Inject
 
-class PreferencesActivity: AppCompatActivity(R.layout.activity_preferences) {
+class PreferencesActivity: AppCompatActivity(R.layout.activity_preferences), HasAndroidInjector {
+
+    @Inject lateinit var injector: DispatchingAndroidInjector<Any>
+    override fun androidInjector(): AndroidInjector<Any> = injector
 
     private val binding: ActivityPreferencesBinding by dataBinding()
 
@@ -35,6 +44,22 @@ class PreferencesActivity: AppCompatActivity(R.layout.activity_preferences) {
         fun start(context: Context) {
             context.openActivity<PreferencesActivity>()
         }
+    }
+
+}
+
+@Module
+abstract class PreferencesActivityModule {
+
+    @ContributesAndroidInjector(modules = [PreferencesActivityBinder::class])
+    abstract fun contributePreferencesActivity(): PreferencesActivity
+
+    @Module
+    abstract class PreferencesActivityBinder {
+
+        @ContributesAndroidInjector
+        abstract fun contributePreferencesFragment(): PreferencesFragment
+
     }
 
 }
