@@ -18,5 +18,6 @@ interface NotificationDatabase {
     // ----- Message -----
     fun observeMessages(roomId: String): Flow<List<UserMessageEntity>>
     suspend fun deleteMessage(id: String)
+    suspend fun deleteMessageBefore(howOld: Int)
 
 }

@@ -6,6 +6,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.soywiz.klock.DateTime
+import com.soywiz.klock.months
 import com.tick.taku.notificationwatcher.domain.db.NotificationDatabase
 import com.tick.taku.notificationwatcher.domain.db.base.BitmapConverter
 import com.tick.taku.notificationwatcher.domain.db.dao.MessageDao
@@ -18,6 +20,7 @@ import com.tick.taku.notificationwatcher.domain.db.internal.entity.RoomEntityImp
 import com.tick.taku.notificationwatcher.domain.db.internal.entity.UserEntityImpl
 import com.tick.taku.notificationwatcher.domain.db.entity.mapper.toEntities
 import kotlinx.coroutines.flow.Flow
+import timber.log.Timber
 
 @Database(entities = [MessageEntityImpl::class, RoomEntityImpl::class, UserEntityImpl::class], version = 1)
 @TypeConverters(BitmapConverter::class)
@@ -47,6 +50,13 @@ internal abstract class NotificationDatabaseImpl: RoomDatabase(), NotificationDa
     override fun observeMessages(roomId: String): Flow<List<UserMessageEntity>> = messageDao().observe(roomId)
     override suspend fun deleteMessage(id: String) {
         messageDao().deleteById(id)
+    }
+
+    override suspend fun deleteMessageBefore(howOld: Int) {
+        val specified = DateTime.now() - howOld.months
+        messageDao().deleteBefore(specified.unixMillisLong)
+
+        Timber.d("Delete message before ${specified.toString("yyyy/MM/dd HH:mm:ss")}.")
     }
 
     companion object {
