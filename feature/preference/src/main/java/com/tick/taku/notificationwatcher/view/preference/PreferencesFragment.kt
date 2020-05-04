@@ -2,7 +2,6 @@ package com.tick.taku.notificationwatcher.view.preference
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.preference.*
 import com.tick.taku.android.corecomponent.di.Injectable

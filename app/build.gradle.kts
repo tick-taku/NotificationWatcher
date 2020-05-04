@@ -85,6 +85,9 @@ dependencies {
     implementation(Dep.AndroidX.Navigation.uiKtx)
     implementation(Dep.AndroidX.Navigation.runtimeKtx)
 
+    // WorkManager ----------------------------------------------------
+    implementation(Dep.AndroidX.WorkManager.runtimeKtx)
+
     // Coil ----------------------------------------------------------
     implementation(Dep.Coil.common)
 
