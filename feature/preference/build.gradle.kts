@@ -1,23 +1,17 @@
 import dependencies.Dep
 import dependencies.Packages
-import extensions.debug
 import extensions.release
 
 plugins {
-    id("com.android.application")
-
+    id("com.android.library")
     kotlin("android")
-
     kotlin("android.extensions")
-
     kotlin("kapt")
 }
 
 android {
     compileSdkVersion(Packages.SdkVersion.compile)
-    buildToolsVersion = Packages.SdkVersion.compile.toString()
     defaultConfig {
-        applicationId = Packages.id
         minSdkVersion(Packages.SdkVersion.min)
         targetSdkVersion(Packages.SdkVersion.target)
         versionCode = Packages.Version.code
@@ -29,18 +23,10 @@ android {
         jvmTarget = "1.8"
     }
     buildTypes {
-        debug {
-            applicationIdSuffix = Packages.debugIdSuffix
-        }
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
-    }
-    packagingOptions {
-        exclude("META-INF/*.kotlin_module")
-        exclude("META-INF/*.version")
-        exclude("META-INF/proguard/*.pro")
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -50,18 +36,14 @@ android {
 
 dependencies {
     implementation(project(":corecomponent"))
-    implementation(project(":feature:message"))
-    implementation(project(":feature:preference"))
     implementation(project(":domain:db"))
-    implementation(project(":domain:repository"))
-
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     implementation(Dep.Kotlin.stdlibJdk)
     implementation(Dep.AndroidX.appCompat)
     implementation(Dep.AndroidX.coreKtx)
     implementation(Dep.AndroidX.constraint)
-    implementation(Dep.AndroidX.design)
+    api(Dep.AndroidX.preference)
 
     testImplementation(Dep.Test.junit)
     androidTestImplementation(Dep.Test.androidJunit)
@@ -76,10 +58,6 @@ dependencies {
     compileOnly(Dep.Dagger.AssistedInject.annotations)
     kapt(Dep.Dagger.AssistedInject.processor)
 
-    // LifeCycle -----------------------------------------------------
-    implementation(Dep.AndroidX.LifeCycle.liveDataExtension)
-    implementation(Dep.AndroidX.LifeCycle.liveDataKtx)
-
     // Navigation ----------------------------------------------------
     implementation(Dep.AndroidX.Navigation.fragmentKtx)
     implementation(Dep.AndroidX.Navigation.uiKtx)
@@ -88,9 +66,6 @@ dependencies {
     // WorkManager ----------------------------------------------------
     implementation(Dep.AndroidX.WorkManager.runtimeKtx)
 
-    // Coil ----------------------------------------------------------
-    implementation(Dep.Coil.common)
-
-    // Timber  -------------------------------------------------------
+    // Timber --------------------------------------------------------
     implementation(Dep.Timber.timber)
 }

@@ -4,9 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import androidx.annotation.IdRes
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.tick.taku.android.corecomponent.di.ActivityScope
 import com.tick.taku.android.corecomponent.di.FragmentScope
@@ -15,6 +19,7 @@ import com.tick.taku.android.corecomponent.util.showDialog
 import com.tick.taku.notificationwatcher.databinding.ActivityMainBinding
 import com.tick.taku.notificationwatcher.view.di.MessageAssistedInjectModule
 import com.tick.taku.notificationwatcher.view.message.MessageFragment
+import com.tick.taku.notificationwatcher.view.preference.PreferencesActivity
 import com.tick.taku.notificationwatcher.view.room.RoomListFragment
 import dagger.Module
 import dagger.android.AndroidInjector
@@ -42,13 +47,37 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), HasAndroidInject
         checkForPermission()
     }
 
+    override fun onBackPressed() {
+        binding.drawerLayout.run {
+            when (isDrawerOpen(GravityCompat.START)) {
+                true -> closeDrawer(GravityCompat.START)
+                false -> super.onBackPressed()
+            }
+        }
+    }
+
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp()
+        return navController.navigateUp(binding.drawerLayout)
     }
 
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbar)
-        setupActionBarWithNavController(navController)
+
+        val config = AppBarConfiguration(setOf(R.id.room_list_fragment), binding.drawerLayout)
+        setupActionBarWithNavController(navController, config)
+
+        setupDrawer()
+    }
+
+    private fun setupDrawer() {
+        binding.drawer.setNavigationItemSelectedListener {
+            when (DrawerMenu.findById(it.itemId)) {
+                DrawerMenu.SETTINGS -> { PreferencesActivity.start(this) }
+                else -> {}
+            }
+            binding.drawerLayout.closeDrawers()
+            false
+        }
     }
 
     /**
@@ -63,6 +92,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), HasAndroidInject
                     startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
                 }
             }
+    }
+}
+
+private enum class DrawerMenu(@IdRes val id: Int) {
+    SETTINGS(R.id.menu_settings);
+    companion object {
+        fun findById(id: Int): DrawerMenu? = values().find { it.id == id }
     }
 }
 

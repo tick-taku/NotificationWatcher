@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.tick.taku.notificationwatcher">
 
     <application
@@ -20,6 +21,11 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+        <activity android:name=".view.preference.PreferencesActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
         <service
             android:name=".notification.NotificationWatcher"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
@@ -28,6 +34,11 @@
             </intent-filter>
         </service>
 
+        <provider
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="${applicationId}.workmanager-init"
+            android:exported="false"
+            tools:node="remove"/>
     </application>
 
 </manifest>
