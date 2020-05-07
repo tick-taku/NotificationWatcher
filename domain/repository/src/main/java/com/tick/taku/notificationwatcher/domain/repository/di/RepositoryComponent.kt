@@ -1,8 +1,8 @@
 package com.tick.taku.notificationwatcher.domain.repository.di
 
 import android.content.Context
-import com.tick.taku.notificationwatcher.domain.db.NotificationDatabase
-import com.tick.taku.notificationwatcher.domain.repository.NotificationRepository
+import com.tick.taku.notificationwatcher.domain.db.MessageDatabase
+import com.tick.taku.notificationwatcher.domain.repository.MessageRepository
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -11,11 +11,11 @@ import javax.inject.Singleton
 @Component(modules = [RepositoryModule::class])
 interface RepositoryComponent {
 
-    fun notificationRepository(): NotificationRepository
+    fun messageRepository(): MessageRepository
 
     @Component.Factory
     interface Factory {
-        fun create(@BindsInstance context: Context, @BindsInstance db: NotificationDatabase): RepositoryComponent
+        fun create(@BindsInstance context: Context, @BindsInstance db: MessageDatabase): RepositoryComponent
     }
 
     companion object {

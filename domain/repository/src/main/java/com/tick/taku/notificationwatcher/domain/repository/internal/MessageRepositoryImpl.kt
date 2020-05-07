@@ -3,18 +3,18 @@ package com.tick.taku.notificationwatcher.domain.repository.internal
 import android.app.Notification
 import android.content.Context
 import android.service.notification.StatusBarNotification
-import com.tick.taku.notificationwatcher.domain.db.NotificationDatabase
+import com.tick.taku.notificationwatcher.domain.db.MessageDatabase
 import com.tick.taku.notificationwatcher.domain.db.entity.*
-import com.tick.taku.notificationwatcher.domain.repository.NotificationRepository
+import com.tick.taku.notificationwatcher.domain.repository.MessageRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import javax.inject.Inject
 
-internal class NotificationRepositoryImpl @Inject constructor(private val context: Context,
-                                                              private val db: NotificationDatabase)
-    : NotificationRepository {
+internal class MessageRepositoryImpl @Inject constructor(private val context: Context,
+                                                         private val db: MessageDatabase)
+    : MessageRepository {
 
     companion object {
 

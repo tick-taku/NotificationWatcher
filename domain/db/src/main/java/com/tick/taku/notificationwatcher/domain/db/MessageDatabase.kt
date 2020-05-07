@@ -6,7 +6,7 @@ import com.tick.taku.notificationwatcher.domain.db.entity.RoomInfoEntity
 import com.tick.taku.notificationwatcher.domain.db.entity.UserMessageEntity
 import kotlinx.coroutines.flow.Flow
 
-interface NotificationDatabase {
+interface MessageDatabase {
 
     suspend fun saveFromNotification(context: Context, notification: Notification)
 

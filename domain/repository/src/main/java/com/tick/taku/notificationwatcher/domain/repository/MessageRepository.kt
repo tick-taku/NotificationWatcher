@@ -5,7 +5,7 @@ import com.tick.taku.notificationwatcher.domain.db.entity.RoomInfoEntity
 import com.tick.taku.notificationwatcher.domain.db.entity.UserMessageEntity
 import kotlinx.coroutines.flow.Flow
 
-interface NotificationRepository {
+interface MessageRepository {
 
     /**
      * Save notification to db.

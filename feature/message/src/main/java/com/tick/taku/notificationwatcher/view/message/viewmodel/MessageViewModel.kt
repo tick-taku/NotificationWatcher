@@ -7,12 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.tick.taku.notificationwatcher.domain.db.entity.UserMessageEntity
-import com.tick.taku.notificationwatcher.domain.repository.NotificationRepository
+import com.tick.taku.notificationwatcher.domain.repository.MessageRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MessageViewModel @AssistedInject constructor(@Assisted private val roomId: String,
-                                                   private val repository: NotificationRepository): ViewModel() {
+                                                   private val repository: MessageRepository): ViewModel() {
 
     val messageList: LiveData<Map<String, List<UserMessageEntity>>> by lazy {
         repository.messageList(roomId).asLiveData()

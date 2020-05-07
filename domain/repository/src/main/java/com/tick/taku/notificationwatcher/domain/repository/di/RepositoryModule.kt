@@ -1,7 +1,7 @@
 package com.tick.taku.notificationwatcher.domain.repository.di
 
-import com.tick.taku.notificationwatcher.domain.repository.NotificationRepository
-import com.tick.taku.notificationwatcher.domain.repository.internal.NotificationRepositoryImpl
+import com.tick.taku.notificationwatcher.domain.repository.MessageRepository
+import com.tick.taku.notificationwatcher.domain.repository.internal.MessageRepositoryImpl
 import dagger.Binds
 import dagger.Module
 
@@ -9,6 +9,6 @@ import dagger.Module
 internal abstract class RepositoryModule {
 
     @Binds
-    abstract fun provideNotificationRepository(impl: NotificationRepositoryImpl): NotificationRepository
+    abstract fun provideMessageRepository(impl: MessageRepositoryImpl): MessageRepository
 
 }

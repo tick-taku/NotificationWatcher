@@ -2,7 +2,7 @@ package com.tick.taku.notificationwatcher.notification
 
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
-import com.tick.taku.notificationwatcher.domain.repository.NotificationRepository
+import com.tick.taku.notificationwatcher.domain.repository.MessageRepository
 import dagger.Module
 import dagger.android.AndroidInjection
 import dagger.android.ContributesAndroidInjector
@@ -18,7 +18,7 @@ class NotificationWatcher: NotificationListenerService(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Default
 
-    @Inject lateinit var repository: NotificationRepository
+    @Inject lateinit var repository: MessageRepository
 
     override fun onCreate() {
         AndroidInjection.inject(this)

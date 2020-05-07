@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.months
-import com.tick.taku.notificationwatcher.domain.db.NotificationDatabase
+import com.tick.taku.notificationwatcher.domain.db.MessageDatabase
 import com.tick.taku.notificationwatcher.domain.db.base.BitmapConverter
 import com.tick.taku.notificationwatcher.domain.db.dao.MessageDao
 import com.tick.taku.notificationwatcher.domain.db.dao.RoomDao
@@ -24,7 +24,7 @@ import timber.log.Timber
 
 @Database(entities = [MessageEntityImpl::class, RoomEntityImpl::class, UserEntityImpl::class], version = 1)
 @TypeConverters(BitmapConverter::class)
-internal abstract class NotificationDatabaseImpl: RoomDatabase(), NotificationDatabase {
+internal abstract class MessageDatabaseImpl: RoomDatabase(), MessageDatabase {
 
     // ----- Dao ------
 
@@ -69,8 +69,8 @@ internal abstract class NotificationDatabaseImpl: RoomDatabase(), NotificationDa
          * @param context Context
          * @return Database instance
          */
-        fun getInstance(context: Context): NotificationDatabaseImpl =
-            Room.databaseBuilder(context, NotificationDatabaseImpl::class.java, NOTIFICATION_DATABASE_FILE).build()
+        fun getInstance(context: Context): MessageDatabaseImpl =
+            Room.databaseBuilder(context, MessageDatabaseImpl::class.java, NOTIFICATION_DATABASE_FILE).build()
 
     }
 

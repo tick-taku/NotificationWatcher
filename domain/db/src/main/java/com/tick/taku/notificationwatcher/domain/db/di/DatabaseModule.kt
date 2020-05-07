@@ -1,8 +1,8 @@
 package com.tick.taku.notificationwatcher.domain.db.di
 
 import android.content.Context
-import com.tick.taku.notificationwatcher.domain.db.NotificationDatabase
-import com.tick.taku.notificationwatcher.domain.db.internal.NotificationDatabaseImpl
+import com.tick.taku.notificationwatcher.domain.db.MessageDatabase
+import com.tick.taku.notificationwatcher.domain.db.internal.MessageDatabaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -12,13 +12,13 @@ import javax.inject.Singleton
 internal abstract class DatabaseModule {
 
     @Binds
-    abstract fun bindNotificationDatabase(db: NotificationDatabaseImpl): NotificationDatabase
+    abstract fun bindMessageDatabase(db: MessageDatabaseImpl): MessageDatabase
 
     @Module
     object Provider {
         @Singleton @Provides
-        fun provideNotificationDatabase(context: Context): NotificationDatabaseImpl {
-            return NotificationDatabaseImpl.getInstance(context)
+        fun provideMessageDatabase(context: Context): MessageDatabaseImpl {
+            return MessageDatabaseImpl.getInstance(context)
         }
     }
 
