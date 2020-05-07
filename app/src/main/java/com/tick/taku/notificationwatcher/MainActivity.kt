@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import androidx.annotation.IdRes
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.tick.taku.android.corecomponent.di.ActivityScope
 import com.tick.taku.android.corecomponent.di.FragmentScope
@@ -42,35 +44,32 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), HasAndroidInject
 
         setupToolbar()
 
-        setupDrawer()
-
         checkForPermission()
     }
 
+    override fun onBackPressed() {
+        binding.drawerLayout.run {
+            when (isDrawerOpen(GravityCompat.START)) {
+                true -> closeDrawer(GravityCompat.START)
+                false -> super.onBackPressed()
+            }
+        }
+    }
+
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp()
+        return navController.navigateUp(binding.drawerLayout)
     }
 
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbar)
-        setupActionBarWithNavController(navController)
+
+        val config = AppBarConfiguration(setOf(R.id.room_list_fragment), binding.drawerLayout)
+        setupActionBarWithNavController(navController, config)
+
+        setupDrawer()
     }
 
     private fun setupDrawer() {
-        ActionBarDrawerToggle(
-            this,
-            binding.drawerLayout,
-            binding.toolbar,
-            R.string.content_description_drawer_open,
-            R.string.content_description_drawer_close
-        )
-            .apply {
-                isDrawerSlideAnimationEnabled = false
-            }.also {
-                binding.drawerLayout.addDrawerListener(it)
-                it.syncState()
-            }
-
         binding.drawer.setNavigationItemSelectedListener {
             when (DrawerMenu.findById(it.itemId)) {
                 DrawerMenu.SETTINGS -> { PreferencesActivity.start(this) }
