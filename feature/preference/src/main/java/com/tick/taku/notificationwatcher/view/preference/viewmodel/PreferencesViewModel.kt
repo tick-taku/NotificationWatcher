@@ -3,9 +3,9 @@ package com.tick.taku.notificationwatcher.view.preference.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
 import com.tick.taku.notificationwatcher.view.preference.worker.AutoDeletionWorker
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class PreferencesViewModel @Inject constructor(private val workManager: WorkManager): ViewModel() {
@@ -18,13 +18,23 @@ class PreferencesViewModel @Inject constructor(private val workManager: WorkMana
 
         when (isEnabled) {
             true -> startDeletionWorker()
-            false -> workManager.cancelAllWork()
+            false -> workManager.cancelAllWorkByTag(AutoDeletionWorker.TAG)
         }
     }
 
     private fun startDeletionWorker() {
-        val request = OneTimeWorkRequestBuilder<AutoDeletionWorker>().build()
-        workManager.enqueue(request)
+        val constraints = Constraints.Builder()
+            .setRequiresCharging(true)
+            .setRequiresDeviceIdle(true)
+
+        PeriodicWorkRequestBuilder<AutoDeletionWorker>(1, TimeUnit.DAYS)
+            .addTag(AutoDeletionWorker.TAG)
+            .setInitialDelay(1, TimeUnit.DAYS)
+            .setConstraints(constraints.build())
+            .build()
+            .let {
+                workManager.enqueueUniquePeriodicWork(AutoDeletionWorker.TAG, ExistingPeriodicWorkPolicy.KEEP, it)
+            }
     }
 
 }

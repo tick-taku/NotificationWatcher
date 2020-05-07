@@ -13,6 +13,10 @@ class AutoDeletionWorker @AssistedInject constructor(@Assisted private val conte
                                                      @Assisted params: WorkerParameters,
                                                      private val db: NotificationDatabase): CoroutineWorker(context, params) {
 
+    companion object {
+        const val TAG = "auto_deletion_worker"
+    }
+
     override suspend fun doWork(): Result {
         val before = context.let {
             PreferenceManager.getDefaultSharedPreferences(it).getInt(it.getString(R.string.pref_key_delete_from), 1)
