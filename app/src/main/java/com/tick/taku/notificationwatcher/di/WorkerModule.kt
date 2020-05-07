@@ -13,20 +13,25 @@ object WorkerModule {
 
     @Singleton @Provides
     fun provideWorkManager(context: Context, assistedFactory: AutoDeletionWorker.Factory): WorkManager {
-        val factory = object: WorkerFactory() {
-            override fun createWorker(appContext: Context,
-                                      workerClassName: String,
-                                      workerParameters: WorkerParameters): ListenableWorker? {
-                return when (Class.forName(workerClassName)) {
-                    AutoDeletionWorker::class.java -> assistedFactory.create(appContext, workerParameters)
-                    else -> null
-                }
+        Configuration.Builder().setWorkerFactory { appContext, className, workerParameters ->
+            when (Class.forName(className)) {
+                AutoDeletionWorker::class.java -> assistedFactory.create(appContext, workerParameters)
+                else -> null
             }
         }
-        Configuration.Builder().setWorkerFactory(factory)
             .let { WorkManager.initialize(context, it.build()) }
 
         return WorkManager.getInstance(context)
     }
 
+}
+
+private fun Configuration.Builder.setWorkerFactory(f: (Context, String, WorkerParameters) -> ListenableWorker?): Configuration.Builder {
+    return setWorkerFactory(object: WorkerFactory() {
+        override fun createWorker(appContext: Context,
+                                  workerClassName: String,
+                                  workerParameters: WorkerParameters): ListenableWorker? {
+            return f(appContext, workerClassName, workerParameters)
+        }
+    })
 }
