@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), HasAndroidInject
 
     private fun setupDrawer() {
         viewModel.account.observe(this) {
-            drawerHeaderBinding.accountName.text = it
+            drawerHeaderBinding.accountName.text = it.name
         }
 
         binding.drawer.setNavigationItemSelectedListener {

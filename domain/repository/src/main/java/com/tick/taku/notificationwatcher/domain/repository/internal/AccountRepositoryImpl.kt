@@ -2,6 +2,7 @@ package com.tick.taku.notificationwatcher.domain.repository.internal
 
 import android.content.Intent
 import com.tick.taku.notificationwatcher.domain.api.account.AccountClient
+import com.tick.taku.notificationwatcher.domain.api.entity.AccountEntity
 import com.tick.taku.notificationwatcher.domain.repository.AccountRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -11,10 +12,10 @@ import javax.inject.Inject
 
 internal class AccountRepositoryImpl @Inject constructor(private val client: AccountClient): AccountRepository {
 
-    private val accountInfo: Channel<String> = Channel(Channel.CONFLATED)
+    private val accountInfo: Channel<AccountEntity> = Channel(Channel.CONFLATED)
 
     @UseExperimental(kotlinx.coroutines.FlowPreview::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
-    override fun accountInfo(): Flow<String> =
+    override fun accountInfo(): Flow<AccountEntity> =
         accountInfo.consumeAsFlow()
             .onStart { getProfile() }
 

@@ -1,6 +1,7 @@
 package com.tick.taku.notificationwatcher.domain.api.account
 
 import android.content.Intent
+import com.tick.taku.notificationwatcher.domain.api.entity.AccountEntity
 
 interface AccountClient {
 
@@ -8,8 +9,8 @@ interface AccountClient {
         const val LINE_CHANNEL_ID = ""
     }
 
-    fun obtainProfile(): String
+    fun obtainProfile(): AccountEntity
 
-    fun onAccountLinked(data: Intent?): String
+    fun onAccountLinked(data: Intent?): AccountEntity
 
 }

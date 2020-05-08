@@ -3,6 +3,7 @@ package com.tick.taku.notificationwatcher.viewmodel
 import android.app.Activity
 import android.content.Intent
 import androidx.lifecycle.*
+import com.tick.taku.notificationwatcher.domain.api.entity.AccountEntity
 import com.tick.taku.notificationwatcher.domain.repository.AccountRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,7 +16,7 @@ class MainViewModel @Inject constructor(private val repository: AccountRepositor
         const val ACCOUNT_LINK_RESULT = 999
     }
 
-    val account: LiveData<String> by lazy {
+    val account: LiveData<AccountEntity> by lazy {
         repository.accountInfo().asLiveData(Dispatchers.IO)
     }
 
