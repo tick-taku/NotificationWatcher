@@ -43,6 +43,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":corecomponent"))
     implementation(project(":domain:db"))
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
@@ -73,4 +74,7 @@ dependencies {
 
     // for Timber
     implementation(Dep.Timber.timber)
+
+    // Line ----------------------------------------------------------
+    implementation(Dep.Line.sdk)
 }

@@ -2,37 +2,28 @@ package com.tick.taku.notificationwatcher.viewmodel
 
 import android.app.Activity
 import android.content.Intent
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.linecorp.linesdk.auth.LineLoginApi
-import com.linecorp.linesdk.auth.LineLoginResult
-import com.tick.taku.android.corecomponent.ktx.guard
+import androidx.lifecycle.*
+import com.tick.taku.notificationwatcher.domain.repository.AccountRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import onactivityresult.OnActivityResult
-import timber.log.Timber
+import javax.inject.Inject
 
-class MainViewModel: ViewModel() {
+class MainViewModel @Inject constructor(private val repository: AccountRepository): ViewModel() {
 
     companion object {
         const val ACCOUNT_LINK_RESULT = 999
     }
 
-    private val _account: MutableLiveData<String> = MutableLiveData("")
-    val account: LiveData<String> = _account
+    val account: LiveData<String> by lazy {
+        repository.accountInfo().asLiveData(Dispatchers.IO)
+    }
 
     @Suppress("unused")
     @OnActivityResult(requestCode = ACCOUNT_LINK_RESULT, resultCodes = [Activity.RESULT_OK])
     fun onAccountLinkResult(data: Intent?) {
-        val result = LineLoginApi.getLoginResultFromIntent(data).takeIf { it.isSuccess } guard {
-            Timber.e("Failed for account link.")
-            return
-        }
-        onObtainedProfile(result)
-    }
-
-    private fun onObtainedProfile(result: LineLoginResult) {
-        result.lineProfile?.displayName?.let {
-            _account.postValue(it)
+        viewModelScope.launch(Dispatchers.Default) {
+            repository.onAccountLinkResult(data)
         }
     }
 

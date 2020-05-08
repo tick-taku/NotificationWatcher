@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
-import androidx.activity.viewModels
 import androidx.annotation.IdRes
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.GravityCompat
@@ -21,9 +20,11 @@ import com.tick.taku.android.corecomponent.di.ActivityScope
 import com.tick.taku.android.corecomponent.di.FragmentScope
 import com.tick.taku.android.corecomponent.ktx.dataBinding
 import com.tick.taku.android.corecomponent.ktx.getBinding
+import com.tick.taku.android.corecomponent.ktx.viewModelProvider
 import com.tick.taku.android.corecomponent.util.showDialog
 import com.tick.taku.notificationwatcher.databinding.ActivityMainBinding
 import com.tick.taku.notificationwatcher.databinding.LayoutDrawerHeaderBinding
+import com.tick.taku.notificationwatcher.domain.repository.AccountRepository
 import com.tick.taku.notificationwatcher.view.di.MessageAssistedInjectModule
 import com.tick.taku.notificationwatcher.view.message.MessageFragment
 import com.tick.taku.notificationwatcher.view.preference.PreferencesActivity
@@ -36,6 +37,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import onactivityresult.ActivityResult
 import javax.inject.Inject
+import javax.inject.Provider
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), HasAndroidInjector {
 
@@ -47,7 +49,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), HasAndroidInject
         binding.drawer.getBinding<LayoutDrawerHeaderBinding>()
     }
 
-    private val viewModel: MainViewModel by viewModels()
+    @Inject lateinit var viewModelFactory: Provider<MainViewModel>
+    private val viewModel: MainViewModel by viewModelProvider {
+        viewModelFactory.get()
+    }
 
     private val navController: NavController by lazy {
         findNavController(R.id.fragment_container)
@@ -101,7 +106,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), HasAndroidInject
 
     private fun linkAccount() {
         val intent = LineAuthenticationParams.Builder().scopes(mutableListOf(Scope.PROFILE)).let {
-            LineLoginApi.getLoginIntent(applicationContext, "", it.build())
+            LineLoginApi.getLoginIntent(applicationContext, AccountRepository.LINE_CHANNEL_ID, it.build())
         }
         startActivityForResult(intent, MainViewModel.ACCOUNT_LINK_RESULT)
     }
