@@ -66,6 +66,12 @@ object Dep {
         }
     }
 
+    object OnActivityResult {
+        const val version = "0.7.0"
+        const val core = "com.vanniktech:onactivityresult:$version"
+        const val compiler = "com.vanniktech:onactivityresult-compiler:$version"
+    }
+
     object Groupie {
         const val version = "2.7.2"
         const val common = "com.xwray:groupie:$version"

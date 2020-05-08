@@ -88,6 +88,10 @@ dependencies {
     // WorkManager ----------------------------------------------------
     implementation(Dep.AndroidX.WorkManager.runtimeKtx)
 
+    // OnActivityResult ----------------------------------------------
+    implementation(Dep.OnActivityResult.core)
+    kapt(Dep.OnActivityResult.compiler)
+
     // Coil ----------------------------------------------------------
     implementation(Dep.Coil.common)
 
