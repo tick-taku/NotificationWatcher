@@ -87,4 +87,9 @@ object Dep {
         const val version = "4.7.1"
         const val timber = "com.jakewharton.timber:timber:$version"
     }
+
+    object Line {
+        const val version = "5.0.1"
+        const val sdk = "com.linecorp:linesdk:$version"
+    }
 }

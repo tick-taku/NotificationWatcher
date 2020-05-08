@@ -93,4 +93,7 @@ dependencies {
 
     // Timber  -------------------------------------------------------
     implementation(Dep.Timber.timber)
+
+    // Line ----------------------------------------------------------
+    implementation(Dep.Line.sdk)
 }
