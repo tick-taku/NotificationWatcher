@@ -47,6 +47,7 @@ dependencies {
     implementation(Dep.AndroidX.coreKtx)
     implementation(Dep.AndroidX.activityKtx)
     implementation(Dep.AndroidX.fragmentKtx)
+    implementation(Dep.AndroidX.design)
 
     implementation(Dep.AndroidX.Navigation.uiKtx)
 

@@ -4,9 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import androidx.activity.viewModels
 import androidx.annotation.IdRes
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -18,31 +20,34 @@ import com.linecorp.linesdk.auth.LineLoginApi
 import com.tick.taku.android.corecomponent.di.ActivityScope
 import com.tick.taku.android.corecomponent.di.FragmentScope
 import com.tick.taku.android.corecomponent.ktx.dataBinding
-import com.tick.taku.android.corecomponent.ktx.guard
+import com.tick.taku.android.corecomponent.ktx.getBinding
 import com.tick.taku.android.corecomponent.util.showDialog
 import com.tick.taku.notificationwatcher.databinding.ActivityMainBinding
+import com.tick.taku.notificationwatcher.databinding.LayoutDrawerHeaderBinding
 import com.tick.taku.notificationwatcher.view.di.MessageAssistedInjectModule
 import com.tick.taku.notificationwatcher.view.message.MessageFragment
 import com.tick.taku.notificationwatcher.view.preference.PreferencesActivity
 import com.tick.taku.notificationwatcher.view.room.RoomListFragment
+import com.tick.taku.notificationwatcher.viewmodel.MainViewModel
 import dagger.Module
 import dagger.android.AndroidInjector
 import dagger.android.ContributesAndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
-import timber.log.Timber
+import onactivityresult.ActivityResult
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), HasAndroidInjector {
-
-    companion object {
-        private const val ACCOUNT_LINK_RESULT = 999
-    }
 
     @Inject lateinit var injector: DispatchingAndroidInjector<Any>
     override fun androidInjector(): AndroidInjector<Any> = injector
 
     private val binding: ActivityMainBinding by dataBinding()
+    private val drawerHeaderBinding: LayoutDrawerHeaderBinding by lazy {
+        binding.drawer.getBinding<LayoutDrawerHeaderBinding>()
+    }
+
+    private val viewModel: MainViewModel by viewModels()
 
     private val navController: NavController by lazy {
         findNavController(R.id.fragment_container)
@@ -79,6 +84,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), HasAndroidInject
     }
 
     private fun setupDrawer() {
+        viewModel.account.observe(this) {
+            drawerHeaderBinding.accountName.text = it
+        }
+
         binding.drawer.setNavigationItemSelectedListener {
             when (DrawerMenu.findById(it.itemId)) {
                 DrawerMenu.ACCOUNT_LINK -> { linkAccount() }
@@ -94,20 +103,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), HasAndroidInject
         val intent = LineAuthenticationParams.Builder().scopes(mutableListOf(Scope.PROFILE)).let {
             LineLoginApi.getLoginIntent(applicationContext, "", it.build())
         }
-        startActivityForResult(intent, ACCOUNT_LINK_RESULT)
+        startActivityForResult(intent, MainViewModel.ACCOUNT_LINK_RESULT)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
-        when (requestCode) {
-            ACCOUNT_LINK_RESULT -> onAccountLinkResult(data)
-        }
-    }
-
-    private fun onAccountLinkResult(data: Intent?) {
-        val result = LineLoginApi.getLoginResultFromIntent(data).takeIf { it.isSuccess }?.lineProfile guard { return }
-        Timber.d("User name: ${result.displayName}")
+        ActivityResult.onResult(requestCode, resultCode, data).into(viewModel)
     }
 
     /**
