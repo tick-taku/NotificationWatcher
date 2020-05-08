@@ -1,14 +1,11 @@
-import dependencies.Dep
 import dependencies.Packages
+import dependencies.Dep
 import extensions.release
 
 plugins {
     id("com.android.library")
-
     kotlin("android")
-
     kotlin("android.extensions")
-
     kotlin("kapt")
 }
 
@@ -30,12 +27,6 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    androidExtensions { isExperimental = true }
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
-        kotlinOptions {
-            freeCompilerArgs += listOf("-Xuse-experimental=kotlin.Experimental")
-        }
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -44,8 +35,6 @@ android {
 
 dependencies {
     implementation(project(":corecomponent"))
-    implementation(project(":domain:api"))
-    implementation(project(":domain:db"))
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     implementation(Dep.Kotlin.stdlibJdk)
@@ -63,16 +52,13 @@ dependencies {
     kapt(Dep.Dagger.compiler)
     kapt(Dep.Dagger.androidProcessor)
 
-    // Coroutine ---------------------------------------
+    // Coroutine -----------------------------------------------------
     implementation(Dep.Kotlin.coroutines)
     implementation(Dep.Kotlin.coroutinesCommon)
 
-    // Room ---------------------------------------------
-    implementation(Dep.AndroidX.Room.runtime)
-
-    // Klock ---------------------------------------------------------
-    implementation(Dep.Klock.common)
-
-    // for Timber
+    // Timber --------------------------------------------------------
     implementation(Dep.Timber.timber)
+
+    // Line ----------------------------------------------------------
+    implementation(Dep.Line.sdk)
 }

@@ -19,6 +19,7 @@ import javax.inject.Singleton
     PreferencesActivityModule::class,
     NotificationWatcherModule::class,
     RepositoryComponentModule::class,
+    ApiComponentModule::class,
     DatabaseComponentModule::class
 ])
 interface AppComponent: AndroidInjector<MyApplication> {

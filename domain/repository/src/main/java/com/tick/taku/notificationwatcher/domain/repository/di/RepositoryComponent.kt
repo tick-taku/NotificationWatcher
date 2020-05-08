@@ -1,6 +1,7 @@
 package com.tick.taku.notificationwatcher.domain.repository.di
 
 import android.content.Context
+import com.tick.taku.notificationwatcher.domain.api.account.AccountClient
 import com.tick.taku.notificationwatcher.domain.db.MessageDatabase
 import com.tick.taku.notificationwatcher.domain.repository.AccountRepository
 import com.tick.taku.notificationwatcher.domain.repository.MessageRepository
@@ -18,7 +19,9 @@ interface RepositoryComponent {
 
     @Component.Factory
     interface Factory {
-        fun create(@BindsInstance context: Context, @BindsInstance db: MessageDatabase): RepositoryComponent
+        fun create(@BindsInstance context: Context,
+                   @BindsInstance db: MessageDatabase,
+                   @BindsInstance client: AccountClient): RepositoryComponent
     }
 
     companion object {

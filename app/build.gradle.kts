@@ -52,6 +52,7 @@ dependencies {
     implementation(project(":corecomponent"))
     implementation(project(":feature:message"))
     implementation(project(":feature:preference"))
+    implementation(project(":domain:api"))
     implementation(project(":domain:db"))
     implementation(project(":domain:repository"))
 
