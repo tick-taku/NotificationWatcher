@@ -26,6 +26,7 @@ import com.tick.taku.android.corecomponent.ktx.viewModelProvider
 import com.tick.taku.android.corecomponent.util.showDialog
 import com.tick.taku.notificationwatcher.databinding.ActivityMainBinding
 import com.tick.taku.notificationwatcher.databinding.LayoutDrawerHeaderBinding
+import com.tick.taku.notificationwatcher.dialog.IconDialog
 import com.tick.taku.notificationwatcher.domain.api.entity.AccountEntity
 import com.tick.taku.notificationwatcher.view.di.MessageAssistedInjectModule
 import com.tick.taku.notificationwatcher.view.message.MessageFragment
@@ -93,6 +94,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), HasAndroidInject
     private fun setupDrawer() {
         viewModel.account.observe(this) {
             drawerHeaderBinding.setupAccount(it)
+        }
+
+        drawerHeaderBinding.accountIcon.setOnClickListener {
+            IconDialog.show(supportFragmentManager, viewModel.account.value?.iconUrl)
         }
 
         binding.drawer.setNavigationItemSelectedListener {
