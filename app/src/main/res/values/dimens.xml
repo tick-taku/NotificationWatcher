@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="drawer_header_padding">16dp</dimen>
+    <dimen name="drawer_header_height">130dp</dimen>
+    <dimen name="drawer_header_icon">64dp</dimen>
+</resources>

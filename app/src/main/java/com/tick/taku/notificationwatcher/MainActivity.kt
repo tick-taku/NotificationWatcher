@@ -13,6 +13,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import coil.api.load
+import coil.transform.CircleCropTransformation
 import com.linecorp.linesdk.Scope
 import com.linecorp.linesdk.auth.LineAuthenticationParams
 import com.linecorp.linesdk.auth.LineLoginApi
@@ -25,6 +27,7 @@ import com.tick.taku.android.corecomponent.util.showDialog
 import com.tick.taku.notificationwatcher.databinding.ActivityMainBinding
 import com.tick.taku.notificationwatcher.databinding.LayoutDrawerHeaderBinding
 import com.tick.taku.notificationwatcher.domain.api.account.AccountClient
+import com.tick.taku.notificationwatcher.domain.api.entity.AccountEntity
 import com.tick.taku.notificationwatcher.view.di.MessageAssistedInjectModule
 import com.tick.taku.notificationwatcher.view.message.MessageFragment
 import com.tick.taku.notificationwatcher.view.preference.PreferencesActivity
@@ -90,7 +93,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), HasAndroidInject
 
     private fun setupDrawer() {
         viewModel.account.observe(this) {
-            drawerHeaderBinding.accountName.text = it.name
+            drawerHeaderBinding.setupAccount(it)
         }
 
         binding.drawer.setNavigationItemSelectedListener {
@@ -101,6 +104,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), HasAndroidInject
             }
             binding.drawerLayout.closeDrawers()
             false
+        }
+    }
+
+    private fun LayoutDrawerHeaderBinding.setupAccount(accountInfo: AccountEntity) {
+        accountName.text = accountInfo.name
+        accountMsg.text = accountInfo.status
+        accountIcon.load(accountInfo.iconUrl) {
+            transformations(CircleCropTransformation())
         }
     }
 
