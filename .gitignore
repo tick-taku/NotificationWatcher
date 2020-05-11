@@ -233,3 +233,5 @@ Temporary Items
 .nfs*
 
 
+# for credentials
+credential.properties

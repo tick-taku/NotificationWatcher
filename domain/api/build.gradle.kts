@@ -1,6 +1,22 @@
 import dependencies.Packages
 import dependencies.Dep
+import extensions.debug
 import extensions.release
+import java.util.Properties
+import java.io.FileInputStream
+import kotlin.collections.mapOf
+
+// Loads the keystore.properties file into the keystoreProperties object.
+val credentialProperties = Properties().apply {
+    val credentialPropertiesFile = rootProject.file("credential.properties")
+    load(FileInputStream(credentialPropertiesFile))
+}
+val lineChannelId: Map<String, String> by extra {
+    mapOf(
+        "lineChannelIdDebug".let { it to credentialProperties[it].toString() },
+        "lineChannelIdRelease".let { it to credentialProperties[it].toString() }
+    )
+}
 
 plugins {
     id("com.android.library")
@@ -22,9 +38,13 @@ android {
         jvmTarget = "1.8"
     }
     buildTypes {
+        debug {
+            buildConfigField("String", "LINE_CHANNEL_ID", lineChannelId["lineChannelIdDebug"])
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            buildConfigField("String", "LINE_CHANNEL_ID", lineChannelId["lineChannelIdRelease"])
         }
     }
     compileOptions {

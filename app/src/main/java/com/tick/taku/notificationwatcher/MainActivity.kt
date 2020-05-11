@@ -26,7 +26,6 @@ import com.tick.taku.android.corecomponent.ktx.viewModelProvider
 import com.tick.taku.android.corecomponent.util.showDialog
 import com.tick.taku.notificationwatcher.databinding.ActivityMainBinding
 import com.tick.taku.notificationwatcher.databinding.LayoutDrawerHeaderBinding
-import com.tick.taku.notificationwatcher.domain.api.account.AccountClient
 import com.tick.taku.notificationwatcher.domain.api.entity.AccountEntity
 import com.tick.taku.notificationwatcher.view.di.MessageAssistedInjectModule
 import com.tick.taku.notificationwatcher.view.message.MessageFragment
@@ -117,7 +116,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), HasAndroidInject
 
     private fun linkAccount() {
         val intent = LineAuthenticationParams.Builder().scopes(mutableListOf(Scope.PROFILE)).let {
-            LineLoginApi.getLoginIntent(applicationContext, AccountClient.LINE_CHANNEL_ID, it.build())
+            LineLoginApi.getLoginIntent(applicationContext, BuildConfig.LINE_CHANNEL_ID, it.build())
         }
         startActivityForResult(intent, MainViewModel.ACCOUNT_LINK_RESULT)
     }

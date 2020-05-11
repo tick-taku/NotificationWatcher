@@ -5,10 +5,6 @@ import com.tick.taku.notificationwatcher.domain.api.entity.AccountEntity
 
 interface AccountClient {
 
-    companion object {
-        const val LINE_CHANNEL_ID = ""
-    }
-
     fun obtainProfile(): AccountEntity
 
     fun onAccountLinked(data: Intent?): AccountEntity
