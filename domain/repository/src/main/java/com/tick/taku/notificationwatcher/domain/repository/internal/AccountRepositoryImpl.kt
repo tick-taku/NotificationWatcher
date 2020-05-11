@@ -26,7 +26,7 @@ internal class AccountRepositoryImpl @Inject constructor(private val client: Acc
     }
 
     override suspend fun onAccountLinkResult(data: Intent?) {
-        client.onAccountLinked(data)
+        accountInfo.offer(client.onAccountLinked(data))
     }
 
 }
