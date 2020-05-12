@@ -6,6 +6,8 @@
 
     <color name="posted_date">#C8C8C8</color>
 
+    <color name="input_box_background">#FAFAFA</color>
+
     <color name="room_name">#75D2F6</color>
     <color name="room_card">#FAFAFA</color>
 
