@@ -1,6 +1,10 @@
 package com.tick.taku.notificationwatcher.view.room
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
@@ -31,6 +35,18 @@ class RoomListFragment: Fragment(R.layout.fragment_room_list), Injectable {
         super.onActivityCreated(savedInstanceState)
 
         setupRoomList()
+
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_message, menu)
+
+        menu.findItem(R.id.launch_line).setOnMenuItemClickListener {
+            launchLineRoom()
+            true
+        }
     }
 
     private fun setupRoomList() {
@@ -65,6 +81,14 @@ class RoomListFragment: Fragment(R.layout.fragment_room_list), Injectable {
             }
             setNegativeButton(R.string.cancel)
         }
+    }
+
+    private fun launchLineRoom() {
+        val intent = Intent().apply {
+            action = Intent.ACTION_VIEW
+            data = Uri.parse("https://line.me/R/nv/chat")
+        }
+        startActivity(intent)
     }
 
 }

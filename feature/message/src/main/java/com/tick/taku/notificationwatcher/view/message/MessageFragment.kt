@@ -2,7 +2,10 @@ package com.tick.taku.notificationwatcher.view.message
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.view.MotionEvent
 import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
@@ -10,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.tick.taku.android.corecomponent.di.Injectable
 import com.tick.taku.android.corecomponent.ktx.dataBinding
+import com.tick.taku.android.corecomponent.ktx.hideKeyboard
 import com.tick.taku.android.corecomponent.ktx.toast
 import com.tick.taku.android.corecomponent.ktx.viewModelProvider
 import com.tick.taku.android.corecomponent.util.setupBackUp
@@ -22,6 +26,7 @@ import com.tick.taku.notificationwatcher.view.message.viewmodel.MessageViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Section
 import com.xwray.groupie.databinding.GroupieViewHolder
+import java.net.URLEncoder
 import javax.inject.Inject
 
 class MessageFragment: Fragment(R.layout.fragment_message), Injectable {
@@ -41,6 +46,8 @@ class MessageFragment: Fragment(R.layout.fragment_message), Injectable {
         setupBackUp(findNavController())
 
         setupMessageList()
+
+        setupPostMessageField()
     }
 
     private fun setupMessageList() {
@@ -86,6 +93,32 @@ class MessageFragment: Fragment(R.layout.fragment_message), Injectable {
                 viewModel.delete(id)
             }
             setNegativeButton(R.string.cancel)
+        }
+    }
+
+    private fun setupPostMessageField() {
+        binding.viewModel = viewModel
+        binding.messageInputLayout.setEndIconOnClickListener {
+            postMessageToLine()
+        }
+
+        @Suppress("ClickableViewAccessibility")
+        binding.messageList.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) binding.messageList.requestFocus()
+            false
+        }
+        binding.messageInputField.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) hideKeyboard(v)
+        }
+    }
+
+    private fun postMessageToLine() {
+        viewModel.outgoingMessage.value?.takeIf { it.isNotEmpty() }?.let {
+            val intent = Intent().apply {
+                action = Intent.ACTION_VIEW
+                data = Uri.parse("https://line.me/R/msg/text/${URLEncoder.encode(it, "utf-8")}")
+            }
+            startActivity(intent)
         }
     }
 

@@ -2,6 +2,8 @@
 <resources>
     <color name="posted_date">#848484</color>
 
+    <color name="input_box_background">#313233</color>
+
     <color name="room_name">#03A9F4</color>
     <color name="room_card">#616161</color>
 

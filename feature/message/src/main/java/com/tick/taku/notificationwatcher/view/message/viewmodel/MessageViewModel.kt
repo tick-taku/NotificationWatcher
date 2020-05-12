@@ -1,9 +1,6 @@
 package com.tick.taku.notificationwatcher.view.message.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import com.tick.taku.notificationwatcher.domain.db.entity.UserMessageEntity
@@ -17,6 +14,8 @@ class MessageViewModel @AssistedInject constructor(@Assisted private val roomId:
     val messageList: LiveData<Map<String, List<UserMessageEntity>>> by lazy {
         repository.messageList(roomId).asLiveData()
     }
+
+    val outgoingMessage: MutableLiveData<String> = MutableLiveData("")
 
     fun delete(id: String) {
         viewModelScope.launch(Dispatchers.IO) {

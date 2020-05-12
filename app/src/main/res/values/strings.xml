@@ -2,13 +2,16 @@
     <string name="app_name">NotificationWatcher</string>
 
     <!-- Menu -->
+    <string name="account_link">Account Link</string>
     <string name="menu_settings">Settings</string>
     <string name="content_description_drawer_header">Header</string>
-    <string name="content_description_drawer_open">drawer open</string>
-    <string name="content_description_drawer_close">drawer close</string>
+    <string name="content_description_drawer_icon">Icon</string>
 
     <!-- Dialog -->
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="notification_listener_denied">Permission not granted. Please setup.</string>
+
+    <string name="already_logged_in">You are already logged in to LINE. Do you want to logout?</string>
+    <string name="logout">LOGOUT</string>
 </resources>

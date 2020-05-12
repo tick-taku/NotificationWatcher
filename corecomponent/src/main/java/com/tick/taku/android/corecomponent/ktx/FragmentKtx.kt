@@ -1,7 +1,10 @@
 package com.tick.taku.android.corecomponent.ktx
 
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -36,4 +39,9 @@ fun Fragment.toast(text: CharSequence, duration: Int = Toast.LENGTH_SHORT): Toas
 
 fun Fragment.toast(@StringRes resId: Int, duration: Int = Toast.LENGTH_SHORT): Toast {
     return requireContext().toast(resId, duration)
+}
+
+fun Fragment.hideKeyboard(v: View) {
+    context?.getSystemService<InputMethodManager>()
+        ?.hideSoftInputFromWindow(v.windowToken, 0)
 }

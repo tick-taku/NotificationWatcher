@@ -43,6 +43,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":corecomponent"))
+    implementation(project(":domain:api"))
     implementation(project(":domain:db"))
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
