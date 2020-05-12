@@ -7,6 +7,7 @@
             android:icon="@drawable/line"/>
         <item
             android:id="@+id/menu_settings"
-            android:title="@string/menu_settings"/>
+            android:title="@string/menu_settings"
+            android:icon="@drawable/ic_settings"/>
     </group>
 </menu>
