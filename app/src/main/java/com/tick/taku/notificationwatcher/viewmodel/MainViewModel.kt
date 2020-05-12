@@ -28,4 +28,10 @@ class MainViewModel @Inject constructor(private val repository: AccountRepositor
         }
     }
 
+    fun logout() {
+        viewModelScope.launch(Dispatchers.Default) {
+            repository.logout()
+        }
+    }
+
 }

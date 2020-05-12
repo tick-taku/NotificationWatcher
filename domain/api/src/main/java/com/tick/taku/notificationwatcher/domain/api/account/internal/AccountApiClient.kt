@@ -39,4 +39,10 @@ internal class AccountApiClient @Inject constructor(private val context: Context
     private fun extractAccount(profile: LineProfile) =
         AccountEntityImpl(profile.displayName, profile.statusMessage ?: "", profile.pictureUrl?.toString() ?: "")
 
+    override fun logout() {
+        lineApiClient.logout().takeIf { it.isSuccess } guard {
+            Timber.e("Failed for logout.")
+        }
+    }
+
 }

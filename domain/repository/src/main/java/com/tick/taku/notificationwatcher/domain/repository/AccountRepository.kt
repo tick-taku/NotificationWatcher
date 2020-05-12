@@ -10,4 +10,6 @@ interface AccountRepository {
 
     suspend fun onAccountLinkResult(data: Intent?)
 
+    suspend fun logout()
+
 }

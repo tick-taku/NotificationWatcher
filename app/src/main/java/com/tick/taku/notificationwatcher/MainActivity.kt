@@ -120,10 +120,23 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), HasAndroidInject
     }
 
     private fun linkAccount() {
+        if (drawerHeaderBinding.accountName.text.isNotEmpty()) {
+            showLogoutDialog()
+            return
+        }
+
         val intent = LineAuthenticationParams.Builder().scopes(mutableListOf(Scope.PROFILE)).let {
             LineLoginApi.getLoginIntent(applicationContext, BuildConfig.LINE_CHANNEL_ID, it.build())
         }
         startActivityForResult(intent, MainViewModel.ACCOUNT_LINK_RESULT)
+    }
+
+    private fun showLogoutDialog() {
+        showDialog {
+            setMessage(R.string.already_logged_in)
+            setPositiveButton(R.string.logout) { viewModel.logout() }
+            setNegativeButton(R.string.cancel)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

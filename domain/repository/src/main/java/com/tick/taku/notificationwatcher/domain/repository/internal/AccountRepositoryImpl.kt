@@ -10,26 +10,29 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@UseExperimental(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 internal class AccountRepositoryImpl @Inject constructor(private val client: AccountClient): AccountRepository {
 
-    @UseExperimental(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     private val accountInfo: ConflatedBroadcastChannel<AccountEntity> = ConflatedBroadcastChannel()
 
-    @UseExperimental(kotlinx.coroutines.FlowPreview::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+    @UseExperimental(kotlinx.coroutines.FlowPreview::class)
     override fun accountInfo(): Flow<AccountEntity> =
         accountInfo.asFlow()
             .onStart { getProfile() }
 
-    @UseExperimental(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     private suspend fun getProfile() {
         withContext(Dispatchers.IO) {
             accountInfo.offer(client.obtainProfile())
         }
     }
 
-    @UseExperimental(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     override suspend fun onAccountLinkResult(data: Intent?) {
         accountInfo.offer(client.onAccountLinked(data))
+    }
+
+    override suspend fun logout() {
+        client.logout()
+        accountInfo.offer(client.obtainProfile())
     }
 
 }

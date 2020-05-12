@@ -11,4 +11,7 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="notification_listener_denied">Permission not granted. Please setup.</string>
+
+    <string name="already_logged_in">You are already logged in to LINE. Do you want to logout?</string>
+    <string name="logout">LOGOUT</string>
 </resources>

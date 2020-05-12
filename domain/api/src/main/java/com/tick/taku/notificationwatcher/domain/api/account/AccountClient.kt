@@ -9,4 +9,6 @@ interface AccountClient {
 
     fun onAccountLinked(data: Intent?): AccountEntity
 
+    fun logout()
+
 }
