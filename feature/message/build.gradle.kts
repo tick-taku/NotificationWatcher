@@ -92,4 +92,7 @@ dependencies {
 
     // Timber --------------------------------------------------------
     implementation(Dep.Timber.timber)
+
+    // Jsoup ---------------------------------------------------------
+    implementation(Dep.Jsoup.common)
 }
