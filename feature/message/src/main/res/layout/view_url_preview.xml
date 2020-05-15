@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:padding="4dp">
+
+        <View
+            android:id="@+id/preview_guide"
+            android:layout_width="@dimen/preview_guide_width"
+            android:layout_height="@dimen/preview_guide_height"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/preview_guide"/>
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="@id/preview_guide"
+            app:layout_constraintBottom_toBottomOf="@id/preview_guide"
+            app:layout_constraintStart_toEndOf="@id/preview_guide"
+            app:layout_constraintDimensionRatio="6:5"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="8dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/content_description_preview_image"/>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/image"
+            app:layout_constraintStart_toEndOf="@id/image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="2dp"
+            android:textSize="@dimen/global_font_size"
+            android:textStyle="bold"
+            android:gravity="start"
+            app:layout_constrainedWidth="true"
+            android:singleLine="true"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintBottom_toBottomOf="@id/preview_guide"
+            app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            android:layout_marginTop="4dp"
+            app:layout_constrainedWidth="true"
+            android:textSize="@dimen/global_font_size_small"
+            android:alpha="0.7"
+            android:gravity="start"
+            android:maxLines="2"
+            android:ellipsize="end"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
