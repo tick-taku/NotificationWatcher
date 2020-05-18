@@ -69,7 +69,8 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:scrollbars="none"
                 android:overScrollMode="never"
-                android:nestedScrollingEnabled="false"/>
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone"/>
 
         </LinearLayout>
 

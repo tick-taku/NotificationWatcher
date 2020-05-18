@@ -32,4 +32,9 @@ interface MessageRepository {
      */
     suspend fun deleteMessage(id: String)
 
+    /**
+     * Is show url preview in message.
+     */
+    fun isShowUrlPreview(): Flow<Boolean>
+
 }
