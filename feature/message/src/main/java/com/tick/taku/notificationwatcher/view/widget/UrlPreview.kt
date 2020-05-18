@@ -3,12 +3,14 @@ package com.tick.taku.notificationwatcher.view.widget
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
+import android.util.LruCache
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.annotation.MainThread
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import coil.api.load
+import coil.request.CachePolicy
 import coil.transform.RoundedCornersTransformation
 import com.tick.taku.android.corecomponent.ktx.guard
 import com.tick.taku.android.corecomponent.ktx.isWebUrlSchema
@@ -22,6 +24,12 @@ import java.lang.IllegalArgumentException
 import java.lang.NullPointerException
 import java.util.*
 import kotlin.coroutines.CoroutineContext
+
+private val previewCache = LruCache<String, UrlPreviewEntity>(1024 * 1024)
+
+internal data class UrlPreviewEntity(val title: String,
+                                     val description: String,
+                                     val imageUrl: String)
 
 class UrlPreview: FrameLayout, CoroutineScope {
     constructor(context: Context): super(context)
@@ -37,12 +45,7 @@ class UrlPreview: FrameLayout, CoroutineScope {
                 onRenderedError?.invoke(IllegalArgumentException("Argument is not web url."))
                 return
             }
-
-            // TODO: Use cache
-            if (title.isEmpty())
-                obtainLinkPreview(value)
-            else
-                renderPreview(title, description, imageUrl)
+            showPreview(field)
         }
 
     var title: String = ""
@@ -59,6 +62,7 @@ class UrlPreview: FrameLayout, CoroutineScope {
         @MainThread private set(value) {
             field = value
             binding.image.load(field) {
+                diskCachePolicy(CachePolicy.ENABLED)
                 transformations(RoundedCornersTransformation(previewImageRadius))
             }
         }
@@ -72,12 +76,19 @@ class UrlPreview: FrameLayout, CoroutineScope {
         context.resources.getDimension(R.dimen.url_preview_image_radius)
     }
 
+    private fun showPreview(url: String) {
+        previewCache.get(url).takeIf { it?.title?.isNotEmpty() == true }?.let { renderPreview(it) }
+            ?: obtainLinkPreview(url)
+    }
+
     private fun obtainLinkPreview(link: String) {
         launch {
             connectAsync(link).also { connection = it }.await()?.let {
+                val entity = UrlPreviewEntity(it.getTitle(), it.getDescription(), it.getImageUrl())
                 withContext(Dispatchers.Main) {
-                    renderPreview(it.getTitle(), it.getDescription(), it.getImageUrl())
+                    renderPreview(entity)
                 }
+                previewCache.put(link, entity)
             }
             connection = null
         }
@@ -119,11 +130,12 @@ class UrlPreview: FrameLayout, CoroutineScope {
         }
     }
 
-    private fun renderPreview(t: String, d: String, i: String) {
-        if (t.isNotEmpty()) {
-            title = t
-            description = d
-            imageUrl = i
+    @MainThread
+    private fun renderPreview(entity: UrlPreviewEntity) {
+        if (entity.title.isNotEmpty()) {
+            title = entity.title
+            description = entity.description
+            imageUrl = entity.imageUrl
             onRenderedSuccess?.invoke()
         } else onRenderedError?.invoke(NullPointerException("Obtained title is empty."))
     }
@@ -148,11 +160,8 @@ class UrlPreview: FrameLayout, CoroutineScope {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
 
-        // TODO: Use cache
         if (title.isEmpty())
-            obtainLinkPreview(url)
-        else
-            renderPreview(title, description, imageUrl)
+            showPreview(url)
     }
 
     override fun onDetachedFromWindow() {
