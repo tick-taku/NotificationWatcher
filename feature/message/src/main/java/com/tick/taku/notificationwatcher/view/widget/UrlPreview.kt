@@ -84,7 +84,7 @@ class UrlPreview: FrameLayout, CoroutineScope {
     private fun obtainLinkPreview(link: String) {
         launch {
             connectAsync(link).also { connection = it }.await()?.let {
-                val entity = UrlPreviewEntity(it.getTitle(), it.getDescription(), it.getImageUrl())
+                val entity = UrlPreviewEntity(it.metaTitle, it.description, it.imageUrl)
                 withContext(Dispatchers.Main) {
                     renderPreview(entity)
                 }
@@ -108,27 +108,27 @@ class UrlPreview: FrameLayout, CoroutineScope {
             .getOrNull()
     }
 
-    private fun Document.getTitle(): String {
-        return select("meta[property=og:title]").attr("content").takeIf { it.isNotEmpty() } ?: title()
-    }
+    private val Document.metaTitle: String
+        get() = select("meta[property=og:title]").attr("content").takeIf { it.isNotEmpty() } ?: title()
 
-    private fun Document.getDescription(): String {
-        val d = select("meta").find {
-            it.attr("property") == "og:description" || it.attr("name").toLowerCase(Locale.ROOT) == "description"
-        }?.attr("content") ?: ""
-        return d.trim().replace("\n", " ")
-    }
-
-    private fun Document.getImageUrl(): String {
-        return select("meta[property=og:image]").attr("content").takeIf { it.isNotEmpty() } guard {
-            select("link").find {
-                when (it.attr("rel").toLowerCase(Locale.ROOT)) {
-                    "image_src", "apple-touch-icon", "icon" -> true
-                    else -> false
-                }
-            }?.attr("href") ?: ""
+    private val Document.description: String
+        get() {
+            val d = select("meta").find {
+                it.attr("property") == "og:description" || it.attr("name").toLowerCase(Locale.ROOT) == "description"
+            }?.attr("content") ?: ""
+            return d.trim().replace("\n", " ")
         }
-    }
+
+    private val Document.imageUrl: String
+        get() =
+            select("meta[property=og:image]").attr("content").takeIf { it.isNotEmpty() } guard {
+                select("link").find {
+                    when (it.attr("rel").toLowerCase(Locale.ROOT)) {
+                        "image_src", "apple-touch-icon", "icon" -> true
+                        else -> false
+                    }
+                }?.attr("href") ?: ""
+            }
 
     @MainThread
     private fun renderPreview(entity: UrlPreviewEntity) {
