@@ -59,7 +59,7 @@ class UrlPreview: FrameLayout, CoroutineScope {
         @MainThread private set(value) {
             field = value
             binding.image.load(field) {
-                transformations(RoundedCornersTransformation(10f, 10f, 10f, 10f))
+                transformations(RoundedCornersTransformation(previewImageRadius))
             }
         }
 
@@ -67,6 +67,10 @@ class UrlPreview: FrameLayout, CoroutineScope {
         DataBindingUtil.inflate<ViewUrlPreviewBinding>(LayoutInflater.from(context), R.layout.view_url_preview, this, true)
     }
     private var connection: Deferred<Document?>? = null
+
+    private val previewImageRadius: Float by lazy {
+        context.resources.getDimension(R.dimen.url_preview_image_radius)
+    }
 
     private fun obtainLinkPreview(link: String) {
         launch {

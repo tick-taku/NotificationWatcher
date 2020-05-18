@@ -15,4 +15,6 @@
     <dimen name="preview_guide_width">2dp</dimen>
     <dimen name="preview_guide_height">60dp</dimen>
     <dimen name="preview_guide_radius">16dp</dimen>
+
+    <dimen name="url_preview_image_radius">10dp</dimen>
 </resources>
