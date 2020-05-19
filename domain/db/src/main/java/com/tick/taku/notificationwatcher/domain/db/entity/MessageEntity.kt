@@ -16,7 +16,7 @@ interface MessageEntity {
     fun localTime(): DateTimeTz = DateTime(date).local
 
     fun extractWebLink(): List<String> =
-        message.split("\n").mapNotNull {
+        message.split("\n", " ").mapNotNull {
             val p = Patterns.WEB_URL.matcher(it)
             if (p.find()) it.substring(p.start() until p.end()).takeIf { s -> s.toUri().isWebUrlSchema() }
             else null
