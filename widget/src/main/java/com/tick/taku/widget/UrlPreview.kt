@@ -28,14 +28,14 @@ class UrlPreview: FrameLayout, CoroutineScope {
 
     override val coroutineContext: CoroutineContext = Dispatchers.Main
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        onRenderedError?.invoke(throwable)
+        listener?.onError(throwable)
     }
     private val coroutineScope = CoroutineScope(coroutineContext + exceptionHandler)
 
     var url: String = ""
         set(value) {
             field = value.takeIf { it.toUri().isWebUrlSchema() } guard {
-                onRenderedError?.invoke(IllegalArgumentException("Argument is not web url."))
+                listener?.onError(IllegalArgumentException("Argument is not web url."))
                 return
             }
             makePreview(field)
@@ -51,9 +51,9 @@ class UrlPreview: FrameLayout, CoroutineScope {
                     diskCachePolicy(CachePolicy.ENABLED)
                     transformations(RoundedCornersTransformation(previewImageRadius))
                 }
-                onRenderedSuccess?.invoke()
+                listener?.onSuccess()
             } guard {
-                onRenderedError?.invoke(NullPointerException("Obtained title is empty."))
+                listener?.onError(NullPointerException("Obtained title is empty."))
             }
         }
 
@@ -101,16 +101,27 @@ class UrlPreview: FrameLayout, CoroutineScope {
 
     override fun onDetachedFromWindow() {
         connection?.cancel()
-        onRenderedSuccess = null
-        onRenderedError = null
+        listener = null
 
         super.onDetachedFromWindow()
     }
 
-    private var onRenderedSuccess: (() -> Unit)? = null
-    private var onRenderedError: ((Throwable) -> Unit)? = null
-    fun setOnRenderedListener(onSuccess: () -> Unit = {}, onError: (Throwable) -> Unit = {}) {
-        onRenderedSuccess = onSuccess
-        onRenderedError = onError
+    // ----------------------------------------------------------------------
+    //   Listener
+    // ----------------------------------------------------------------------
+
+    interface OnRenderedListener {
+        fun onSuccess()
+        fun onError(e: Throwable)
     }
+
+    private var listener: OnRenderedListener? = null
+    fun setOnRenderedListener(onSuccess: () -> Unit = {}, onError: (Throwable) -> Unit = {}) {
+        val l = object: OnRenderedListener {
+            override fun onSuccess() { onSuccess() }
+            override fun onError(e: Throwable) { onError(e) }
+        }
+        setOnRenderedListener(l)
+    }
+    fun setOnRenderedListener(l: OnRenderedListener) { listener = l }
 }
