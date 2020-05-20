@@ -15,20 +15,17 @@ import coil.transform.RoundedCornersTransformation
 import com.tick.taku.android.corecomponent.ktx.guard
 import com.tick.taku.android.corecomponent.ktx.isWebUrlSchema
 import com.tick.taku.widget.databinding.LayoutUrlPreviewBinding
+import com.tick.taku.widget.internal.SourceContent
+import com.tick.taku.widget.internal.mapper.toSourceContent
 import kotlinx.coroutines.*
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import timber.log.Timber
 import java.lang.IllegalArgumentException
 import java.lang.NullPointerException
-import java.util.*
 import kotlin.coroutines.CoroutineContext
 
-private val previewCache = LruCache<String, UrlPreviewEntity>(1024 * 1024)
-
-internal data class UrlPreviewEntity(val title: String,
-                                     val description: String,
-                                     val imageUrl: String)
+private val previewCache = LruCache<String, SourceContent>(1024 * 1024)
 
 class UrlPreview: FrameLayout, CoroutineScope {
     constructor(context: Context): super(context)
@@ -82,13 +79,11 @@ class UrlPreview: FrameLayout, CoroutineScope {
 
     private fun obtainUrlPreview(webUrl: String) {
         launch {
-            connectAsync(webUrl).also { connection = it }.await()?.let {
-                val entity =
-                    UrlPreviewEntity(it.metaTitle, it.description, it.imageUrl)
+            connectAsync(webUrl).also { connection = it }.await()?.toSourceContent()?.let {
                 withContext(Dispatchers.Main) {
-                    renderPreview(entity)
+                    renderPreview(it)
                 }
-                previewCache.put(webUrl, entity)
+                previewCache.put(webUrl, it)
             }
             connection = null
         }
@@ -108,30 +103,8 @@ class UrlPreview: FrameLayout, CoroutineScope {
             .getOrNull()
     }
 
-    private val Document.metaTitle: String
-        get() = select("meta[property=og:title]").attr("content").takeIf { it.isNotEmpty() } ?: title()
-
-    private val Document.description: String
-        get() {
-            val d = select("meta").find {
-                it.attr("property") == "og:description" || it.attr("name").toLowerCase(Locale.ROOT) == "description"
-            }?.attr("content") ?: ""
-            return d.trim().replace("\n", " ")
-        }
-
-    private val Document.imageUrl: String
-        get() =
-            select("meta[property=og:image]").attr("content").takeIf { it.isNotEmpty() } guard {
-                select("link").find {
-                    when (it.attr("rel").toLowerCase(Locale.ROOT)) {
-                        "image_src", "apple-touch-icon", "icon" -> true
-                        else -> false
-                    }
-                }?.attr("href") ?: ""
-            }
-
     @MainThread
-    private fun renderPreview(entity: UrlPreviewEntity) {
+    private fun renderPreview(entity: SourceContent) {
         if (entity.title.isNotEmpty()) {
             title = entity.title
             description = entity.description
@@ -150,13 +123,6 @@ class UrlPreview: FrameLayout, CoroutineScope {
         }
     }
 
-    private var onRenderedSuccess: (() -> Unit)? = null
-    private var onRenderedError: ((Throwable) -> Unit)? = null
-    fun setOnRenderedListener(onSuccess: () -> Unit = {}, onError: (Throwable) -> Unit = {}) {
-        onRenderedSuccess = onSuccess
-        onRenderedError = onError
-    }
-
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
 
@@ -170,5 +136,12 @@ class UrlPreview: FrameLayout, CoroutineScope {
         onRenderedError = null
 
         super.onDetachedFromWindow()
+    }
+
+    private var onRenderedSuccess: (() -> Unit)? = null
+    private var onRenderedError: ((Throwable) -> Unit)? = null
+    fun setOnRenderedListener(onSuccess: () -> Unit = {}, onError: (Throwable) -> Unit = {}) {
+        onRenderedSuccess = onSuccess
+        onRenderedError = onError
     }
 }
