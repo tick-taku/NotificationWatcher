@@ -50,6 +50,7 @@ class UrlPreview: FrameLayout, CoroutineScope {
                 binding.image.load(field.imageUrl) {
                     diskCachePolicy(CachePolicy.ENABLED)
                     transformations(RoundedCornersTransformation(previewImageRadius))
+                    error(R.drawable.ic_error)
                 }
                 listener?.onSuccess()
             } guard {
