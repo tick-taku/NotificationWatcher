@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="content" type="com.tick.taku.widget.internal.SourceContent"/>
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:padding="4dp">
@@ -26,7 +29,7 @@
             android:layout_marginBottom="4dp"
             android:layout_marginStart="8dp"
             android:scaleType="centerCrop"
-            android:contentDescription="@string/content_description_preview_image"/>
+            android:contentDescription="@{content.imageUrl}"/>
 
         <TextView
             android:id="@+id/title"
@@ -38,6 +41,7 @@
             app:layout_constraintHorizontal_bias="0"
             android:layout_marginStart="8dp"
             android:layout_marginTop="2dp"
+            android:text="@{content.title}"
             android:textSize="@dimen/global_font_size"
             android:textStyle="bold"
             android:gravity="start"
@@ -56,6 +60,7 @@
             app:layout_constraintHorizontal_bias="0"
             android:layout_marginTop="4dp"
             app:layout_constrainedWidth="true"
+            android:text="@{content.description}"
             android:textSize="@dimen/global_font_size_small"
             android:alpha="0.7"
             android:gravity="start"

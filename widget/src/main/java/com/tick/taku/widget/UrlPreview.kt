@@ -41,24 +41,28 @@ class UrlPreview: FrameLayout, CoroutineScope {
             makePreview(field)
         }
 
-    var title: String = ""
-        @MainThread private set(value) {
-            field = value
-            binding.title.text = field
-        }
-    var description: String = ""
-        @MainThread private set(value) {
-            field = value
-            binding.description.text = field
-        }
-    var imageUrl: String = ""
-        @MainThread private set(value) {
-            field = value
-            binding.image.load(field) {
-                diskCachePolicy(CachePolicy.ENABLED)
-                transformations(RoundedCornersTransformation(previewImageRadius))
+    private var sourceContent: SourceContent = SourceContent("", "", "")
+        @MainThread set(value) {
+            value.takeIf { it.title.isNotEmpty() }?.let {
+                field = it
+
+                binding.content = field
+                binding.image.load(field.imageUrl) {
+                    diskCachePolicy(CachePolicy.ENABLED)
+                    transformations(RoundedCornersTransformation(previewImageRadius))
+                }
+                onRenderedSuccess?.invoke()
+            } guard {
+                onRenderedError?.invoke(NullPointerException("Obtained title is empty."))
             }
         }
+
+    val title: String
+        get() = sourceContent.title
+    val description: String
+        get() = sourceContent.description
+    val imageUrl: String
+        get() = sourceContent.imageUrl
 
     private val binding: LayoutUrlPreviewBinding by lazy {
         DataBindingUtil.inflate<LayoutUrlPreviewBinding>(LayoutInflater.from(context), R.layout.layout_url_preview, this, true)
@@ -72,20 +76,10 @@ class UrlPreview: FrameLayout, CoroutineScope {
     private fun makePreview(webUrl: String) {
         coroutineScope.launch {
             ContentCrawler.obtainUrlPreviewAsync(webUrl).also { connection = it }.await()?.let {
-                renderPreview(it)
+                sourceContent = it
                 connection = null
             }
         }
-    }
-
-    @MainThread
-    private fun renderPreview(entity: SourceContent) {
-        if (entity.title.isNotEmpty()) {
-            title = entity.title
-            description = entity.description
-            imageUrl = entity.imageUrl
-            onRenderedSuccess?.invoke()
-        } else onRenderedError?.invoke(NullPointerException("Obtained title is empty."))
     }
 
     override fun onFinishInflate() {
