@@ -9,12 +9,4 @@
 
     <dimen name="message_header_padding">16dp</dimen>
     <dimen name="message_header_line_space">18dp</dimen>
-
-    <dimen name="preview_guide_margin">8dp</dimen>
-
-    <dimen name="preview_guide_width">2dp</dimen>
-    <dimen name="preview_guide_height">60dp</dimen>
-    <dimen name="preview_guide_radius">16dp</dimen>
-
-    <dimen name="url_preview_image_radius">10dp</dimen>
 </resources>

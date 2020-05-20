@@ -1,4 +1,4 @@
-package com.tick.taku.notificationwatcher.view.widget
+package com.tick.taku.widget
 
 import android.content.Context
 import android.content.Intent
@@ -14,8 +14,7 @@ import coil.request.CachePolicy
 import coil.transform.RoundedCornersTransformation
 import com.tick.taku.android.corecomponent.ktx.guard
 import com.tick.taku.android.corecomponent.ktx.isWebUrlSchema
-import com.tick.taku.notificationwatcher.view.R
-import com.tick.taku.notificationwatcher.view.databinding.ViewUrlPreviewBinding
+import com.tick.taku.widget.databinding.LayoutUrlPreviewBinding
 import kotlinx.coroutines.*
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -67,8 +66,8 @@ class UrlPreview: FrameLayout, CoroutineScope {
             }
         }
 
-    private val binding: ViewUrlPreviewBinding by lazy {
-        DataBindingUtil.inflate<ViewUrlPreviewBinding>(LayoutInflater.from(context), R.layout.view_url_preview, this, true)
+    private val binding: LayoutUrlPreviewBinding by lazy {
+        DataBindingUtil.inflate<LayoutUrlPreviewBinding>(LayoutInflater.from(context), R.layout.layout_url_preview, this, true)
     }
     private var connection: Deferred<Document?>? = null
 
@@ -84,7 +83,8 @@ class UrlPreview: FrameLayout, CoroutineScope {
     private fun obtainUrlPreview(webUrl: String) {
         launch {
             connectAsync(webUrl).also { connection = it }.await()?.let {
-                val entity = UrlPreviewEntity(it.metaTitle, it.description, it.imageUrl)
+                val entity =
+                    UrlPreviewEntity(it.metaTitle, it.description, it.imageUrl)
                 withContext(Dispatchers.Main) {
                     renderPreview(entity)
                 }

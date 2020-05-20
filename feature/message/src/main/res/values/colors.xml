@@ -15,6 +15,4 @@
     <color name="ripple_incoming_bubble">#EEEEEE</color>
     <color name="outgoing_bubble">#C8BDBDBD</color>
     <color name="ripple_outgoing_bubble">#4FC3F7</color>
-
-    <color name="preview_guide">#C8C8C8</color>
 </resources>

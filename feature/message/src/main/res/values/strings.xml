@@ -8,8 +8,6 @@
     <string name="clipboard_label_message">message</string>
     <string name="copy_to_clipboard">Message copied to clipboard.</string>
 
-    <string name="content_description_preview_image">Preview Image</string>
-
     <!-- Dialog -->
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
