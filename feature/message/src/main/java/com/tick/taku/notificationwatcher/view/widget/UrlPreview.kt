@@ -76,31 +76,31 @@ class UrlPreview: FrameLayout, CoroutineScope {
         context.resources.getDimension(R.dimen.url_preview_image_radius)
     }
 
-    private fun showPreview(url: String) {
-        previewCache.get(url).takeIf { it?.title?.isNotEmpty() == true }?.let { renderPreview(it) }
-            ?: obtainLinkPreview(url)
+    private fun showPreview(webUrl: String) {
+        previewCache.get(webUrl).takeIf { it?.title?.isNotEmpty() == true }?.let { renderPreview(it) }
+            ?: obtainUrlPreview(webUrl)
     }
 
-    private fun obtainLinkPreview(link: String) {
+    private fun obtainUrlPreview(webUrl: String) {
         launch {
-            connectAsync(link).also { connection = it }.await()?.let {
+            connectAsync(webUrl).also { connection = it }.await()?.let {
                 val entity = UrlPreviewEntity(it.metaTitle, it.description, it.imageUrl)
                 withContext(Dispatchers.Main) {
                     renderPreview(entity)
                 }
-                previewCache.put(link, entity)
+                previewCache.put(webUrl, entity)
             }
             connection = null
         }
     }
 
-    private fun connectAsync(url: String) = async(Dispatchers.IO) {
-        Timber.d("Try to connect $url.")
+    private fun connectAsync(webUrl: String) = async(Dispatchers.IO) {
+        Timber.d("Try to connect $webUrl.")
         runCatching {
-            Jsoup.connect(url).userAgent("Mozilla").get()
+            Jsoup.connect(webUrl).userAgent("Mozilla").get()
         }
             .onFailure {
-                Timber.e("Failed to connect $url. <$it>")
+                Timber.e("Failed to connect $webUrl. <$it>")
                 withContext(Dispatchers.Main) {
                     onRenderedError?.invoke(it)
                 }
