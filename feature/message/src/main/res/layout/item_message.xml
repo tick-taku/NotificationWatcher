@@ -33,7 +33,8 @@
             android:text="@{entity.user.name}"
             android:textSize="@dimen/global_font_size_small"
             android:textStyle="bold"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:visibility="@{entity.message.showUserName ? View.VISIBLE : View.GONE}"/>
 
         <Space
             android:id="@+id/icon_center"
