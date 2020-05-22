@@ -1,6 +1,7 @@
 package com.tick.taku.notificationwatcher.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.tick.taku.notificationwatcher.domain.api.account.AccountClient
 import com.tick.taku.notificationwatcher.domain.db.MessageDatabase
 import com.tick.taku.notificationwatcher.domain.repository.AccountRepository
@@ -24,8 +25,11 @@ object RepositoryComponentModule {
     }
 
     @Singleton @Provides
-    fun providesRepositoryComponent(context: Context, db: MessageDatabase, client: AccountClient): RepositoryComponent {
-        return RepositoryComponent.factory().create(context, db, client)
+    fun providesRepositoryComponent(context: Context,
+                                    db: MessageDatabase,
+                                    client: AccountClient,
+                                    prefs: SharedPreferences): RepositoryComponent {
+        return RepositoryComponent.factory().create(context, db, client, prefs)
     }
 
 }

@@ -19,10 +19,10 @@ class AutoDeletionWorker @AssistedInject constructor(@Assisted private val conte
 
     override suspend fun doWork(): Result {
         val howLongBefore = PreferenceManager.getDefaultSharedPreferences(context).run {
-            getInt(
-                context.getString(R.string.pref_key_delete_from),
-                context.resources.getInteger(R.integer.delete_from_max)
-            )
+            val (key, default) = context.run {
+                getString(R.string.pref_key_delete_from) to resources.getInteger(R.integer.delete_from_max)
+            }
+            getInt(key, default)
         }
         db.deleteMessageBefore(howLongBefore)
 

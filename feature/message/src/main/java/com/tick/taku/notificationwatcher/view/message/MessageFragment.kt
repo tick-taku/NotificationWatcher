@@ -60,7 +60,7 @@ class MessageFragment: Fragment(R.layout.fragment_message), Injectable {
             val items = list.mapKeys { MessageHeaderItem(it.key) }
                 .mapValues {
                     it.value.map { entity ->
-                        MessageItem(entity, isShowName).apply {
+                        MessageItem(entity, viewModel, viewLifecycleOwner, isShowName).apply {
                             setOnMessageClickListener { m -> copyToClipboard(m) }
                             setOnLongClickListener { e -> showConfirmationDialog(e.id) }
                         }

@@ -15,6 +15,10 @@ class MessageViewModel @AssistedInject constructor(@Assisted private val roomId:
         repository.messageList(roomId).asLiveData()
     }
 
+    val isShowUrlPreview: LiveData<Boolean> by lazy {
+        repository.isShowUrlPreview().asLiveData()
+    }
+
     val outgoingMessage: MutableLiveData<String> = MutableLiveData("")
 
     fun delete(id: String) {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <bool name="is_show_url_preview">true</bool>
     <integer name="delete_from_min">1</integer>
     <integer name="delete_from_max">12</integer>
 </resources>

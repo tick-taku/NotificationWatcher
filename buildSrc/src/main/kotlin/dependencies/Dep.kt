@@ -98,4 +98,9 @@ object Dep {
         const val version = "5.0.1"
         const val sdk = "com.linecorp:linesdk:$version"
     }
+
+    object Jsoup {
+        const val version = "1.11.3"
+        const val common = "org.jsoup:jsoup:$version"
+    }
 }
