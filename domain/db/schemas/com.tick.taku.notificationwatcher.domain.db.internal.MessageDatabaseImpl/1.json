@@ -1,0 +1,158 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "da2ceab1ad0b7ec103ffe275e0f562a5",
+    "entities": [
+      {
+        "tableName": "message",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`message_id` TEXT NOT NULL, `room_id` TEXT NOT NULL, `message_user_id` TEXT NOT NULL, `message` TEXT NOT NULL, `date` INTEGER NOT NULL, PRIMARY KEY(`message_id`, `room_id`, `message_user_id`), FOREIGN KEY(`room_id`) REFERENCES `room`(`room_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`message_user_id`) REFERENCES `user`(`user_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "message_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "roomId",
+            "columnName": "room_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "message_user_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "message",
+            "columnName": "message",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "message_id",
+            "room_id",
+            "message_user_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_message_room_id",
+            "unique": false,
+            "columnNames": [
+              "room_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_message_room_id` ON `${TABLE_NAME}` (`room_id`)"
+          },
+          {
+            "name": "index_message_message_user_id",
+            "unique": false,
+            "columnNames": [
+              "message_user_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_message_message_user_id` ON `${TABLE_NAME}` (`message_user_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "room",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "room_id"
+            ],
+            "referencedColumns": [
+              "room_id"
+            ]
+          },
+          {
+            "table": "user",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "message_user_id"
+            ],
+            "referencedColumns": [
+              "user_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "room",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`room_id` TEXT NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`room_id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "room_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "room_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "user",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` TEXT NOT NULL, `user_name` TEXT NOT NULL, `user_icon` TEXT NOT NULL, PRIMARY KEY(`user_id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "user_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "user_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "icon",
+            "columnName": "user_icon",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "user_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'da2ceab1ad0b7ec103ffe275e0f562a5')"
+    ]
+  }
+}
