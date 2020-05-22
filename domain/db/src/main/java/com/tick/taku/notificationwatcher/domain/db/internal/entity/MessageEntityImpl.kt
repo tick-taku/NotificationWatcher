@@ -26,4 +26,5 @@ internal data class MessageEntityImpl(@ColumnInfo(name = "message_id") override 
                                       @ColumnInfo(name = "room_id", index = true) override val roomId: String,
                                       @ColumnInfo(name = "message_user_id", index = true) override val userId: String,
                                       override val message: String,
-                                      override val date: Long): MessageEntity, DaoEntity
+                                      override val date: Long,
+                                      @ColumnInfo(name = "image_url") override val imageUrl: String): MessageEntity, DaoEntity

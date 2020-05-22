@@ -11,6 +11,8 @@ private const val ROOM_ID = "line.chat.id"
 
 private const val MESSAGE_ID = "line.message.id"
 
+private const val STAMP_URL_ID = "line.sticker.url"
+
 internal fun Notification.toEntities(context: Context): Triple<RoomEntityImpl, UserEntityImpl, MessageEntityImpl> =
     extras.let {
         val userName = it.getString(Notification.EXTRA_TITLE) ?: "Empty user"
@@ -31,7 +33,8 @@ internal fun Notification.toEntities(context: Context): Triple<RoomEntityImpl, U
             roomId = room.id,
             userId = user.id,
             message = it.getString(Notification.EXTRA_TEXT) ?: "Empty message",
-            date = `when`
+            date = `when`,
+            imageUrl = it.getString(STAMP_URL_ID) ?: ""
         )
 
         Triple(room, user, message)
