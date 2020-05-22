@@ -56,6 +56,10 @@ class MessageItem(private val entity: UserMessageEntity,
             messageClickListener?.invoke(entity.message.message)
         }
 
+        viewBinding.postedImage.setOnClickListener {
+            imageClickListener?.invoke(entity.message.imageUrl)
+        }
+
         viewBinding.root.setOnLongClickListener {
             longClickListener?.invoke(entity.message)
             true
@@ -83,6 +87,9 @@ class MessageItem(private val entity: UserMessageEntity,
 
     private var messageClickListener: ((String) -> Unit)? = null
     fun setOnMessageClickListener(l: (String) -> Unit) { messageClickListener = l }
+
+    private var imageClickListener: ((String) -> Unit)? = null
+    fun setOnImageClickListener(l: (String) -> Unit) { imageClickListener = l }
 
     private var longClickListener: ((MessageEntity) -> Unit)? = null
     fun setOnLongClickListener(l: (MessageEntity) -> Unit) { longClickListener = l }

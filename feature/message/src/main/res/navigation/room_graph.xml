@@ -38,4 +38,14 @@
 
     </fragment>
 
+    <dialog
+        android:id="@+id/image_dialog"
+        android:name="com.tick.taku.notificationwatcher.view.dialog.ImageDialog">
+
+        <argument
+            android:name="imageUrl"
+            app:argType="string"/>
+
+    </dialog>
+
 </navigation>
