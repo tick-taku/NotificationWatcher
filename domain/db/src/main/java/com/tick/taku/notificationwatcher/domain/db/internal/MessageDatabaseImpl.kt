@@ -6,6 +6,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.soywiz.klock.DateTime
 import com.soywiz.klock.months
 import com.tick.taku.notificationwatcher.domain.db.MessageDatabase
@@ -22,7 +24,7 @@ import com.tick.taku.notificationwatcher.domain.db.entity.mapper.toEntities
 import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
 
-@Database(entities = [MessageEntityImpl::class, RoomEntityImpl::class, UserEntityImpl::class], version = 1)
+@Database(entities = [MessageEntityImpl::class, RoomEntityImpl::class, UserEntityImpl::class], version = 2)
 @TypeConverters(BitmapConverter::class)
 internal abstract class MessageDatabaseImpl: RoomDatabase(), MessageDatabase {
 
@@ -63,6 +65,14 @@ internal abstract class MessageDatabaseImpl: RoomDatabase(), MessageDatabase {
 
         private const val NOTIFICATION_DATABASE_FILE = "notification.db"
 
+        private val migrations: List<Migration> = listOf(
+            object: Migration(1, 2) {
+                override fun migrate(database: SupportSQLiteDatabase) {
+                    database.execSQL("ALTER TABLE message ADD COLUMN image_url TEXT NOT NULL DEFAULT ''")
+                }
+            }
+        )
+
         /**
          * Get shared DataBase instance
          *
@@ -70,7 +80,10 @@ internal abstract class MessageDatabaseImpl: RoomDatabase(), MessageDatabase {
          * @return Database instance
          */
         fun getInstance(context: Context): MessageDatabaseImpl =
-            Room.databaseBuilder(context, MessageDatabaseImpl::class.java, NOTIFICATION_DATABASE_FILE).build()
+            Room.databaseBuilder(context, MessageDatabaseImpl::class.java, NOTIFICATION_DATABASE_FILE)
+                .apply {
+                    migrations.forEach { addMigrations(it) }
+                }.build()
 
     }
 
