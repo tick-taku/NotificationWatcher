@@ -10,6 +10,8 @@
     <string name="clipboard_label_message">message</string>
     <string name="copy_to_clipboard">Message copied to clipboard.</string>
 
+    <string name="grouping_date_format">yyyy/MM/dd (EE)</string>
+
     <string name="posted_message_date_format">HH:mm</string>
 
     <!-- Dialog -->
