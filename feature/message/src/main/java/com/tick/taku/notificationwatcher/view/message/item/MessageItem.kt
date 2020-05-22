@@ -21,10 +21,6 @@ class MessageItem(private val entity: UserMessageEntity,
                   private val lifecycleOwner: LifecycleOwner,
                   private val isShowName: Boolean = true): BindableItem<ItemMessageBinding>(entity.hashCode().toLong()) {
 
-    companion object {
-        private const val DATE_FORMAT = "HH:mm"
-    }
-
     override fun getLayout() = R.layout.item_message
 
     private val previewAdapter: GroupAdapter<GroupieViewHolder<*>> by lazy {
@@ -35,21 +31,15 @@ class MessageItem(private val entity: UserMessageEntity,
 
     override fun bind(viewBinding: ItemMessageBinding, position: Int) {
         viewBinding.entity = entity.also {
-            viewBinding.date.text = it.message.localTime().toString(DATE_FORMAT)
+            viewBinding.icon.load(it.user.icon)
         }
+        viewBinding.user.isVisible = isShowName
 
         viewModel.isShowUrlPreview.observe(lifecycleOwner) { isShow ->
             viewBinding.previews.run {
                 isGone = true
                 if (isShow) setupMessage()
             }
-        }
-
-        viewBinding.user.isVisible = isShowName
-
-        viewBinding.icon.load(entity.user.icon) {
-            // TODO : Icon disappear when screen rotated.
-//            transformations(CircleCropTransformation())
         }
 
         viewBinding.message.setOnClickListener {

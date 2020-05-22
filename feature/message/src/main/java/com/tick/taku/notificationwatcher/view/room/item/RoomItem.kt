@@ -1,7 +1,6 @@
 package com.tick.taku.notificationwatcher.view.room.item
 
 import coil.api.load
-import coil.transform.CircleCropTransformation
 import com.tick.taku.notificationwatcher.domain.db.entity.RoomInfoEntity
 import com.tick.taku.notificationwatcher.view.R
 import com.tick.taku.notificationwatcher.view.databinding.ItemRoomBinding
@@ -10,21 +9,11 @@ import com.xwray.groupie.databinding.BindableItem
 // TODO: Fix layout
 data class RoomItem(private val entity: RoomInfoEntity): BindableItem<ItemRoomBinding>(entity.hashCode().toLong()) {
 
-    companion object {
-        private const val DATE_FORMAT = "yyyy/MM/dd HH:mm"
-    }
-
     override fun getLayout() = R.layout.item_room
 
     override fun bind(viewBinding: ItemRoomBinding, position: Int) {
-        viewBinding.entity = entity
-
-        viewBinding.date.text =
-            entity.latestMessage.localTime().toString(DATE_FORMAT)
-
-        viewBinding.icon.load(entity.latestMessage.icon) {
-            // TODO : Icon disappear when screen rotated.
-//            transformations(CircleCropTransformation())
+        viewBinding.entity = entity.also {
+            viewBinding.icon.load(it.latestMessage.icon)
         }
 
         viewBinding.root.run {

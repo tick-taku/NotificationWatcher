@@ -70,6 +70,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="4dp"
+                android:text="@{entity.latestMessage.localTime().toString(@string/posted_room_date_format)}"
                 android:textSize="@dimen/global_font_size_small"
                 android:textStyle="bold"
                 android:textColor="@color/colorAccent"/>
