@@ -68,6 +68,8 @@ class MessageFragment: Fragment(R.layout.fragment_message), Injectable {
                     }
                 }.toSections().asReversed()
             messageListAdapter.update(items)
+
+            binding.messageList.scrollToPosition(messageListAdapter.itemCount - 1)
         }
     }
 
