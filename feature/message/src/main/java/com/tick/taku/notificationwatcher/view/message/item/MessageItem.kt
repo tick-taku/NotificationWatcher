@@ -27,7 +27,9 @@ class MessageItem(private val entity: UserMessageEntity,
         GroupAdapter<GroupieViewHolder<*>>()
     }
 
-    private val urls: List<String> = entity.message.extractWebLink()
+    private val urls: List<String> by lazy {
+        entity.message.extractWebLink()
+    }
 
     override fun bind(viewBinding: ItemMessageBinding, position: Int) {
         viewBinding.entity = entity.also {
