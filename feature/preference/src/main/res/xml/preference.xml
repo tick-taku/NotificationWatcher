@@ -27,4 +27,20 @@
             app:showSeekBarValue="true"/>
 
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/system_category"
+        android:key="@string/pref_key_system">
+
+        <ListPreference
+            android:title="@string/select_language"
+            android:key="@string/pref_key_language"
+            android:entries="@array/localized_language"
+            android:entryValues="@array/localized_language_values"
+            android:defaultValue="@string/language"
+            android:dialogTitle="@string/select_language"
+            app:useSimpleSummaryProvider="true"/>
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

@@ -2,6 +2,7 @@
 <resources>
     <string name="toolbar_title_settings">Settings</string>
 
+    <!-- Message -->
     <string name="message_category">Message</string>
 
     <string name="show_url_preview">URL preview</string>
@@ -11,4 +12,17 @@
     <string name="summary_auto_delete">Messages outside the retention period are automatically deleted.</string>
     <string name="delete_from">How old</string>
     <string name="delete_from_summary">How many months old message will be erased?</string>
+
+    <!-- System -->
+    <string name="system_category">System</string>
+    <string name="select_language">Select language</string>
+
+    <string name="localized_en">English</string>
+    <string name="localized_ja">Japanese</string>
+    <string name="localized_auto">System</string>
+    <string-array name="localized_language">
+        <item>@string/localized_auto</item>
+        <item>@string/localized_en</item>
+        <item>@string/localized_ja</item>
+    </string-array>
 </resources>

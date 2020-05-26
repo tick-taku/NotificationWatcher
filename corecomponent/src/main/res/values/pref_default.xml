@@ -4,4 +4,11 @@
     <bool name="is_enabled_auto_delete">false</bool>
     <integer name="delete_from_min">1</integer>
     <integer name="delete_from_max">12</integer>
+
+    <string name="language">0</string>
+    <string-array name="localized_language_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 </resources>
