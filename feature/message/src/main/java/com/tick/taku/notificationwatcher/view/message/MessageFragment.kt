@@ -66,8 +66,10 @@ class MessageFragment: Fragment(R.layout.fragment_message), Injectable {
                             setOnLongClickListener { e -> showConfirmationDialog(e.id) }
                         }
                     }
-                }.toSections()
+                }.toSections().asReversed()
             messageListAdapter.update(items)
+
+            binding.messageList.scrollToPosition(messageListAdapter.itemCount - 1)
         }
     }
 

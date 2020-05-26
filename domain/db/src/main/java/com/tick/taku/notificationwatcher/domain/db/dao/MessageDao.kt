@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.Flow
     abstract suspend fun deleteBefore(specified: Long)
 
     @Query("SELECT * FROM message INNER JOIN user ON user.user_id = message.message_user_id " +
-            "WHERE message.room_id = :roomId ORDER BY message.date asc")
+            "WHERE message.room_id = :roomId ORDER BY message.date DESC")
     abstract fun observe(roomId: String): Flow<List<UserMessageEntityImpl>>
 
     @Query("SELECT message_id FROM message ORDER BY message_id desc LIMIT 1")
