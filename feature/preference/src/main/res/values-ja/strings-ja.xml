@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="toolbar_title_settings">設定</string>
+
+    <string name="message_category">メッセージ</string>
+    <string name="enable_url_preview">URLプレビュー</string>
+
+    <string name="auto_delete_category">自動メッセージ削除</string>
+    <string name="enable_auto_delete">保存期間外のメッセージを自動で削除する</string>
+    <string name="delete_from">保存期間</string>
+    <string name="delete_from_summary">メッセージを保存する期間を指定してください。</string>
+</resources>

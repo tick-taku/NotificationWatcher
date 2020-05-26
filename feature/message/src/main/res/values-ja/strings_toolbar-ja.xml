@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="toolbar_room_list">ルーム</string>
+    <string name="toolbar_message_default">メッセージ</string>
+</resources>

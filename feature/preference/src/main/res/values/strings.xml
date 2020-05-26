@@ -2,9 +2,6 @@
 <resources>
     <string name="toolbar_title_settings">Settings</string>
 
-    <string name="enable_summary_on">Enabled</string>
-    <string name="enable_summary_off">Disabled</string>
-
     <string name="message_category">Message</string>
     <string name="enable_url_preview">Enable URL preview</string>
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Menu -->
+    <string name="account_link">アカウントリンク</string>
+    <string name="menu_settings">設定</string>
+
+    <!-- Dialog -->
+    <string name="ok">OK</string>
+    <string name="cancel">キャンセル</string>
+    <string name="notification_listener_denied">LINE からの通知を受け取るためにアプリに権限を許可してください。</string>
+
+    <string name="already_logged_in">すでに LINE アカウントでログインされています。ログアウトしますか？</string>
+    <string name="logout">ログアウト</string>
+</resources>

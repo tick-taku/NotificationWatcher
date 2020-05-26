@@ -8,8 +8,6 @@
         <SwitchPreferenceCompat
             android:key="@string/pref_key_enable_url_preview"
             android:title="@string/enable_url_preview"
-            android:summaryOn="@string/enable_summary_on"
-            android:summaryOff="@string/enable_summary_off"
             android:defaultValue="@bool/is_show_url_preview"/>
 
     </PreferenceCategory>
@@ -20,9 +18,7 @@
 
         <SwitchPreferenceCompat
             android:key="@string/pref_key_enable_auto_delete"
-            android:title="@string/enable_auto_delete"
-            android:summaryOn="@string/enable_summary_on"
-            android:summaryOff="@string/enable_summary_off"/>
+            android:title="@string/enable_auto_delete"/>
 
         <SeekBarPreference
             android:key="@string/pref_key_delete_from"
