@@ -2,12 +2,12 @@
     <!-- Room List -->
     <string name="msg_confirmation_delete_room">Are you sure you want to erase it?</string>
 
-    <string name="posted_room_date_format" translatable="false">yyyy/MM/dd HH:mm</string>
-
     <!-- Message Screen -->
     <string name="clipboard_label_message" translatable="false">message</string>
     <string name="copy_to_clipboard">Message copied to clipboard.</string>
 
+    <!-- Format -->
+    <string name="posted_room_date_format" translatable="false">yyyy/MM/dd HH:mm</string>
     <string name="grouping_date_format" translatable="false">yyyy/MM/dd (EE)</string>
     <string name="posted_message_date_format" translatable="false">HH:mm</string>
 
