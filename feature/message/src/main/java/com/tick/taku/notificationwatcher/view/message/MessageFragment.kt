@@ -57,11 +57,10 @@ class MessageFragment: Fragment(R.layout.fragment_message), Injectable {
         binding.messageList.adapter = messageListAdapter
 
         viewModel.messageList.observe(viewLifecycleOwner) { list ->
-            val isShowName = list.all { items -> items.value.all { it.user.name != args.title } }
             val items = list.mapKeys { MessageHeaderItem(it.key) }
                 .mapValues {
                     it.value.map { entity ->
-                        MessageItem(entity, viewModel, viewLifecycleOwner, isShowName).apply {
+                        MessageItem(entity, viewModel, viewLifecycleOwner).apply {
                             setOnMessageClickListener { m -> copyToClipboard(m) }
                             setOnImageClickListener { u -> ImageDialog.show(childFragmentManager, u) }
                             setOnLongClickListener { e -> showConfirmationDialog(e.id) }

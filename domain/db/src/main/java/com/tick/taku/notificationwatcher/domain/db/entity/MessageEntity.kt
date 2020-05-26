@@ -16,6 +16,8 @@ interface MessageEntity {
 
     fun localTime(): DateTimeTz = DateTime(date).local
 
+    fun isShowUserName(): Boolean = roomId.startsWith("c")
+
     fun extractWebLink(): List<String> =
         message.split("\n", " ").mapNotNull {
             val p = Patterns.WEB_URL.matcher(it)

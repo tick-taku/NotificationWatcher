@@ -18,8 +18,8 @@ import com.xwray.groupie.databinding.GroupieViewHolder
 // TODO: Fix layout
 class MessageItem(private val entity: UserMessageEntity,
                   private val viewModel: MessageViewModel,
-                  private val lifecycleOwner: LifecycleOwner,
-                  private val isShowName: Boolean = true): BindableItem<ItemMessageBinding>(entity.hashCode().toLong()) {
+                  private val lifecycleOwner: LifecycleOwner)
+    : BindableItem<ItemMessageBinding>(entity.hashCode().toLong()) {
 
     override fun getLayout() = R.layout.item_message
 
@@ -33,7 +33,6 @@ class MessageItem(private val entity: UserMessageEntity,
         viewBinding.entity = entity.also {
             viewBinding.icon.load(it.user.icon)
         }
-        viewBinding.user.isVisible = isShowName
 
         viewModel.isShowUrlPreview.observe(lifecycleOwner) { isShow ->
             viewBinding.previews.run {
