@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="room_card_margin">6dp</dimen>
+
     <dimen name="room_radius">4dp</dimen>
     <dimen name="room_padding">12dp</dimen>
 
