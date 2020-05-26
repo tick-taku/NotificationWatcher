@@ -17,13 +17,8 @@ import javax.inject.Inject
 internal class MessageRepositoryImpl @Inject constructor(private val context: Context,
                                                          private val db: MessageDatabase,
                                                          private val prefs: SharedPreferences) : MessageRepository {
-
     companion object {
-
         private val FILTERS = listOf("jp.naver.line.android")
-
-        private const val HEADER_FORMAT = "yyyy/MM/dd (EE)"
-
     }
 
     private val isEnabledUrlPreview: ConflatedBroadcastChannel<Boolean> = ConflatedBroadcastChannel(false)
@@ -52,11 +47,8 @@ internal class MessageRepositoryImpl @Inject constructor(private val context: Co
         db.deleteRoom(id)
     }
 
-    override fun messageList(roomId: String): Flow<Map<String, List<UserMessageEntity>>> =
+    override fun messageList(roomId: String): Flow<List<UserMessageEntity>> =
         db.observeMessages(roomId).distinctUntilChanged()
-            .map { entity ->
-                entity.groupBy { it.message.localTime().toString(HEADER_FORMAT) }
-            }
 
     override suspend fun deleteMessage(id: String) {
         db.deleteMessage(id)

@@ -21,10 +21,6 @@ class MessageItem(private val entity: UserMessageEntity,
                   private val lifecycleOwner: LifecycleOwner,
                   private val isShowName: Boolean = true): BindableItem<ItemMessageBinding>(entity.hashCode().toLong()) {
 
-    companion object {
-        private const val DATE_FORMAT = "HH:mm"
-    }
-
     override fun getLayout() = R.layout.item_message
 
     private val previewAdapter: GroupAdapter<GroupieViewHolder<*>> by lazy {
@@ -35,8 +31,9 @@ class MessageItem(private val entity: UserMessageEntity,
 
     override fun bind(viewBinding: ItemMessageBinding, position: Int) {
         viewBinding.entity = entity.also {
-            viewBinding.date.text = it.message.localTime().toString(DATE_FORMAT)
+            viewBinding.icon.load(it.user.icon)
         }
+        viewBinding.user.isVisible = isShowName
 
         viewModel.isShowUrlPreview.observe(lifecycleOwner) { isShow ->
             viewBinding.previews.run {
@@ -45,15 +42,12 @@ class MessageItem(private val entity: UserMessageEntity,
             }
         }
 
-        viewBinding.user.isVisible = isShowName
-
-        viewBinding.icon.load(entity.user.icon) {
-            // TODO : Icon disappear when screen rotated.
-//            transformations(CircleCropTransformation())
-        }
-
         viewBinding.message.setOnClickListener {
             messageClickListener?.invoke(entity.message.message)
+        }
+
+        viewBinding.postedImage.setOnClickListener {
+            imageClickListener?.invoke(entity.message.imageUrl)
         }
 
         viewBinding.root.setOnLongClickListener {
@@ -83,6 +77,9 @@ class MessageItem(private val entity: UserMessageEntity,
 
     private var messageClickListener: ((String) -> Unit)? = null
     fun setOnMessageClickListener(l: (String) -> Unit) { messageClickListener = l }
+
+    private var imageClickListener: ((String) -> Unit)? = null
+    fun setOnImageClickListener(l: (String) -> Unit) { imageClickListener = l }
 
     private var longClickListener: ((MessageEntity) -> Unit)? = null
     fun setOnLongClickListener(l: (MessageEntity) -> Unit) { longClickListener = l }

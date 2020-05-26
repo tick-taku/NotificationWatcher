@@ -12,6 +12,7 @@ interface MessageEntity {
     val userId: String
     val message: String
     val date: Long
+    val imageUrl: String
 
     fun localTime(): DateTimeTz = DateTime(date).local
 

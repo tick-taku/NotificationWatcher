@@ -57,4 +57,10 @@ dependencies {
 
     // Dagger --------------------------------------------------------
     implementation(Dep.Dagger.core)
+
+    // Coil ----------------------------------------------------------
+    implementation(Dep.Coil.common)
+
+    // Timber --------------------------------------------------------
+    implementation(Dep.Timber.timber)
 }

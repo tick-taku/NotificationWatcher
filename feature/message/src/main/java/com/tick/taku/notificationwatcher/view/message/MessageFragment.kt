@@ -20,6 +20,7 @@ import com.tick.taku.android.corecomponent.util.setupBackUp
 import com.tick.taku.android.corecomponent.util.showDialog
 import com.tick.taku.notificationwatcher.view.R
 import com.tick.taku.notificationwatcher.view.databinding.FragmentMessageBinding
+import com.tick.taku.notificationwatcher.view.dialog.ImageDialog
 import com.tick.taku.notificationwatcher.view.message.item.MessageHeaderItem
 import com.tick.taku.notificationwatcher.view.message.item.MessageItem
 import com.tick.taku.notificationwatcher.view.message.viewmodel.MessageViewModel
@@ -62,6 +63,7 @@ class MessageFragment: Fragment(R.layout.fragment_message), Injectable {
                     it.value.map { entity ->
                         MessageItem(entity, viewModel, viewLifecycleOwner, isShowName).apply {
                             setOnMessageClickListener { m -> copyToClipboard(m) }
+                            setOnImageClickListener { u -> ImageDialog.show(childFragmentManager, u) }
                             setOnLongClickListener { e -> showConfirmationDialog(e.id) }
                         }
                     }
