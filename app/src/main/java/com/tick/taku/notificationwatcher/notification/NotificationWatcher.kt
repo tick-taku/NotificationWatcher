@@ -28,7 +28,6 @@ class NotificationWatcher: NotificationListenerService(), CoroutineScope {
     override fun onListenerConnected() {
         super.onListenerConnected()
 
-        Timber.d("------------- NotificationWatcher#onListenerConnected. -------------")
         launch {
             activeNotifications
                 .forEach {
@@ -40,17 +39,13 @@ class NotificationWatcher: NotificationListenerService(), CoroutineScope {
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
         super.onNotificationPosted(sbn)
 
-        Timber.d("------------- NotificationWatcher#onNotificationPosted. -------------")
         launch {
-            sbn?.let {
-                repository.saveNotification(it)
-            }
+            sbn?.let { repository.saveNotification(it) }
         }
     }
 
     override fun onListenerDisconnected() {
         super.onListenerDisconnected()
-
         Timber.d("------------- NotificationWatcher#onListenerDisconnected. -------------")
     }
 
