@@ -7,18 +7,15 @@
 
         <SwitchPreferenceCompat
             android:key="@string/pref_key_enable_url_preview"
-            android:title="@string/enable_url_preview"
+            android:title="@string/show_url_preview"
+            android:summary="@string/summary_url_preview"
             android:defaultValue="@bool/is_show_url_preview"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/auto_delete_category"
-        android:key="@string/pref_key_auto_delete">
 
         <SwitchPreferenceCompat
             android:key="@string/pref_key_enable_auto_delete"
-            android:title="@string/enable_auto_delete"/>
+            android:title="@string/auto_delete"
+            android:summary="@string/summary_auto_delete"
+            android:defaultValue="@bool/is_enabled_auto_delete"/>
 
         <SeekBarPreference
             android:key="@string/pref_key_delete_from"
