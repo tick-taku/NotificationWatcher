@@ -2,6 +2,7 @@ package com.tick.taku.notificationwatcher.view.preference
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.observe
 import androidx.preference.*
 import com.tick.taku.android.corecomponent.di.Injectable
@@ -51,6 +52,19 @@ class PreferencesFragment: PreferenceFragmentCompat(), Injectable {
                 return@OnPreferenceChangeListener true
             }
         }
+
+        preferenceManager.findPreference<ListPreference>(getString(R.string.pref_key_ui_mode))?.let {
+            it.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
+                AppCompatDelegate.setDefaultNightMode((newValue as String).uiMode())
+                return@OnPreferenceChangeListener true
+            }
+        }
+    }
+
+    private fun String.uiMode(): Int = when (this) {
+        getString(R.string.ui_mode_value_light) -> AppCompatDelegate.MODE_NIGHT_NO
+        getString(R.string.ui_mode_value_dark) -> AppCompatDelegate.MODE_NIGHT_YES
+        else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
     }
 
 }

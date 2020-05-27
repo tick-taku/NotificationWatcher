@@ -20,15 +20,21 @@ abstract class BaseActivity(@LayoutRes layoutId: Int): AppCompatActivity(layoutI
         super.attachBaseContext(base?.createConfigurationContext(conf))
     }
 
+    override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
+        overrideConfiguration?.let {
+            val uiMode = it.uiMode
+            it.setTo(baseContext.resources.configuration)
+            it.uiMode = uiMode
+        }
+        super.applyOverrideConfiguration(overrideConfiguration)
+    }
+
     override fun onResume() {
         super.onResume()
-
         val currentLocale =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) getCurrentLocale()
             else getCurrentLocaleLegacy()
-        if (currentLocale != getLocale(this)) {
-            recreate()
-        }
+        if (currentLocale != getLocale()) recreate()
     }
 
     @TargetApi(Build.VERSION_CODES.N)
@@ -37,7 +43,7 @@ abstract class BaseActivity(@LayoutRes layoutId: Int): AppCompatActivity(layoutI
     @Suppress("deprecation")
     private fun getCurrentLocaleLegacy() = resources.configuration.locale
 
-    private fun getLocale(context: Context?): Locale {
+    private fun getLocale(context: Context? = this): Locale {
         val pref = (context?.applicationContext as? DirectlyModuleProvider)?.providerSharedPrefs() guard {
             return Locale.getDefault()
         }
