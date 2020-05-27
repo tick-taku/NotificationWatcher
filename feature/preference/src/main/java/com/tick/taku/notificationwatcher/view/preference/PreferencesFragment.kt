@@ -42,8 +42,12 @@ class PreferencesFragment: PreferenceFragmentCompat(), Injectable {
         }
 
         preferenceManager.findPreference<ListPreference>(getString(R.string.pref_key_language))?.let {
-            it.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
-                activity?.recreate()
+            var prev = it.value
+            it.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
+                if (prev != (newValue as String)) {
+                    activity?.recreate()
+                }
+                prev = newValue
                 return@OnPreferenceChangeListener true
             }
         }
