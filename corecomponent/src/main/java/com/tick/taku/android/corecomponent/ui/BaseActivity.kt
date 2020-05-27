@@ -31,6 +31,8 @@ abstract class BaseActivity(@LayoutRes layoutId: Int): AppCompatActivity(layoutI
 
     override fun onResume() {
         super.onResume()
+
+        // TODO: Use OnPreferenceChangeListener
         val currentLocale =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) getCurrentLocale()
             else getCurrentLocaleLegacy()
