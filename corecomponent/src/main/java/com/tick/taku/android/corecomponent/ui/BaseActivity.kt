@@ -15,7 +15,7 @@ abstract class BaseActivity(@LayoutRes layoutId: Int): AppCompatActivity(layoutI
 
     override fun attachBaseContext(base: Context?) {
         val conf = Configuration(base?.resources?.configuration).apply {
-            setLocale(getLocale(base))
+            setLocale(base?.getLocale())
         }
         super.attachBaseContext(base?.createConfigurationContext(conf))
     }
@@ -43,17 +43,17 @@ abstract class BaseActivity(@LayoutRes layoutId: Int): AppCompatActivity(layoutI
     @Suppress("deprecation")
     private fun getCurrentLocaleLegacy() = resources.configuration.locale
 
-    private fun getLocale(context: Context? = this): Locale {
-        val pref = (context?.applicationContext as? DirectlyModuleProvider)?.providerSharedPrefs() guard {
+    private fun Context.getLocale(): Locale {
+        val pref = (applicationContext as? DirectlyModuleProvider)?.providerSharedPrefs() guard {
             return Locale.getDefault()
         }
 
-        val (key, value) = context!!.let {
-            it.getString(R.string.pref_key_language) to it.getString(R.string.localized_language_value_system)
+        val (key, value) = run {
+            getString(R.string.pref_key_language) to getString(R.string.localized_language_value_system)
         }
         return when (pref.getString(key, value)) {
-            context.getString(R.string.localized_language_value_en) -> Locale.ENGLISH
-            context.getString(R.string.localized_language_value_ja) -> Locale.JAPANESE
+            getString(R.string.localized_language_value_en) -> Locale.ENGLISH
+            getString(R.string.localized_language_value_ja) -> Locale.JAPANESE
             else -> Locale.getDefault()
         }
     }
