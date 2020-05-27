@@ -6,4 +6,7 @@
     <string name="pref_key_auto_delete">auto_delete</string>
     <string name="pref_key_enable_auto_delete">enable_auto_delete</string>
     <string name="pref_key_delete_from">delete_from</string>
+
+    <string name="pref_key_system">system</string>
+    <string name="pref_key_language">selected_language</string>
 </resources>

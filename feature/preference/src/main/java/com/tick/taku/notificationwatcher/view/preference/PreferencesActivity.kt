@@ -2,13 +2,13 @@ package com.tick.taku.notificationwatcher.view.preference
 
 import android.content.Context
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.tick.taku.android.corecomponent.ktx.dataBinding
 import com.tick.taku.android.corecomponent.ktx.openActivity
+import com.tick.taku.android.corecomponent.ui.BaseActivity
 import com.tick.taku.notificationwatcher.view.preference.databinding.ActivityPreferencesBinding
 import dagger.Module
 import dagger.android.AndroidInjector
@@ -17,7 +17,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 
-class PreferencesActivity: AppCompatActivity(R.layout.activity_preferences), HasAndroidInjector {
+class PreferencesActivity: BaseActivity(R.layout.activity_preferences), HasAndroidInjector {
 
     @Inject lateinit var injector: DispatchingAndroidInjector<Any>
     override fun androidInjector(): AndroidInjector<Any> = injector

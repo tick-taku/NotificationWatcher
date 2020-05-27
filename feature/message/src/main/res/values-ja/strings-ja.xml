@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="msg_confirmation_delete_room">削除しますか?</string>
+
+    <string name="copy_to_clipboard">クリップボードにコピーしました。</string>
+
+    <!-- Dialog -->
+    <string name="ok">OK</string>
+    <string name="cancel">キャンセル</string>
+</resources>

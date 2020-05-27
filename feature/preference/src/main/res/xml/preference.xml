@@ -7,22 +7,15 @@
 
         <SwitchPreferenceCompat
             android:key="@string/pref_key_enable_url_preview"
-            android:title="@string/enable_url_preview"
-            android:summaryOn="@string/enable_summary_on"
-            android:summaryOff="@string/enable_summary_off"
+            android:title="@string/show_url_preview"
+            android:summary="@string/summary_url_preview"
             android:defaultValue="@bool/is_show_url_preview"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/auto_delete_category"
-        android:key="@string/pref_key_auto_delete">
 
         <SwitchPreferenceCompat
             android:key="@string/pref_key_enable_auto_delete"
-            android:title="@string/enable_auto_delete"
-            android:summaryOn="@string/enable_summary_on"
-            android:summaryOff="@string/enable_summary_off"/>
+            android:title="@string/auto_delete"
+            android:summary="@string/summary_auto_delete"
+            android:defaultValue="@bool/is_enabled_auto_delete"/>
 
         <SeekBarPreference
             android:key="@string/pref_key_delete_from"
@@ -34,4 +27,20 @@
             app:showSeekBarValue="true"/>
 
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/system_category"
+        android:key="@string/pref_key_system">
+
+        <ListPreference
+            android:title="@string/select_language"
+            android:key="@string/pref_key_language"
+            android:entries="@array/localized_language"
+            android:entryValues="@array/localized_language_values"
+            android:defaultValue="@string/localized_language_value_system"
+            android:dialogTitle="@string/select_language"
+            app:useSimpleSummaryProvider="true"/>
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

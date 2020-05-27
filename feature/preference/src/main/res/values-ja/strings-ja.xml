@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="toolbar_title_settings">設定</string>
+
+    <!-- Message -->
+    <string name="message_category">メッセージ</string>
+
+    <string name="show_url_preview">URLプレビュー</string>
+    <string name="summary_url_preview">メッセージ内の Web URL のプレビューを表示します。</string>
+
+    <string name="auto_delete">メッセージ自動削除</string>
+    <string name="summary_auto_delete">保存期間外のメッセージを自動で削除します。</string>
+    <string name="delete_from">保存期間 (月)</string>
+    <string name="delete_from_summary">メッセージを保存する期間を指定してください。</string>
+
+    <!-- System -->
+    <string name="system_category">システム</string>
+    <string name="select_language">言語設定</string>
+
+    <string name="localized_en">英語</string>
+    <string name="localized_ja">日本語</string>
+    <string name="localized_auto">システム</string>
+</resources>

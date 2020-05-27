@@ -5,6 +5,7 @@ import android.view.View
 import androidx.lifecycle.observe
 import androidx.preference.*
 import com.tick.taku.android.corecomponent.di.Injectable
+import com.tick.taku.android.corecomponent.ktx.guard
 import com.tick.taku.android.corecomponent.ktx.viewModelProvider
 import com.tick.taku.notificationwatcher.view.preference.viewmodel.PreferencesViewModel
 import javax.inject.Inject
@@ -24,7 +25,9 @@ class PreferencesFragment: PreferenceFragmentCompat(), Injectable {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        preferenceManager?.findPreference<SwitchPreferenceCompat>(getString(R.string.pref_key_enable_auto_delete))?.let {
+        preferenceManager guard { return }
+
+        preferenceManager.findPreference<SwitchPreferenceCompat>(getString(R.string.pref_key_enable_auto_delete))?.let {
             viewModel.setIsEnabledAutoDelete(it.isChecked)
             it.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
                 viewModel.setIsEnabledAutoDelete(newValue as Boolean)
@@ -35,6 +38,17 @@ class PreferencesFragment: PreferenceFragmentCompat(), Injectable {
         viewModel.isEnabledAutoDelete.observe(viewLifecycleOwner) { isEnabled ->
             preferenceManager?.findPreference<SeekBarPreference>(getString(R.string.pref_key_delete_from))?.let {
                 it.isEnabled = isEnabled
+            }
+        }
+
+        preferenceManager.findPreference<ListPreference>(getString(R.string.pref_key_language))?.let {
+            var prev = it.value
+            it.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
+                if (prev != (newValue as String)) {
+                    activity?.recreate()
+                }
+                prev = newValue
+                return@OnPreferenceChangeListener true
             }
         }
     }
