@@ -13,4 +13,14 @@
         <item>@string/localized_language_value_en</item>
         <item>@string/localized_language_value_ja</item>
     </string-array>
+
+    <string name="ui_mode_value_system">0</string>
+    <string name="ui_mode_value_light">1</string>
+    <string name="ui_mode_value_dark">2</string>
+    <string-array name="ui_mode_value">
+        <item>@string/ui_mode_value_system</item>
+        <item>@string/ui_mode_value_light</item>
+        <item>@string/ui_mode_value_dark</item>
+    </string-array>
+
 </resources>

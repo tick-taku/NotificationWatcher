@@ -15,9 +15,14 @@
 
     <!-- System -->
     <string name="system_category">システム</string>
-    <string name="select_language">言語設定</string>
 
+    <string name="select_language">言語設定</string>
+    <string name="localized_auto">システム</string>
     <string name="localized_en">英語</string>
     <string name="localized_ja">日本語</string>
-    <string name="localized_auto">システム</string>
+
+    <string name="select_ui_mode">UI設定</string>
+    <string name="ui_mode_system">システム</string>
+    <string name="ui_mode_light">ライト</string>
+    <string name="ui_mode_dark">ダーク</string>
 </resources>
