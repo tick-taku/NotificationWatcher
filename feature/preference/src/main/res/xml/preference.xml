@@ -37,7 +37,7 @@
             android:key="@string/pref_key_language"
             android:entries="@array/localized_language"
             android:entryValues="@array/localized_language_values"
-            android:defaultValue="@string/language"
+            android:defaultValue="@string/localized_language_value_system"
             android:dialogTitle="@string/select_language"
             app:useSimpleSummaryProvider="true"/>
 
