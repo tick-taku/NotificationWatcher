@@ -15,14 +15,25 @@
 
     <!-- System -->
     <string name="system_category">System</string>
-    <string name="select_language">Select language</string>
 
+    <string name="select_language">Select language</string>
+    <string name="localized_auto">System</string>
     <string name="localized_en">English</string>
     <string name="localized_ja">Japanese</string>
-    <string name="localized_auto">System</string>
     <string-array name="localized_language">
         <item>@string/localized_auto</item>
         <item>@string/localized_en</item>
         <item>@string/localized_ja</item>
     </string-array>
+
+    <string name="select_ui_mode">Select UI</string>
+    <string name="ui_mode_system">System</string>
+    <string name="ui_mode_light">Light</string>
+    <string name="ui_mode_dark">Dark</string>
+    <string-array name="ui_mode">
+        <item>@string/ui_mode_system</item>
+        <item>@string/ui_mode_light</item>
+        <item>@string/ui_mode_dark</item>
+    </string-array>
+
 </resources>

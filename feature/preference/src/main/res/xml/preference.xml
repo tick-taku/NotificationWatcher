@@ -41,6 +41,15 @@
             android:dialogTitle="@string/select_language"
             app:useSimpleSummaryProvider="true"/>
 
+        <ListPreference
+            android:title="@string/select_ui_mode"
+            android:key="@string/pref_key_ui_mode"
+            android:entries="@array/ui_mode"
+            android:entryValues="@array/ui_mode_value"
+            android:defaultValue="@string/ui_mode_value_system"
+            android:dialogTitle="@string/select_ui_mode"
+            app:useSimpleSummaryProvider="true"/>
+
     </PreferenceCategory>
 
 </PreferenceScreen>
