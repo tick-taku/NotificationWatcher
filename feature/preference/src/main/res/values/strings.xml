@@ -13,6 +13,9 @@
     <string name="delete_from">How old</string>
     <string name="delete_from_summary">How many months old message will be erased?</string>
 
+    <string name="improve_notification_save_accuracy">Improve accuracy of saving messages</string>
+    <string name="improve_notification_save_accuracy_summary">Improve the message acquisition accuracy by turning off the LINE Letter function.</string>
+
     <!-- System -->
     <string name="system_category">System</string>
 
@@ -35,5 +38,8 @@
         <item>@string/ui_mode_light</item>
         <item>@string/ui_mode_dark</item>
     </string-array>
+
+    <!-- URL -->
+    <string name="line_privacy_url" translatable="false">https://line.me/R/nv/settings/privacy</string>
 
 </resources>

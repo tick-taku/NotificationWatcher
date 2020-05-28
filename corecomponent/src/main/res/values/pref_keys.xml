@@ -7,6 +7,8 @@
     <string name="pref_key_enable_auto_delete">enable_auto_delete</string>
     <string name="pref_key_delete_from">delete_from</string>
 
+    <string name="pref_key_improve_notification_save_accuracy">improve_notification_save_accuracy</string>
+
     <string name="pref_key_system">system</string>
     <string name="pref_key_language">selected_language</string>
     <string name="pref_key_ui_mode">ui_mode</string>

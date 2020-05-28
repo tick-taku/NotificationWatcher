@@ -26,6 +26,15 @@
             android:max="@integer/delete_from_max"
             app:showSeekBarValue="true"/>
 
+        <Preference
+            android:key="@string/pref_key_improve_notification_save_accuracy"
+            android:title="@string/improve_notification_save_accuracy"
+            android:summary="@string/improve_notification_save_accuracy_summary">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/line_privacy_url"/>
+        </Preference>
+
     </PreferenceCategory>
 
     <PreferenceCategory
