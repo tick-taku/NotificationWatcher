@@ -37,7 +37,7 @@ inline fun <reified T: AppCompatActivity> Context.activity() = Intent(this, T::c
 // ---- internal ----
 
 internal fun Context.getLocale(): Locale {
-    val pref = (applicationContext as? DirectlyModuleProvider)?.providerSharedPrefs() guard {
+    val pref = (applicationContext as? DirectlyModuleProvider)?.provideSharedPrefs() guard {
         return Locale.getDefault()
     }
 

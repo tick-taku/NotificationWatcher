@@ -4,5 +4,5 @@ import android.content.SharedPreferences
 
 // TODO: For get injection on attachBaseContext.
 interface DirectlyModuleProvider {
-    fun providerSharedPrefs(): SharedPreferences
+    fun provideSharedPrefs(): SharedPreferences
 }
