@@ -6,9 +6,7 @@ import android.content.res.Configuration
 import android.os.Build
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import com.tick.taku.android.corecomponent.R
-import com.tick.taku.android.corecomponent.di.DirectlyModuleProvider
-import com.tick.taku.android.corecomponent.ktx.guard
+import com.tick.taku.android.corecomponent.ktx.getLocale
 import java.util.*
 
 abstract class BaseActivity(@LayoutRes layoutId: Int): AppCompatActivity(layoutId) {
@@ -29,14 +27,11 @@ abstract class BaseActivity(@LayoutRes layoutId: Int): AppCompatActivity(layoutI
         super.applyOverrideConfiguration(overrideConfiguration)
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        // TODO: Use OnPreferenceChangeListener
+    protected fun isLocaleChanged(locale: Locale): Boolean {
         val currentLocale =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) getCurrentLocale()
             else getCurrentLocaleLegacy()
-        if (currentLocale != getLocale()) recreate()
+        return currentLocale != locale
     }
 
     @TargetApi(Build.VERSION_CODES.N)
@@ -44,20 +39,5 @@ abstract class BaseActivity(@LayoutRes layoutId: Int): AppCompatActivity(layoutI
 
     @Suppress("deprecation")
     private fun getCurrentLocaleLegacy() = resources.configuration.locale
-
-    private fun Context.getLocale(): Locale {
-        val pref = (applicationContext as? DirectlyModuleProvider)?.providerSharedPrefs() guard {
-            return Locale.getDefault()
-        }
-
-        val (key, value) = run {
-            getString(R.string.pref_key_language) to getString(R.string.localized_language_value_system)
-        }
-        return when (pref.getString(key, value)) {
-            getString(R.string.localized_language_value_en) -> Locale.ENGLISH
-            getString(R.string.localized_language_value_ja) -> Locale.JAPANESE
-            else -> Locale.getDefault()
-        }
-    }
 
 }

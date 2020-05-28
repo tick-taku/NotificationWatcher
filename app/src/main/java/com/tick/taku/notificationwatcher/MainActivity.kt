@@ -23,6 +23,7 @@ import com.tick.taku.android.corecomponent.ktx.dataBinding
 import com.tick.taku.android.corecomponent.ktx.getBinding
 import com.tick.taku.android.corecomponent.ktx.viewModelProvider
 import com.tick.taku.android.corecomponent.ui.BaseActivity
+import com.tick.taku.android.corecomponent.ui.viewmodel.SystemViewModel
 import com.tick.taku.android.corecomponent.util.showDialog
 import com.tick.taku.notificationwatcher.databinding.ActivityMainBinding
 import com.tick.taku.notificationwatcher.databinding.LayoutDrawerHeaderBinding
@@ -57,6 +58,11 @@ class MainActivity : BaseActivity(R.layout.activity_main), HasAndroidInjector {
         viewModelFactory.get()
     }
 
+    @Inject lateinit var systemViewModelFactory: Provider<SystemViewModel>
+    private val systemViewModel: SystemViewModel by viewModelProvider {
+        systemViewModelFactory.get()
+    }
+
     private val navController: NavController by lazy {
         findNavController(R.id.fragment_container)
     }
@@ -67,6 +73,10 @@ class MainActivity : BaseActivity(R.layout.activity_main), HasAndroidInjector {
         setupToolbar()
 
         checkForPermission()
+
+        systemViewModel.locale.observe(this) {
+            if (isLocaleChanged(it)) recreate()
+        }
     }
 
     override fun onBackPressed() {

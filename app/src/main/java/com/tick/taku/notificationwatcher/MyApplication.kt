@@ -36,6 +36,6 @@ class MyApplication: DaggerApplication(), DirectlyModuleProvider {
     }
 
     @Inject lateinit var prefs: SharedPreferences
-    override fun providerSharedPrefs(): SharedPreferences = prefs
+    override fun provideSharedPrefs(): SharedPreferences = prefs
 
 }

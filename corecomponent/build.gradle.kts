@@ -55,6 +55,10 @@ dependencies {
     androidTestImplementation(Dep.Test.androidJunit)
     androidTestImplementation(Dep.Test.espressoCore)
 
+    // LifeCycle -----------------------------------------------------
+    implementation(Dep.AndroidX.LifeCycle.liveDataExtension)
+    implementation(Dep.AndroidX.LifeCycle.liveDataKtx)
+
     // Dagger --------------------------------------------------------
     implementation(Dep.Dagger.core)
 

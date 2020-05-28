@@ -5,6 +5,9 @@ import android.content.Intent
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import com.tick.taku.android.corecomponent.R
+import com.tick.taku.android.corecomponent.di.DirectlyModuleProvider
+import java.util.*
 
 fun Context.toast(text: CharSequence, duration: Int = Toast.LENGTH_SHORT): Toast {
     return Toast.makeText(this, text, duration).apply { show() }
@@ -30,3 +33,20 @@ inline fun <reified T: AppCompatActivity> Context.openActivity(crossinline extra
  * Create activity intent.
  */
 inline fun <reified T: AppCompatActivity> Context.activity() = Intent(this, T::class.java)
+
+// ---- internal ----
+
+internal fun Context.getLocale(): Locale {
+    val pref = (applicationContext as? DirectlyModuleProvider)?.provideSharedPrefs() guard {
+        return Locale.getDefault()
+    }
+
+    val (key, value) = run {
+        getString(R.string.pref_key_language) to getString(R.string.localized_language_value_system)
+    }
+    return when (pref.getString(key, value)) {
+        getString(R.string.localized_language_value_en) -> Locale.ENGLISH
+        getString(R.string.localized_language_value_ja) -> Locale.JAPANESE
+        else -> Locale.getDefault()
+    }
+}

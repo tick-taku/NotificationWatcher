@@ -42,17 +42,6 @@ class PreferencesFragment: PreferenceFragmentCompat(), Injectable {
             }
         }
 
-        preferenceManager.findPreference<ListPreference>(getString(R.string.pref_key_language))?.let {
-            var prev = it.value
-            it.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
-                if (prev != (newValue as String)) {
-                    activity?.recreate()
-                }
-                prev = newValue
-                return@OnPreferenceChangeListener true
-            }
-        }
-
         preferenceManager.findPreference<ListPreference>(getString(R.string.pref_key_ui_mode))?.let {
             it.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
                 AppCompatDelegate.setDefaultNightMode((newValue as String).uiMode())
