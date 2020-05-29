@@ -12,12 +12,7 @@ import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.tick.taku.android.corecomponent.di.Injectable
-import com.tick.taku.android.corecomponent.ktx.dataBinding
-import com.tick.taku.android.corecomponent.ktx.hideKeyboard
-import com.tick.taku.android.corecomponent.ktx.toast
-import com.tick.taku.android.corecomponent.ktx.viewModelProvider
-import com.tick.taku.android.corecomponent.util.setupBackUp
-import com.tick.taku.android.corecomponent.util.showDialog
+import com.tick.taku.android.corecomponent.ktx.*
 import com.tick.taku.notificationwatcher.view.R
 import com.tick.taku.notificationwatcher.view.databinding.FragmentMessageBinding
 import com.tick.taku.notificationwatcher.view.dialog.ImageDialog

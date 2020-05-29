@@ -4,6 +4,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.tick.taku.android.corecomponent.ui.ApplicationDialog
 
 inline fun <reified T: ViewModel> AppCompatActivity.viewModelProvider(crossinline viewModels: () -> T): Lazy<T> {
     return viewModels {
@@ -14,4 +15,16 @@ inline fun <reified T: ViewModel> AppCompatActivity.viewModelProvider(crossinlin
             }
         }
     }
+}
+
+/**
+ * Show common dialog.
+ */
+fun AppCompatActivity.showDialog(factory: ApplicationDialog.Factory.() -> Unit) {
+    if (isDestroyed) return
+
+    val dialog = ApplicationDialog.Factory(applicationContext).apply {
+        factory(this)
+    }.create()
+    dialog.show(supportFragmentManager)
 }

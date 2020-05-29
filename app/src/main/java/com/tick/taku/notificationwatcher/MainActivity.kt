@@ -24,7 +24,7 @@ import com.tick.taku.android.corecomponent.ktx.getBinding
 import com.tick.taku.android.corecomponent.ktx.viewModelProvider
 import com.tick.taku.android.corecomponent.ui.BaseActivity
 import com.tick.taku.android.corecomponent.ui.viewmodel.SystemViewModel
-import com.tick.taku.android.corecomponent.util.showDialog
+import com.tick.taku.android.corecomponent.ktx.showDialog
 import com.tick.taku.notificationwatcher.databinding.ActivityMainBinding
 import com.tick.taku.notificationwatcher.databinding.LayoutDrawerHeaderBinding
 import com.tick.taku.notificationwatcher.dialog.IconDialog
