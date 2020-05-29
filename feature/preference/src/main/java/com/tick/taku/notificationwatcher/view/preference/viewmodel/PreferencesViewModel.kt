@@ -32,9 +32,11 @@ class PreferencesViewModel @Inject constructor(private val workManager: WorkMana
             .setInitialDelay(1, TimeUnit.DAYS)
             .setConstraints(constraints.build())
             .build()
-            .let {
-                workManager.enqueueUniquePeriodicWork(AutoDeletionWorker.TAG, ExistingPeriodicWorkPolicy.KEEP, it)
-            }
+            .enqueueWithTag(AutoDeletionWorker.TAG, ExistingPeriodicWorkPolicy.KEEP)
+    }
+
+    private fun PeriodicWorkRequest.enqueueWithTag(tag: String, periodicWorkPolicy: ExistingPeriodicWorkPolicy) {
+        workManager.enqueueUniquePeriodicWork(tag, periodicWorkPolicy, this)
     }
 
 }
