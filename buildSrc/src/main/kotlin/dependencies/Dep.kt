@@ -5,6 +5,13 @@ object Dep {
         const val junit = "junit:junit:4.12"
         const val androidJunit = "androidx.test.ext:junit:1.1.1"
         const val espressoCore = "androidx.test.espresso:espresso-core:3.2.0"
+        const val archCore = "androidx.arch.core:core-testing:2.1.0"
+        const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.1.0"
+
+        object Mochito {
+            const val version = "1.5.0"
+            const val kotlin = "com.nhaarman:mockito-kotlin:$version"
+        }
     }
 
     object Kotlin {
