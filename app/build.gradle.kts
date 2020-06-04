@@ -56,6 +56,12 @@ android {
             buildConfigField("String", "LINE_CHANNEL_ID", lineChannelId["lineChannelIdRelease"])
         }
     }
+    androidExtensions { isExperimental = true }
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
+        kotlinOptions {
+            freeCompilerArgs += listOf("-Xuse-experimental=kotlin.Experimental")
+        }
+    }
     packagingOptions {
         exclude("META-INF/*.kotlin_module")
         exclude("META-INF/*.version")
@@ -86,6 +92,10 @@ dependencies {
     testImplementation(Dep.Test.junit)
     androidTestImplementation(Dep.Test.androidJunit)
     androidTestImplementation(Dep.Test.espressoCore)
+    testImplementation(Dep.Test.archCore)
+    testImplementation(Dep.Test.coroutines)
+    testImplementation(Dep.Test.Truth.core)
+    testImplementation(Dep.Test.Mochito.kotlin)
 
     // Dagger --------------------------------------------------------
     implementation(Dep.Dagger.core)

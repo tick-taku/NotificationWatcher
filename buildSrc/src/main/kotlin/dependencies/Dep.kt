@@ -8,6 +8,11 @@ object Dep {
         const val archCore = "androidx.arch.core:core-testing:2.1.0"
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.1.0"
 
+        object Truth {
+            const val version = "1.0"
+            const val core = "com.google.truth:truth:$version"
+        }
+
         object Mochito {
             const val version = "1.5.0"
             const val kotlin = "com.nhaarman:mockito-kotlin:$version"
