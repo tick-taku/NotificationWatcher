@@ -3,7 +3,7 @@ package com.tick.taku.notificationwatcher.view.mock
 import android.graphics.Bitmap
 import com.tick.taku.notificationwatcher.domain.db.entity.*
 
-object Dummies {
+internal object Dummies {
 
     val roomList: List<RoomInfoEntity> = listOf(
         object: RoomInfoEntity {
