@@ -41,7 +41,7 @@ class MessageViewModelTest {
     }
 
     @Test
-    fun getMessageList() {
+    fun getMessageListTest() {
         val testObserver = mock<Observer<Map<String, List<UserMessageEntity>>>>()
         viewModel.messageList.observeForever(testObserver)
 
@@ -51,7 +51,7 @@ class MessageViewModelTest {
     }
 
     @Test
-    fun isShowUrlPreview() {
+    fun isShowUrlPreviewTest() {
         val testObserver = mock<Observer<Boolean>>()
         viewModel.isShowUrlPreview.observeForever(testObserver)
 
