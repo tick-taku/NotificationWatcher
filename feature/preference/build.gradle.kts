@@ -48,6 +48,8 @@ dependencies {
     testImplementation(Dep.Test.junit)
     androidTestImplementation(Dep.Test.androidJunit)
     androidTestImplementation(Dep.Test.espressoCore)
+    testImplementation(Dep.Test.Mochito.kotlin)
+    testImplementation(Dep.Test.Truth.core)
 
     // Dagger --------------------------------------------------------
     implementation(Dep.Dagger.core)
