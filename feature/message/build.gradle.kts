@@ -62,8 +62,6 @@ dependencies {
     testImplementation(Dep.Test.junit)
     androidTestImplementation(Dep.Test.androidJunit)
     androidTestImplementation(Dep.Test.espressoCore)
-    testImplementation(Dep.Test.archCore)
-    testImplementation(Dep.Test.coroutines)
     testImplementation(Dep.Test.Mochito.kotlin)
 
     // Dagger --------------------------------------------------------

@@ -1,21 +1,16 @@
 package com.tick.taku.notificationwatcher.view.message.viewmodel
 
 import android.content.Context
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
+import com.tick.taku.android.corecomponent.test.ViewModelTestRule
 import com.tick.taku.notificationwatcher.domain.db.entity.UserMessageEntity
 import com.tick.taku.notificationwatcher.domain.repository.MessageRepository
 import com.tick.taku.notificationwatcher.view.R
 import com.tick.taku.notificationwatcher.view.mock.Dummies
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
-import org.junit.After
-import org.junit.Before
 import org.junit.Test
 import org.junit.Rule
 
@@ -26,8 +21,7 @@ class MessageViewModelTest {
         private const val GROUPING_FORMAT = "yyyyMMdd"
     }
 
-    @Rule @JvmField
-    val instantTaskExecutorRule = InstantTaskExecutorRule()
+    @get:Rule val viewModelRule = ViewModelTestRule()
 
     private val repository: MessageRepository by lazy {
         mock<MessageRepository> {
@@ -44,16 +38,6 @@ class MessageViewModelTest {
 
     private val viewModel: MessageViewModel by lazy {
         MessageViewModel("0001", context, repository)
-    }
-
-    @Before
-    fun setUp() {
-        Dispatchers.setMain(Dispatchers.Unconfined)
-    }
-
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
     }
 
     @Test

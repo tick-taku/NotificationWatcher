@@ -34,6 +34,12 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+    androidExtensions { isExperimental = true }
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
+        kotlinOptions {
+            freeCompilerArgs += listOf("-Xuse-experimental=kotlin.Experimental")
+        }
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -51,7 +57,9 @@ dependencies {
 
     implementation(Dep.AndroidX.Navigation.uiKtx)
 
-    testImplementation(Dep.Test.junit)
+    implementation(Dep.Test.junit)
+    implementation(Dep.Test.coroutines)
+    implementation(Dep.Test.archCore)
     androidTestImplementation(Dep.Test.androidJunit)
     androidTestImplementation(Dep.Test.espressoCore)
 
