@@ -54,7 +54,7 @@ class MessageFragment: Fragment(R.layout.fragment_message), Injectable {
         viewModel.messageList.observe(viewLifecycleOwner) { list ->
             val items = list.mapKeys { MessageHeaderItem(it.key) }
                 .mapValues {
-                    it.value.map { entity ->
+                    it.value.reversed().map { entity ->
                         MessageItem(entity, viewModel, viewLifecycleOwner).apply {
                             setOnMessageClickListener { m -> copyToClipboard(m) }
                             setOnImageClickListener { u -> ImageDialog.show(childFragmentManager, u) }
