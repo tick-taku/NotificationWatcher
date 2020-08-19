@@ -18,7 +18,9 @@ jobs:
       with:
         java-version: 1.8
     - name: Make credentials
-      run: echo "${{secrets.CREDENTIALS}}" > credential.properties
+      run: echo $CREDENTIALS > $GITHUB_WORKSPACE/credential.properties
+      env:
+        CREDENTIALS: ${{ secrets.CREDENTIALS }}
     - name: build release 
       run: ./gradlew assembleDebug --stacktrace
     - name: upload artifact to Firebase App Distribution
