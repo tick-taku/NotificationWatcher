@@ -232,3 +232,7 @@ Temporary Items
 
 # for credentials
 credential.properties
+
+
+# Ignore gradle-wrapper.jar for CI
+!gradle/wrapper/gradle-wrapper.jar
