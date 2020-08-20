@@ -30,7 +30,7 @@ jobs:
               },
               "accessory": {
                 "type": "image",
-                "image_url": "${{ github.event.pull_request.user.login }}",
+                "image_url": "https://avatars1.githubusercontent.com/u/39234775?v=4",
                 "alt_text": "User Icon"
               }
             },
