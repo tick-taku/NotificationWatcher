@@ -17,6 +17,36 @@ jobs:
         INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       with:
         text: "New app was deployed!! :clap:"
+        blocks: |
+          [
+            {
+              "type": "divider"
+            },
+            {
+              "type": "section",
+              "text": {
+                "type": "mrkdwn",
+                "text": "*test*\nPushed by ${{ github.event.pull_request.user.login }}\n\n${{ github.event.pull_request.html_url }}"
+              }
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "actions",
+              "elements": [
+                {
+                  "type": "button",
+                  "text": {
+                  	"type": "plain_text",
+                  	"text": "Join Test",
+                  	"emoji": true
+                  },
+                  "url": "https://console.firebase.google.com/project/notificationwatcher-10eaf/appdistribution/app/android:com.tick.taku.notificationwatcher.debug/releases"
+                }
+              ]
+            }
+          ]
     - name: Dump GitHub context
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
