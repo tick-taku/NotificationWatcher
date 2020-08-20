@@ -1,8 +1,7 @@
 name: Build & upload to Firebase App Distribution 
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
       - test/actions
 
@@ -10,8 +9,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
-    if: github.event.pull_request.merged == true
 
     steps:
     - name: post message to Slack
