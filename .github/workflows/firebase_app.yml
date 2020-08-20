@@ -31,3 +31,28 @@ jobs:
         token: ${{secrets.FIREBASE_TOKEN}}
         groups: testers
         file: app/build/outputs/apk/debug/app-debug.apk
+    - name: post message to Slack
+      if: success()
+      uses: tokorom/action-slack-incoming-webhook@master
+      env:
+        INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      with:
+        text: "New app was deployed!!\nhttps://console.firebase.google.com/project/notificationwatcher-10eaf/appdistribution/app/android:com.tick.taku.notificationwatcher.debug/releases"
+        attachments: |
+          [
+            {
+              "color": "#2EB886",
+              "author_name": "${{ github.actor }}",
+              "author_icon": "${{ github.event.sender.avatar_url }}",
+              "fields": [
+                {
+                  "title": "PR was merged into master."
+                  "value": "${{ github.event.compare }}"
+                }
+              ]
+            }
+          ]
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
