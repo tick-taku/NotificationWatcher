@@ -19,9 +19,16 @@ jobs:
       env:
         INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       with:
-        text: "New app was deployed!! :clap:"
+        text: ""
         blocks: |
           [
+            {
+              "type": "section",
+              "text": {
+                "type": "mrkdwn",
+                "text": "New app was deployed!! :clap:"
+              }
+            },
             {
               "type": "divider"
             },
