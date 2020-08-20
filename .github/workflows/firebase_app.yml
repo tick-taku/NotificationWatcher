@@ -27,6 +27,11 @@ jobs:
               "text": {
                 "type": "mrkdwn",
                 "text": "*test*\nPushed by ${{ github.event.pull_request.user.login }}\n\n${{ github.event.pull_request.html_url }}"
+              },
+              "accessory": {
+                "type": "image",
+                "image_url": "${{ github.event.pull_request.user.login }}",
+                "alt_text": "User Icon"
               }
             },
             {
