@@ -1,7 +1,8 @@
 name: Build & upload to Firebase App Distribution 
 
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches:
       - test/actions
 
@@ -9,6 +10,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+
+    if: github.event.pull_request.merged == true
 
     steps:
     - name: post message to Slack
@@ -30,7 +33,7 @@ jobs:
               },
               "accessory": {
                 "type": "image",
-                "image_url": "https://avatars1.githubusercontent.com/u/39234775?v=4",
+                "image_url": "${{ github.event.pull_request.user.login }}",
                 "alt_text": "User Icon"
               }
             },
@@ -52,6 +55,7 @@ jobs:
               ]
             }
           ]
+
     - name: Dump GitHub context
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
