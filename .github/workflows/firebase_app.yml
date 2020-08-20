@@ -19,7 +19,7 @@ jobs:
       env:
         INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       with:
-        text: ""
+        text: "New app was deployed!!"
         blocks: |
           [
             {
@@ -36,7 +36,7 @@ jobs:
               "type": "section",
               "text": {
                 "type": "mrkdwn",
-                "text": "*test*\nPushed by ${{ github.event.pull_request.user.login }}\n\n${{ github.event.pull_request.html_url }}"
+                "text": "*${{ github.event.pull_request.title }}*\nPushed by ${{ github.event.pull_request.user.login }}\n\n*URL*\n${{ github.event.pull_request.url }}"
               },
               "accessory": {
                 "type": "image",
