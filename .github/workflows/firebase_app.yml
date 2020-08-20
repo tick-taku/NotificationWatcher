@@ -33,7 +33,7 @@ jobs:
               },
               "accessory": {
                 "type": "image",
-                "image_url": "${{ github.event.pull_request.user.login }}",
+                "image_url": "${{ github.event.pull_request.user.avatar_url }}",
                 "alt_text": "User Icon"
               }
             },
